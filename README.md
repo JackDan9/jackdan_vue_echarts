@@ -1,6 +1,6 @@
 # jackdan_vue_echarts
 
-> A project for better datepicker
+> A project for better jackdan_vue_echarts
 
 ## Build Setup
 
