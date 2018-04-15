@@ -1,4 +1,4 @@
-# vue-datepicker
+# jackdan_vue_echarts
 
 > A project for better datepicker
 
