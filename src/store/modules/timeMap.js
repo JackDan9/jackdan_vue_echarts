@@ -3,12 +3,14 @@ import qs from 'qs'
 
 const state = {
     isLoading: true,
+    isChoose: true,
     startDateTime: 0,
     endDateTime: 0,
     count: 0,
     color: ['#325B69', '#698570', '#AE5548', '#6D9EA8', '#9CC2B0', '#C98769'],
     typeIndex: 0,
     typePriceIndex: 0,
+    smallStartTime: 0
 }
 
 const getters = {}
@@ -78,7 +80,8 @@ const actions = {
             from: state.startDateTime,
             to: state.endDateTime
         });
-        axios.post('http://dx.spider.jiaoan100.com/bigdata/orders_carrier?ver=1', data)
+        let random = parseInt(Math.random() * 10 + 1);
+        axios.get('/orders_carrier?ver=' + random, data)
             .then(
                 (res) => {
                     let indexObj = state.typeIndex;
@@ -159,12 +162,18 @@ const actions = {
 
     },
     fetchLineFlightData({state, commit}, chartsObj) {
-        axios.get('http://dx.spider.jiaoan100.com/bigdata/15mins_carrier')
+        let endTime = parseInt((new Date().getTime())/1000);
+        axios.get('/15mins_carrier', {params: {from:state.smallStartTime,to:endTime}})
             .then(
                 (res) => {
                     let typePriceIndex = state.typePriceIndex;
-                    console.log(typePriceIndex);
                     let ret = res.data.data;
+                    let time = [];
+                    for (let i = 0; i < ret.ts.length; i++) {
+                        let timeNew = new Date(parseInt(ret.ts[i]) * 1000).toLocaleString('chinese',{hour12:false}).replace(/:\d{1,2}$/,' ');
+                        // time.push(timeNew.substring(12));
+                        time.push(timeNew);
+                    }
                     let seriesData = [];
                     let legendData = [];
                     let nameData = [];
@@ -172,11 +181,16 @@ const actions = {
                     if (typePriceIndex == 0) {
                         for(let key in ret['num15']) {
                             nameData.push(key);
-                            obj[key] = false;
+                            if(state.isChoose) {
+                                obj[key] = true;
+                            } else {
+                                obj[key] = false;
+                            }
+                            
                             legendData.push({
                                 name: key,
                                 icon: 'bar',
-                                textStyle: {fontWeight:'bold', color: 'rgba(255,255,255,1)'}
+                                textStyle: {fontWeight:'bold', color: 'rgba(255,255,255,1)'},
                             });
                             seriesData.push({
                                 name: key,
@@ -184,7 +198,6 @@ const actions = {
                                 data: ret['num15'][key]
                             })          
                         }
-                        console.log(obj);
                         if (state.isLoading) {
                             chartsObj.hideLoading()
                             commit('closeLoading')
@@ -192,16 +205,21 @@ const actions = {
                         chartsObj.setOption({
                             legend: {
                                 data: legendData,
-                                selected: 'false'
+                                selected: obj
                             },
                             xAxis: {
-                                data: ret.ts
+                                data: time
                             },
                             series: seriesData
                         })
                     } else if (typePriceIndex == 1) {
                         for(let key in ret['numany']) {
                             nameData.push(key);
+                            if(state.isChoose) {
+                                obj[key] = true;
+                            } else {
+                                obj[key] = false;
+                            }
                             legendData.push({
                                 name: key,
                                 icon: 'bar',
@@ -222,13 +240,19 @@ const actions = {
                                 data: legendData
                             },
                             xAxis: {
-                                data: ret.ts
+                                data: time
                             },
+
                             series: seriesData
                         })
                     } else if (typePriceIndex == 2) {
                         for(let key in ret['per']) {
                             nameData.push(key);
+                            if(state.isChoose) {
+                                obj[key] = true;
+                            } else {
+                                obj[key] = false;
+                            }
                             legendData.push({
                                 name: key,
                                 icon: 'bar',
@@ -249,7 +273,7 @@ const actions = {
                                 data: legendData
                             },
                             xAxis: {
-                                data: ret.ts
+                                data: time
                             },
                             series: seriesData
                         })
@@ -283,6 +307,14 @@ const mutations = {
 
     updateTypeIndex(state, indexObj) {
         state.typeIndex = indexObj
+    },
+
+    updateChooseState(state, chooseObj) {
+        state.isChoose = chooseObj
+    },
+
+    updateSmallStartTime(state, smallStartTimeObj) {
+        state.smallStartTime = smallStartTimeObj
     },
 
     updateTypePriceIndex(state, indexObj) {

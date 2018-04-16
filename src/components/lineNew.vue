@@ -71,6 +71,13 @@
                             textStyle: {
                                 color: 'rgba(255, 255, 255, 1)',
                                 fontSize: 14
+                            },
+                            formatter: function(params) {
+                                let upName = params.substring(0,9);
+                                let downName = params.substring(10, params.length);
+                                let newParamsName = "";
+                                newParamsName = downName + "\n" + upName;
+                                return newParamsName
                             }
                         },
                         data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
@@ -103,7 +110,22 @@
                         },
                         type: 'value'
                     },
-
+                    
+                    dataZoom: [
+                        {
+                            type: 'inside',
+                            xAxisIndex: [0],
+                            start: 0,
+                            end: 100
+                        },
+                        {
+                            type: 'inside',
+                            yAxisIndex: [0],
+                            start: 0,
+                            end: 100
+                        }
+                    ],
+                
                     series: [
                         {
                             name:'教育局',

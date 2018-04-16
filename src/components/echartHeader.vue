@@ -1,6 +1,16 @@
 <template lang="html">
     <div class="title">
         <h1>{{name}}</h1>
+        <div class="chart-select-all" v-show="showSelectAll">
+            <button v-on:click="selectNotAll">全不选</button>
+            <button v-on:click="selectAll">全选</button>
+        </div>
+        <div class="chart-select-time" v-show="showSelectAll">
+            <button v-on:click="selectSmall">3小时</button>
+            <button v-on:click="selectMiddle">6小时</button>
+            <button v-on:click="selectBig">12小时</button>
+            <button v-on:click="selectSum">总数</button>
+        </div>
         <div class="legend-wrapper">
             <ul>
                 <li v-for="(legend, index) in legendArr" v-on:mouseout="downplay(index)" v-on:mouseover="highlight(index)" :style="styleArr[index]" @click="legendToggle(legend)"> 
@@ -19,11 +29,13 @@ export default {
             default: []
         },
         myChart: Object,
-        name: String
+        showSelectAll: Boolean,
+        name: String,
+        defaultTime: 0,
     },
 
     created() {
-        this.init()
+        this.init();
     },
 
     mounted() {
@@ -32,7 +44,8 @@ export default {
     data() {
         return {
             styleArr: [],
-            color: ['#325B69', '#698570', '#AE5548', '#6D9EA8', '#9CC2B0', '#C98769']
+            color: ['#325B69', '#698570', '#AE5548', '#6D9EA8', '#9CC2B0', '#C98769'],
+            chooseState: true
         }
     },
 
@@ -44,6 +57,104 @@ export default {
                     border: '1px solid' + color
                 })
             })
+        },
+
+        selectNotAll() {
+            this.chooseState = false
+            /*
+            let selectArr = this.myChart.getOption().legend[0].data;
+            let option = this.myChart.getOption();
+            let obj = {};
+            for (let key in selectArr) {
+                // console.log(key);
+                // console.log(selectArr[key]['name']);
+                obj[selectArr[key]['name']] = false;
+            }
+            option.legend.selected = obj;
+            console.log(option);
+            */
+            let showLoadingDefault = {
+                text: 'Loading...',
+                color: '#23531',
+                textColor: '#fff',
+                maskColor: '#272D3A',
+                zlevel: 0,
+            }
+            this.myChart.showLoading(showLoadingDefault);
+            this.$store.commit('openLoading');
+            // this.myChart.setOption(option);
+            this.$store.commit('updateChooseState', this.chooseState);
+            this.$store.dispatch('fetchLineFlightData', this.myChart)
+        },
+        selectAll() {
+            this.chooseState = true;
+            let showLoadingDefault = {
+                text: 'Loading...',
+                color: '#23531',
+                textColor: '#fff',
+                maskColor: '#272D3A',
+                zlevel: 0,
+            }
+            this.myChart.showLoading(showLoadingDefault);
+            this.$store.commit('openLoading');
+            this.$store.commit('updateChooseState', this.chooseState);
+            this.$store.dispatch('fetchLineFlightData', this.myChart)
+        },
+        selectSmall() {
+            let smallStartTime = parseInt((new Date().getTime())/1000 - 3 * 60 * 60);
+            this.$store.commit('updateSmallStartTime', smallStartTime);
+            let showLoadingDefault = {
+                text: 'Loading...',
+                color: '#23531',
+                textColor: '#fff',
+                maskColor: '#272D3A',
+                zlevel: 0,
+            }
+            this.myChart.showLoading(showLoadingDefault);
+            this.$store.commit('openLoading');
+            this.$store.dispatch('fetchLineFlightData', this.myChart);
+        },
+        selectMiddle() {
+            let smallStartTime = parseInt((new Date().getTime())/1000 - 6 * 60 * 60);
+            this.$store.commit('updateSmallStartTime', smallStartTime);
+            let showLoadingDefault = {
+                text: 'Loading...',
+                color: '#23531',
+                textColor: '#fff',
+                maskColor: '#272D3A',
+                zlevel: 0,
+            }
+            this.myChart.showLoading(showLoadingDefault);
+            this.$store.commit('openLoading');
+            this.$store.dispatch('fetchLineFlightData', this.myChart);
+        },
+        selectBig() {
+            let smallStartTime = parseInt((new Date().getTime())/1000 - 12 * 60 * 60);
+            this.$store.commit('updateSmallStartTime', smallStartTime);
+            let showLoadingDefault = {
+                text: 'Loading...',
+                color: '#23531',
+                textColor: '#fff',
+                maskColor: '#272D3A',
+                zlevel: 0,
+            }
+            this.myChart.showLoading(showLoadingDefault);
+            this.$store.commit('openLoading');
+            this.$store.dispatch('fetchLineFlightData', this.myChart);
+        },
+        selectSum() {
+            let smallStartTime = 0;
+            this.$store.commit('updateSmallStartTime', smallStartTime);
+            let showLoadingDefault = {
+                text: 'Loading...',
+                color: '#23531',
+                textColor: '#fff',
+                maskColor: '#272D3A',
+                zlevel: 0,
+            }
+            this.myChart.showLoading(showLoadingDefault);
+            this.$store.commit('openLoading');
+            this.$store.dispatch('fetchLineFlightData', this.myChart);
         },
 
         downplay(index) {

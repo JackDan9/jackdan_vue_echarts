@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="chart-num">
-                <v-echart-header :name="name" :legendArr="legendArr" :myChart="myChartColumn"></v-echart-header>
+                <v-echart-header :name="name" :legendArr="legendArr" :showSelectAll="showSelectAll" :myChart="myChartColumn"></v-echart-header>
                 <div class="filter">
                     <div class="startTime">
                         <span class="timeText">起始时间</span>
@@ -76,7 +76,8 @@
                     {"name": "订单数据对比"}
                 ],
                 startDate: '',
-                endDate: ''
+                endDate: '',
+                showSelectAll: false
             }
         },
 
@@ -92,7 +93,7 @@
             this.myChartColumn.showLoading(showLoadingDefault);
             this.$store.commit('openLoading');
             this.$store.dispatch('fetchColumnData', this.myChartColumn);
-            // this.legendArr = this.myChartColumn.getOption().series;
+            // this.legendArr = this.myChartColumn.getOption().legend;
             this.legendArr.forEach((data) => {
                 data.selected = true;
             })

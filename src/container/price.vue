@@ -14,10 +14,7 @@
                 </div>
             </div>
             <div class="chart-price">
-                <v-echart-header :name="name" :legendArr="legendArr" :myChart="myLineChart"></v-echart-header>
-                <div class="chart-select-all">
-                    <button v-on:click="selectAll">全不选</button>
-                </div>
+                <v-echart-header :name="name" :showSelectAll="showSelectAll" :legendArr="legendArr" :myChart="myLineChart"></v-echart-header>
                 <v-line-new :lineId="lineId" v-on:chartFlightLine="chartFlightLine"></v-line-new>
             </div>
         </div>
@@ -44,6 +41,7 @@
                 ],
                 myLineChart: {},
                 typePriceIndex: 0,
+                showSelectAll: true,
             }
         },
 
@@ -58,6 +56,7 @@
             this.myLineChart.showLoading(showLoadingDefault);
             this.$store.commit('openLoading');
             this.$store.dispatch('fetchLineFlightData', this.myLineChart);
+            // this.legendArr = this.myLineChart.getOption().legend;
         },
 
         methods: {
