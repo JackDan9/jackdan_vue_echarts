@@ -36,6 +36,13 @@
                 </el-date-picker>
             </div>
         </div>
+        <div class="chart-select-week" v-show="showWeek">
+            <button v-on:click="selectOneWeek">一周</button>
+            <button v-on:click="selectTwoWeek">两周</button>
+        </div>
+        <div class="chart-select-month" v-show="showMonth">
+            <button v-on:click="selectOneMonth">一月</button>
+        </div>
         <div class="legend-wrapper">
             <ul>
                 <li v-for="(legend, index) in legendArr" v-on:mouseout="downplay(index)" v-on:mouseover="highlight(index)" :style="styleArr[index]" @click="legendToggle(legend)"> 
@@ -56,6 +63,14 @@ export default {
         myChart: Object,
         showSelectAll: Boolean,
         showFilter: Boolean,
+        showWeek: {
+            type: Boolean,
+            default: false
+        },
+        showMonth: {
+            type: Boolean,
+            default: false
+        },
         name: String
     },
 
@@ -209,6 +224,21 @@ export default {
             this.$store.commit('updateFleshTime');
             this.$store.dispatch('fetchLineFlightData', this.myChart);
         },
+        selectOneWeek() {
+            let endOneWeekTime = (((new Date().getTime())/1000) - 432000);
+            this.$store.commit('updateEndDateTime', endOneWeekTime);
+            this.$store.dispatch('fetchColumnData', this.myChart);
+        },
+        selectTwoWeek() {
+            let endTwoWeekTime = (((new Date().getTime())/1000) - 864000);
+            this.$store.commit('updateEndDateTime', endTwoWeekTime);
+            this.$store.dispatch('fetchColumnData', this.myChart);
+        },
+        selectOneMonth() {
+            let endOneMonthTime = (((new Date().getTime())/1000) - 2592000);
+            this.$store.commit('updateEndDateTime', endOneMonthTime);
+            this.$store.dispatch('fetchColumnData', this.myChart);
+        },
 
         downplay(index) {
             this.myChart.dispatchAction({
@@ -297,7 +327,7 @@ export default {
         margin-left: -1px;
     }
 
-    .chart-select-all, .chart-select-time, .chart-select-flesh {
+    .chart-select-all, .chart-select-time, .chart-select-flesh, .chart-select-week, .chart-select-month {
         margin-right: 30px;
         height: 100%;
     }
@@ -311,6 +341,13 @@ export default {
     .chart-select-flesh button {
         background: red;
     }
+    .chart-select-week button {
+        background: #82D900;
+    }
+    .chart-select-month button {
+        background: #FFD1A4;
+    }
+
     button {
         display: inline-block;
         border: 0;

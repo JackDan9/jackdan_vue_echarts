@@ -15,7 +15,7 @@
             </div>
             <div class="chart-price">
                 <v-echart-header :name="name" :showSelectAll="showSelectAll" :legendArr="legendArr" :myChart="myLineChart" :showFilter="showFilter"></v-echart-header>
-                <v-line-new :lineId="lineId" v-on:chartFlightLine="chartFlightLine"></v-line-new>
+                <v-line-new :lineId="lineId" :option="option" v-on:chartFlightLine="chartFlightLine"></v-line-new>
             </div>
         </div>
     </div>
@@ -26,6 +26,7 @@
     import echartHeader from '../components/echartHeader';
     import LineNew from '../components/lineNew';
     import filter from '../components/filter'
+    import axios from 'axios'
 
     export default {
         data() {
@@ -37,10 +38,11 @@
                 errorClass: 'box-card',
                 legendArr: [],
                 chartType: [
-                    {"name": "15分钟数据", "isPriceActive": false},
+                    {"name": "15分钟数据", "isPriceActive": true},
                     {"name": "15分钟总数", "isPriceActive": false},
                     {"name": "15分钟占比", "isPriceActive": false}
                 ],
+                option: {},
                 myLineChart: {},
                 typePriceIndex: 0,
                 showSelectAll: true,
@@ -49,6 +51,7 @@
         },
 
         mounted() {
+            this.getData();
             let showLoadingDefault = {
                 text: 'Loading...',
                 color: '#23531',
@@ -63,6 +66,18 @@
         },
 
         methods: {
+            getData() {
+                axios.get('/15mins_carrier')
+                    .then (
+                        (res) => {
+                            console.log(res.data.data);
+                        }
+                    )
+                    .catch((error) => {
+                        console.log(error);
+                    }
+                )
+            },
             resize() {
                 this.$root.charts.forEach((myChart) => {
                     myChart.resize()
@@ -74,7 +89,7 @@
             typeClick(index) {
                 for(let i = 0; i < this.chartType.length; i++) {
                     if (i == index) {
-                        this.chartType[i].isPriceActive = !this.chartType[i].isPriceActive;
+                        this.chartType[i].isPriceActive = true;
                     } else {
                         this.chartType[i].isPriceActive = false;
                     }
@@ -91,6 +106,8 @@
                 }
                 this.myLineChart.showLoading(showLoadingDefault);
                 this.$store.commit('openLoading');
+                // debugger;
+                // this.myLineChart.clear();
                 this.$store.dispatch('fetchLineFlightData', this.myLineChart);
             },
             selectAll() {
@@ -136,7 +153,7 @@
     }
     .chart-content .box-card {
         display: block;
-        width: 84%;
+        width: 78%;
         margin: 20px auto;
         -webkit-box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
         box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
@@ -146,7 +163,7 @@
         overflow: hidden;
         background: none;
         color: #fff;
-        font-size: 18px;
+        font-size: 14px;
         text-align: center;
         cursor: pointer;
     }    
@@ -155,8 +172,8 @@
         border: 1px solid #e9903a;
     }
     .chart-content .box-card .box-card-header {
-        padding-top: 18px;
-        padding-bottom: 18px;
+        padding-top: 14px;
+        padding-bottom: 14px;
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
     }

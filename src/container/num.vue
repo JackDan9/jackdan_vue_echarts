@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="chart-num">
-                <v-echart-header :name="name" :legendArr="legendArr" :showSelectAll="showSelectAll" :myChart="myChartColumn" :showFilter="showFilter"></v-echart-header>
+                <v-echart-header :name="name" :legendArr="legendArr" :showSelectAll="showSelectAll" :myChart="myChartColumn" :showFilter="showFilter" :showWeek="showWeek" :showMonth="showMonth"></v-echart-header>
                 <v-column :columnId="columnId" v-on:chartColumn="chartColumn"></v-column>
             </div>
         </div>
@@ -53,13 +53,15 @@
                 activeClass: 'box-card-active',
                 errorClass: 'box-card',
                 chartType: [
-                    {"name": "订单数", "isNumActive": false},
+                    {"name": "订单数", "isNumActive": true},
                     {"name": "订单乘机人", "isNumActive": false},
                     {"name": "订单金额", "isNumActive": false},
                     {"name": "验价数", "isNumActive": false}
                 ],
                 showSelectAll: false,
-                showFilter: true
+                showFilter: true,
+                showWeek: true,
+                showMonth: true
             }
         },
 
@@ -93,7 +95,7 @@
             typeClick(index) {
                 for(let i = 0; i < this.chartType.length; i++) {
                     if (i == index) {
-                        this.chartType[i].isNumActive = !this.chartType[i].isNumActive;
+                        this.chartType[i].isNumActive = true;
                     } else {
                         this.chartType[i].isNumActive = false;
                     }
@@ -174,7 +176,7 @@
     }
     .chart-content .box-card {
         display: block;
-        width: 84%;
+        width: 78%;
         margin: 20px auto;
         -webkit-box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
         box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
@@ -184,7 +186,7 @@
         overflow: hidden;
         background: none;
         color: #fff;
-        font-size: 18px;
+        font-size: 14px;
         text-align: center;
         cursor: pointer;
     }    
@@ -193,8 +195,8 @@
         border: 1px solid #e9903a;
     }
     .chart-content .box-card .box-card-header {
-        padding-top: 18px;
-        padding-bottom: 18px;
+        padding-top: 14px;
+        padding-bottom: 14px;
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
     }

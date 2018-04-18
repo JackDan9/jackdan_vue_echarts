@@ -10,6 +10,8 @@ import Config from './config/config'
 import {DatePicker} from 'element-ui'
 import 'element-ui/lib/theme-chalk/display.css'
 import 'element-ui/lib/theme-chalk/index.css'
+import './style/common.css'
+import './style/reset.css'
 import store from './store/index'
 
 Vue.component(DatePicker.name, DatePicker)

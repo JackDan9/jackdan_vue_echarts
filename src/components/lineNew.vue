@@ -12,6 +12,10 @@
             lineId: {
                 type: String,
                 default: ''
+            },
+            option: {
+                type: Object,
+                default: {}
             }
         },
         data() {
@@ -137,21 +141,8 @@
                         {
                             name:'教育局',
                             type:'line',
-                            stack:'总量',
                             data:[150, 232, 201, 154, 190, 330, 410]
-                        },
-                        {
-                            name:'法院',
-                            type:'line',
-                            stack:'总量',
-                            data:[320, 332, 301, 334, 390, 330, 320]
-                        },
-                        {
-                            name:'扶贫办',
-                            type:'line',
-                            stack:'总量',
-                            data:[820, 932, 901, 934, 1290, 1330, 1320]
-                        },
+                        }
                     ]
                 /*
                     legend: {

@@ -213,6 +213,7 @@ const actions = {
                     let nameData = [];
                     let obj = {};
                     if (typePriceIndex == 0) {
+                        // chartsObj.clear();
                         for(let key in ret['num15']) {
                             nameData.push(key);
                             if(state.isChoose) {
@@ -247,51 +248,53 @@ const actions = {
                             series: seriesData
                         })
                     } else if (typePriceIndex == 1) {
-                        // let arr = [];
-                        // let sum = 0;
-                        // for(let num = 0; num < ret['num15']['BE'].length; num ++) {
-                            // sum = 0;
-                            // for(let key in ret['num15']) {
-                                // if(ret['num15'][key][num] == undefined) {
-                                    // ret['num15'][key][num] = 0;
-                                // }
-                                // sum += ret['num15'][key][num] 
-                                
-                            // }
-                            // sum = sum + ret['num15'][key][key];
-                            // arr.push(sum);
-                        // }
-                        for(let key in ret['numany']) {
-                            nameData.push(key);
-                            if(state.isChoose) {
-                                obj[key] = true;
-                            } else {
-                                obj[key] = false;
+                        let arr = [];
+                        let seriesSumData = [];
+                        let sum = 0;
+                        for(let num = 0; num < ret['num15']['BE'].length; num ++) {
+                            sum = 0;
+                            for(let key in ret['num15']) {
+                                if(ret['num15'][key][num] == undefined) {
+                                    ret['num15'][key][num] = 0;
+                                }
+                                sum += ret['num15'][key][num] 
                             }
-                            legendData.push({
-                                name: key,
-                                icon: 'bar',
-                                textStyle: {fontWeight:'bold', color: 'rgba(255,255,255,1)'}
-                            });
-                            seriesData.push({
-                                name: key,
-                                type: 'line',
-                                data: ret['numany'][key]
-                            })          
+                            arr.push(sum);
                         }
+                        seriesSumData.push({
+                            // name: key,
+                            name: '',
+                            type: 'line',
+                            data: arr
+                        })
+                        // for(let key in ret['numany']) {
+                            // nameData.push(key);
+                            // if(state.isChoose) {
+                            //     obj[key] = true;
+                            // } else {
+                            //     obj[key] = false;
+                            // }
+                            // legendData.push({
+                            //     name: key,
+                            //     icon: 'bar',
+                            //     textStyle: {fontWeight:'bold', color: 'rgba(255,255,255,1)'}
+                            // });                     
+                        // }
                         if (state.isLoading) {
                             chartsObj.hideLoading()
                             commit('closeLoading')
                         }
+                    
                         chartsObj.setOption({
-                            legend: {
-                                data: legendData
+                            legend: {       
+                                show: false,
+                                // data: legendData,
+                                // selected: obj
                             },
                             xAxis: {
                                 data: time
                             },
-
-                            series: seriesData
+                            series: seriesSumData
                         })
                     } else if (typePriceIndex == 2) {
                         for(let key in ret['per']) {
@@ -318,7 +321,8 @@ const actions = {
                         }
                         chartsObj.setOption({
                             legend: {
-                                data: legendData
+                                data: legendData,
+                                selected: obj
                             },
                             xAxis: {
                                 data: time
@@ -359,6 +363,7 @@ const mutations = {
 
     updateChooseState(state, chooseObj) {
         state.isChoose = chooseObj
+        console.log(chooseObj);
     },
 
     updateSmallStartTime(state, smallStartTimeObj) {
