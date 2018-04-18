@@ -18,12 +18,14 @@
                 <div class="nav-quicklink" v-for="(item, index) in items" :key="index" @click="showArrow(index)">
                     <router-link :to="'/' + item.ad">
                         {{item.name}}
+                        <!--
                         <i v-show="item.ad=='flight'" class="el-icon-caret-bottom icon-padding"></i>
+                        -->
                     </router-link>
                 </div>
             </div>
         </div>
-
+        <!--
         <div v-bind:class="[arrowActive ? activeArrowClass : '', errorArrowClass]">
             <ul>
                 <li><router-link :to="'/price'">票价</router-link></li>
@@ -32,6 +34,7 @@
             <div class="nav-popover-arrow"></div>
             <div class="nav-popover-arrow-inner"></div>
         </div>
+        -->
 
         <div class="nav-header-right">
             <div class="nav-cta-button-outer">
@@ -91,8 +94,8 @@
                 errorArrowClass: 'nav-popover',
                 secMenuActive: false,
                 items: [
-                    {name: '票价', ad: 'num'},
-                    {name: '票数', ad: 'price'},
+                    {name: '验价订单', ad: 'num'},
+                    {name: '航线数据', ad: 'price'},
                     {name: '机票', ad: 'flight'},         
                 ],
                 titleName: '',
@@ -108,9 +111,6 @@
         },
 
         methods: {
-            num:function(index) {
-                console.log(index);
-            },
             showMenu: function() {
                 this.active = !this.active;
             },

@@ -18,9 +18,9 @@
             -->
             <div class="chart-content">
                 <div class="chart-title">
-                    <h1>机票数据对比</h1>
+                    <h1>验价订单</h1>
                 </div>
-                <div class="box-card" v-for="(item, index) in chartType" :key="index" v-on:click="typeClick(index)">
+                <div v-bind:class="[item.isNumActive ? activeClass : '', errorClass]" v-for="(item, index) in chartType" :key="index" v-on:click="typeClick(index)">
                     <div class="box-card-header">
                         <div class="clearfix">
                             <span>{{item.name}}</span>
@@ -29,27 +29,7 @@
                 </div>
             </div>
             <div class="chart-num">
-                <v-echart-header :name="name" :legendArr="legendArr" :showSelectAll="showSelectAll" :myChart="myChartColumn"></v-echart-header>
-                <div class="filter">
-                    <div class="startTime">
-                        <span class="timeText">起始时间</span>
-                        <el-date-picker
-                            v-model="startDate"
-                            type="datetime"
-                            placeholder="选择日期"
-                            value-format="timestamp"
-                        ></el-date-picker>
-                    </div>
-                    <div class="endTime">
-                        <span class="timeText">截止时间</span>
-                        <el-date-picker
-                            v-model="endDate"
-                            type="datetime"
-                            placeholder="选择日期"
-                            value-format="timestamp">
-                        </el-date-picker>
-                    </div>
-                </div>
+                <v-echart-header :name="name" :legendArr="legendArr" :showSelectAll="showSelectAll" :myChart="myChartColumn" :showFilter="showFilter"></v-echart-header>
                 <v-column :columnId="columnId" v-on:chartColumn="chartColumn"></v-column>
             </div>
         </div>
@@ -67,17 +47,19 @@
                 items: [],
                 columnId: 'columnChart',
                 legendArr: [],
-                name: '票数对比图',
+                name: '订单数',
                 myChartColumn: {},
                 typeIndex: 0,
+                activeClass: 'box-card-active',
+                errorClass: 'box-card',
                 chartType: [
-                    {"name": "票数数据对比"},
-                    {"name": "票价数据对比"},
-                    {"name": "订单数据对比"}
+                    {"name": "订单数", "isNumActive": false},
+                    {"name": "订单乘机人", "isNumActive": false},
+                    {"name": "订单金额", "isNumActive": false},
+                    {"name": "验价数", "isNumActive": false}
                 ],
-                startDate: '',
-                endDate: '',
-                showSelectAll: false
+                showSelectAll: false,
+                showFilter: true
             }
         },
 
@@ -109,7 +91,15 @@
                 this.myChartColumn = msg;
             },
             typeClick(index) {
+                for(let i = 0; i < this.chartType.length; i++) {
+                    if (i == index) {
+                        this.chartType[i].isNumActive = !this.chartType[i].isNumActive;
+                    } else {
+                        this.chartType[i].isNumActive = false;
+                    }
+                }
                 this.typeIndex = index;
+                this.name = this.chartType[index]['name'];
                 this.$store.commit('updateTypeIndex', this.typeIndex);
                 let showLoadingDefault = {
                     text: 'Loading...',
@@ -120,7 +110,7 @@
                 }
                 this.myChartColumn.showLoading(showLoadingDefault);
                 this.$store.commit('openLoading');
-                this.$store.dispatch('fetchColumnData', this.myChartColumn);
+                this.$store.dispatch('fetchColumnData', this.myChartColumn); 
             }
             /*
             init() {
@@ -183,10 +173,9 @@
         letter-spacing: 1px;
     }
     .chart-content .box-card {
-        width: 89%;
-        margin-top: 20px;
-        margin-left: 15px;
-        margin-bottom: 20px;
+        display: block;
+        width: 84%;
+        margin: 20px auto;
         -webkit-box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
         box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
         border: 1px solid #ebeef5;
@@ -195,11 +184,11 @@
         overflow: hidden;
         background: none;
         color: #fff;
-        font-size: 22px;
+        font-size: 18px;
         text-align: center;
         cursor: pointer;
     }    
-    .chart-content .box-card:hover {
+    .chart-content .box-card-active {
         color: #e9903a;
         border: 1px solid #e9903a;
     }

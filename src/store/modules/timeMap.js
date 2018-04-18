@@ -5,12 +5,13 @@ const state = {
     isLoading: true,
     isChoose: true,
     startDateTime: 0,
-    endDateTime: 0,
+    endDateTime: parseInt((new Date().getTime())/1000),
     count: 0,
     color: ['#325B69', '#698570', '#AE5548', '#6D9EA8', '#9CC2B0', '#C98769'],
     typeIndex: 0,
     typePriceIndex: 0,
-    smallStartTime: 0
+    smallStartTime: 0,
+    isFlesh: false
 }
 
 const getters = {}
@@ -56,7 +57,6 @@ const actions = {
             .then(
                 (res) => {
                     let data = res.data.data;
-                    console.log(data);
                     let seriesData = ((state, data) => {
                         let arr = []
                         arr = data
@@ -76,63 +76,93 @@ const actions = {
     },
 
     fetchColumnData ({state, commit}, chartsObj) {
-        let data = qs.stringify({
-            from: state.startDateTime,
-            to: state.endDateTime
-        });
         let random = parseInt(Math.random() * 10 + 1);
-        axios.get('/orders_carrier?ver=' + random, data)
-            .then(
-                (res) => {
-                    let indexObj = state.typeIndex;
-                    let ret = res.data.data;
-                    let numberData = ret.number;
-                    let countData = ret.count;
-                    let priceData = ret.price;
-                    if (indexObj == 0) {
-                        let showData = numberData;
-                        let nameData = [];
-                        for(let i = 0; i < showData[0].length; i++) {
-                            nameData.push(showData[0][i]);
-                        }
-                        let seriesData = ((state, showData) => {
-                            let arr = [];
-                            arr = showData.slice(1);
-                            return arr
-                        })(state, showData)
-                        if (state.isLoading) {
-                            chartsObj.hideLoading()
-                            commit('closeLoading')
-                        }
-                        chartsObj.setOption({
-                            dataset: {
-                                dimensions: nameData,
-                                source: seriesData
+        if(state.typeIndex < 3) {
+            axios.get('/orders_carrier?ver=' + random, {params: {from:state.startDateTime, to:state.endDateTime}})
+                .then(
+                    (res) => {
+                        let indexObj = state.typeIndex;
+                        let ret = res.data.data;
+                        let numberData = ret.number;
+                        let countData = ret.count;
+                        let priceData = ret.price;
+                        if (indexObj == 0) {
+                            let showData = countData;
+                            let nameData = [];
+                            for(let i = 0; i < showData[0].length; i++) {
+                                nameData.push(showData[0][i]);
                             }
-                        })
-                    } else if (indexObj == 1) {
-                        let showData = priceData;
-                        let nameData = [];
-                        for(let i = 0; i < showData[0].length; i++) {
-                            nameData.push(showData[0][i]);
-                        }
-                        let seriesData = ((state, showData) => {
-                            let arr = [];
-                            arr = showData.slice(1);
-                            return arr
-                        })(state, showData)
-                        if (state.isLoading) {
-                            chartsObj.hideLoading()
-                            commit('closeLoading')
-                        }
-                        chartsObj.setOption({
-                            dataset: {
-                                dimensions: nameData,
-                                source: seriesData
+                            let seriesData = ((state, showData) => {
+                                let arr = [];
+                                arr = showData.slice(1);
+                                return arr
+                            })(state, showData)
+                            if (state.isLoading) {
+                                chartsObj.hideLoading()
+                                commit('closeLoading')
                             }
-                        })
-                    } else if (indexObj == 2){
-                        let showData = countData;
+                            chartsObj.setOption({
+                                dataset: {
+                                    dimensions: nameData,
+                                    source: seriesData
+                                }
+                            })
+                        } else if (indexObj == 1) {
+                            let showData = numberData;
+                            let nameData = [];
+                            for(let i = 0; i < showData[0].length; i++) {
+                                nameData.push(showData[0][i]);
+                            }
+                            let seriesData = ((state, showData) => {
+                                let arr = [];
+                                arr = showData.slice(1);
+                                return arr
+                            })(state, showData)
+                            if (state.isLoading) {
+                                chartsObj.hideLoading()
+                                commit('closeLoading')
+                            }
+                            chartsObj.setOption({
+                                dataset: {
+                                    dimensions: nameData,
+                                    source: seriesData
+                                }
+                            })
+                        } else if (indexObj == 2){
+                            let showData = priceData;
+                            let nameData = [];
+                            for(let i = 0; i < showData[0].length; i++) {
+                                nameData.push(showData[0][i]);
+                            }
+                            let seriesData = ((state, showData) => {
+                                let arr = [];
+                                arr = showData.slice(1);
+                                return arr
+                            })(state, showData)
+                            if (state.isLoading) {
+                                chartsObj.hideLoading()
+                                commit('closeLoading')
+                            }
+                            chartsObj.setOption({
+                                dataset: {
+                                    dimensions: nameData,
+                                    source: seriesData
+                                }
+                            })
+                        }
+                        
+                    }
+                )
+                .catch((error) => {
+                    console.log(error)
+                })
+            }
+            else {
+                axios.get('/verify_carrier?ver='+ random, {params: {from:state.startDateTime, to:state.endDateTime}})
+                .then(
+                    (res) => {
+                        let ret = res.data.data;
+                        let showData = ret.number;
                         let nameData = [];
                         for(let i = 0; i < showData[0].length; i++) {
                             nameData.push(showData[0][i]);
@@ -143,7 +173,7 @@ const actions = {
                             return arr
                         })(state, showData)
                         if (state.isLoading) {
-                            chartsObj.hideLoading()
+                            chartsObj.hideLoading() 
                             commit('closeLoading')
                         }
                         chartsObj.setOption({
@@ -153,16 +183,20 @@ const actions = {
                             }
                         })
                     }
-                    
-                }
-            )
-            .catch((error) => {
-                console.log(error)
-            })
+                )
+                .catch((error) => {
+                    console.log(error)
+                })
+            }
 
     },
     fetchLineFlightData({state, commit}, chartsObj) {
         let endTime = parseInt((new Date().getTime())/1000);
+        if (state.isFlesh) {
+            endTime = endTime + 15*60;
+        } else if(!state.isFlesh) {
+            endTime = endTime;
+        }
         axios.get('/15mins_carrier', {params: {from:state.smallStartTime,to:endTime}})
             .then(
                 (res) => {
@@ -170,7 +204,7 @@ const actions = {
                     let ret = res.data.data;
                     let time = [];
                     for (let i = 0; i < ret.ts.length; i++) {
-                        let timeNew = new Date(parseInt(ret.ts[i]) * 1000).toLocaleString('chinese',{hour12:false}).replace(/:\d{1,2}$/,' ');
+                        let timeNew = new Date(parseInt(ret.ts[i]) * 1000).toLocaleString("ch",{hour12:false}).replace(/:\d{1,2}$/,' ');
                         // time.push(timeNew.substring(12));
                         time.push(timeNew);
                     }
@@ -213,6 +247,20 @@ const actions = {
                             series: seriesData
                         })
                     } else if (typePriceIndex == 1) {
+                        // let arr = [];
+                        // let sum = 0;
+                        // for(let num = 0; num < ret['num15']['BE'].length; num ++) {
+                            // sum = 0;
+                            // for(let key in ret['num15']) {
+                                // if(ret['num15'][key][num] == undefined) {
+                                    // ret['num15'][key][num] = 0;
+                                // }
+                                // sum += ret['num15'][key][num] 
+                                
+                            // }
+                            // sum = sum + ret['num15'][key][key];
+                            // arr.push(sum);
+                        // }
                         for(let key in ret['numany']) {
                             nameData.push(key);
                             if(state.isChoose) {
@@ -315,6 +363,10 @@ const mutations = {
 
     updateSmallStartTime(state, smallStartTimeObj) {
         state.smallStartTime = smallStartTimeObj
+    },
+
+    updateFleshTime(state) {
+        state.isFlesh = true
     },
 
     updateTypePriceIndex(state, indexObj) {

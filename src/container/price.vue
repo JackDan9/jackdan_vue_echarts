@@ -3,9 +3,9 @@
         <div class="flex-container column">
             <div class="chart-content">
                 <div class="chart-title">
-                    <h1>机票数据对比</h1>
+                    <h1>航线数据</h1>
                 </div>
-                <div class="box-card" v-for="(item, index) in chartType" :key="index" v-on:click="typeClick(index)">
+                <div v-bind:class="[item.isPriceActive ? activeClass : '', errorClass]" v-for="(item, index) in chartType" :key="index" v-on:click="typeClick(index)">
                     <div class="box-card-header">
                         <div class="clearfix">
                             <span>{{item.name}}</span>
@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="chart-price">
-                <v-echart-header :name="name" :showSelectAll="showSelectAll" :legendArr="legendArr" :myChart="myLineChart"></v-echart-header>
+                <v-echart-header :name="name" :showSelectAll="showSelectAll" :legendArr="legendArr" :myChart="myLineChart" :showFilter="showFilter"></v-echart-header>
                 <v-line-new :lineId="lineId" v-on:chartFlightLine="chartFlightLine"></v-line-new>
             </div>
         </div>
@@ -31,17 +31,20 @@
         data() {
             return {
                 items: [],
-                name: "票价数据对比",
+                name: "15分钟数据",
                 lineId: 'priceLine',
+                activeClass: 'box-card-active',
+                errorClass: 'box-card',
                 legendArr: [],
                 chartType: [
-                    {"name": "票数数据对比"},
-                    {"name": "票价数据对比"},
-                    {"name": "订单数据对比"}
+                    {"name": "15分钟数据", "isPriceActive": false},
+                    {"name": "15分钟总数", "isPriceActive": false},
+                    {"name": "15分钟占比", "isPriceActive": false}
                 ],
                 myLineChart: {},
                 typePriceIndex: 0,
                 showSelectAll: true,
+                showFilter: false
             }
         },
 
@@ -69,6 +72,14 @@
                 this.myLineChart = msg;
             },
             typeClick(index) {
+                for(let i = 0; i < this.chartType.length; i++) {
+                    if (i == index) {
+                        this.chartType[i].isPriceActive = !this.chartType[i].isPriceActive;
+                    } else {
+                        this.chartType[i].isPriceActive = false;
+                    }
+                }
+                this.name = this.chartType[index]['name']
                 this.typePriceIndex = index;
                 this.$store.commit('updateTypePriceIndex', this.typePriceIndex);
                 let showLoadingDefault = {
@@ -124,10 +135,9 @@
         letter-spacing: 1px;
     }
     .chart-content .box-card {
-        width: 89%;
-        margin-top: 20px;
-        margin-left: 15px;
-        margin-bottom: 20px;
+        display: block;
+        width: 84%;
+        margin: 20px auto;
         -webkit-box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
         box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
         border: 1px solid #ebeef5;
@@ -136,11 +146,11 @@
         overflow: hidden;
         background: none;
         color: #fff;
-        font-size: 22px;
+        font-size: 18px;
         text-align: center;
         cursor: pointer;
     }    
-    .chart-content .box-card:hover {
+    .chart-content .box-card-active {
         color: #e9903a;
         border: 1px solid #e9903a;
     }

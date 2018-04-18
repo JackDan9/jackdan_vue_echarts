@@ -39,7 +39,14 @@
                         right: 0,
                         top: 0,
                         bottom: 0,
-                        inactiveColor: '#333',
+                        inactiveColor: '#ACA899',
+                        pageIconColor: '#aaa',
+                        pageIconInactiveColor: '#333',
+                        pageTextStyle: {
+                            color: '#aaa',
+                            fontStyle: 'normal',
+                            fontWeight: 400
+                        },
                         data: []
                     },
                     grid: {

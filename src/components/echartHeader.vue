@@ -2,14 +2,39 @@
     <div class="title">
         <h1>{{name}}</h1>
         <div class="chart-select-all" v-show="showSelectAll">
-            <button v-on:click="selectNotAll">全不选</button>
-            <button v-on:click="selectAll">全选</button>
+            <button v-on:click="selectNotAll" v-bind:disabled="this.allNotDisabled">全不选</button>
+            <button v-on:click="selectAll" v-bind:disabled="this.allDisabled">全选</button>
         </div>
         <div class="chart-select-time" v-show="showSelectAll">
-            <button v-on:click="selectSmall">3小时</button>
-            <button v-on:click="selectMiddle">6小时</button>
-            <button v-on:click="selectBig">12小时</button>
-            <button v-on:click="selectSum">总数</button>
+            <button v-on:click="selectSmall" v-bind:disabled="this.smallDisabled">3小时</button>
+            <button v-on:click="selectMiddle" v-bind:disabled="this.middleDisabled">6小时</button>
+            <button v-on:click="selectBig" v-bind:disabled="this.bigDisabled">12小时</button>
+            <button v-on:click="selectSum" v-bind:disabled="this.sumDisabled">总数</button>
+        </div>
+        <div class="chart-select-flesh" v-show="showSelectAll">
+            <button v-on:click="selectFlesh" >刷新</button>
+        </div>
+        <div class="filter" v-show="showFilter">
+            <div class="startTime">
+                <span class="timeText">起始时间</span>
+                <el-date-picker
+                    v-model="startDate"
+                    type="datetime"
+                    placeholder="选择日期"
+                    value-format="timestamp"
+                    @change="startDateTime"
+                    ></el-date-picker>
+            </div>
+            <div class="endTime">
+                <span class="timeText">截止时间</span>
+                <el-date-picker
+                    v-model="endDate"
+                    type="datetime"
+                    placeholder="选择日期"
+                    value-format="timestamp"
+                    @change="endDateTime">
+                </el-date-picker>
+            </div>
         </div>
         <div class="legend-wrapper">
             <ul>
@@ -30,8 +55,8 @@ export default {
         },
         myChart: Object,
         showSelectAll: Boolean,
-        name: String,
-        defaultTime: 0,
+        showFilter: Boolean,
+        name: String
     },
 
     created() {
@@ -45,7 +70,15 @@ export default {
         return {
             styleArr: [],
             color: ['#325B69', '#698570', '#AE5548', '#6D9EA8', '#9CC2B0', '#C98769'],
-            chooseState: true
+            chooseState: true,
+            allDisabled: false,
+            allNotDisabled: false,
+            smallDisabled: false,
+            middleDisabled: false,
+            bigDisabled: false,
+            sumDisabled: false,
+            startDate: '',
+            endDate: ''
         }
     },
 
@@ -58,21 +91,19 @@ export default {
                 })
             })
         },
-
+        startDateTime(val) {
+            let startTime = +(val/1000);
+            this.$store.commit('updateStateDateTime', startTime);
+        },
+        endDateTime(val) {
+            let endTime = +(val/1000);
+            this.$store.commit('updateEndDateTime', endTime);
+            this.$store.dispatch('fetchColumnData', this.myChart)
+        },
         selectNotAll() {
+            this.allDisabled = false;
+            this.allNotDisabled = true;
             this.chooseState = false
-            /*
-            let selectArr = this.myChart.getOption().legend[0].data;
-            let option = this.myChart.getOption();
-            let obj = {};
-            for (let key in selectArr) {
-                // console.log(key);
-                // console.log(selectArr[key]['name']);
-                obj[selectArr[key]['name']] = false;
-            }
-            option.legend.selected = obj;
-            console.log(option);
-            */
             let showLoadingDefault = {
                 text: 'Loading...',
                 color: '#23531',
@@ -82,11 +113,12 @@ export default {
             }
             this.myChart.showLoading(showLoadingDefault);
             this.$store.commit('openLoading');
-            // this.myChart.setOption(option);
             this.$store.commit('updateChooseState', this.chooseState);
             this.$store.dispatch('fetchLineFlightData', this.myChart)
         },
         selectAll() {
+            this.allDisabled = true;
+            this.allNotDisabled = false;
             this.chooseState = true;
             let showLoadingDefault = {
                 text: 'Loading...',
@@ -101,6 +133,10 @@ export default {
             this.$store.dispatch('fetchLineFlightData', this.myChart)
         },
         selectSmall() {
+            this.smallDisabled = true;
+            this.middleDisabled = false;
+            this.bigDisabled = false;
+            this.sumDisabled = false;
             let smallStartTime = parseInt((new Date().getTime())/1000 - 3 * 60 * 60);
             this.$store.commit('updateSmallStartTime', smallStartTime);
             let showLoadingDefault = {
@@ -115,6 +151,10 @@ export default {
             this.$store.dispatch('fetchLineFlightData', this.myChart);
         },
         selectMiddle() {
+            this.smallDisabled = false;
+            this.middleDisabled = true;
+            this.bigDisabled = false;
+            this.sumDisabled = false;
             let smallStartTime = parseInt((new Date().getTime())/1000 - 6 * 60 * 60);
             this.$store.commit('updateSmallStartTime', smallStartTime);
             let showLoadingDefault = {
@@ -129,6 +169,10 @@ export default {
             this.$store.dispatch('fetchLineFlightData', this.myChart);
         },
         selectBig() {
+            this.smallDisabled = false;
+            this.middleDisabled = false;
+            this.bigDisabled = true;
+            this.sumDisabled = false;
             let smallStartTime = parseInt((new Date().getTime())/1000 - 12 * 60 * 60);
             this.$store.commit('updateSmallStartTime', smallStartTime);
             let showLoadingDefault = {
@@ -143,6 +187,10 @@ export default {
             this.$store.dispatch('fetchLineFlightData', this.myChart);
         },
         selectSum() {
+            this.smallDisabled = false;
+            this.middleDisabled = false;
+            this.bigDisabled = false;
+            this.sumDisabled = true;
             let smallStartTime = 0;
             this.$store.commit('updateSmallStartTime', smallStartTime);
             let showLoadingDefault = {
@@ -154,6 +202,11 @@ export default {
             }
             this.myChart.showLoading(showLoadingDefault);
             this.$store.commit('openLoading');
+            this.$store.dispatch('fetchLineFlightData', this.myChart);
+        },
+        selectFlesh() {
+            // let fleshTime = parseInt((new Date().getTime())/1000 + 15*60);
+            this.$store.commit('updateFleshTime');
             this.$store.dispatch('fetchLineFlightData', this.myChart);
         },
 
@@ -242,5 +295,50 @@ export default {
     
     .title ul li+li {
         margin-left: -1px;
+    }
+
+    .chart-select-all, .chart-select-time, .chart-select-flesh {
+        margin-right: 30px;
+        height: 100%;
+    }
+
+    .chart-select-all button {
+        background: green;
+    }
+    .chart-select-time button {
+        background: blue;
+    }
+    .chart-select-flesh button {
+        background: red;
+    }
+    button {
+        display: inline-block;
+        border: 0;
+        outline: 0;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 400;
+        padding: 3px 15px;
+        margin-right: 10px;
+        cursor: pointer;
+        height: 22px;
+        line-height: 18px;
+    }
+    button:disabled{
+        border: 1px solid #333;
+        background-color: #333;
+        color:#ACA899;
+    }
+    //IE8-
+    button[disabled]{
+        border: 1px solid #333;
+        background-color: #333;
+        color:#ACA899;
+    }
+    //IE6 Using Javascript to add CSS class "disabled"
+    * html button.disabled{
+        border: 1px solid #333;
+        background-color: #333;
+        color:#ACA899;
     }
 </style>
