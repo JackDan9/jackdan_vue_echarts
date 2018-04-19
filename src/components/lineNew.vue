@@ -178,7 +178,16 @@
                     let optionData = JSON.parse(JSON.stringify(this.option));
                     this.myChart = echarts.init(document.getElementById("priceLine"));
                     this.myChart.setOption(this.getOption(), true);
+                    let showLoadingDefault = {
+                        text: 'Loading...',
+                        color: '#23531',
+                        textColor: '#fff',
+                        maskColor: '#272D3A',
+                        zlevel: 0,
+                    }
+                    this.myChart.showLoading(showLoadingDefault);
                     this.myChart.setOption(optionData);
+                    this.myChart.hideLoading();
                 }
             }, { deep: !this.watchShallow })
         },
