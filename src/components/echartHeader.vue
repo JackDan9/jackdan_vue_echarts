@@ -5,7 +5,7 @@
             <button v-on:click="selectNotAll" v-bind:disabled="this.allNotDisabled">全不选</button>
             <button v-on:click="selectAll" v-bind:disabled="this.allDisabled">全选</button>
         </div>
-        <div class="chart-select-time" v-show="showSelectAll">
+        <div class="chart-select-time" v-show="showSelectTimeAll">
             <button v-on:click="selectSmall" v-bind:disabled="this.smallDisabled">3小时</button>
             <button v-on:click="selectMiddle" v-bind:disabled="this.middleDisabled">6小时</button>
             <button v-on:click="selectBig" v-bind:disabled="this.bigDisabled">12小时</button>
@@ -71,6 +71,10 @@ export default {
             type: Boolean,
             default: false
         },
+        showSelectTimeAll: {
+            type: Boolean,
+            default: false
+        },
         name: String
     },
 
@@ -118,7 +122,10 @@ export default {
         selectNotAll() {
             this.allDisabled = false;
             this.allNotDisabled = true;
-            this.chooseState = false
+            this.$emit("selectNotAll", false)
+            // this.chooseState = false
+            // this.$store.commit('updateChooseState', this.chooseState);
+            /*
             let showLoadingDefault = {
                 text: 'Loading...',
                 color: '#23531',
@@ -130,11 +137,27 @@ export default {
             this.$store.commit('openLoading');
             this.$store.commit('updateChooseState', this.chooseState);
             this.$store.dispatch('fetchLineFlightData', this.myChart)
+            */
+            /*
+            let obj = {};
+            let arr = this.myChart.getOption().legend[0].data
+            for(let key in arr) {
+                obj[arr[key]['name']] = false;
+            }
+            console.log(obj);
+            this.myChart.setOption({
+                legend: {
+                    selected: obj
+                }
+            })
+            */
         },
         selectAll() {
             this.allDisabled = true;
             this.allNotDisabled = false;
-            this.chooseState = true;
+            // this.chooseState = true;
+            // this.$store.commit('updateChooseState', this.chooseState);
+            /*
             let showLoadingDefault = {
                 text: 'Loading...',
                 color: '#23531',
@@ -146,6 +169,20 @@ export default {
             this.$store.commit('openLoading');
             this.$store.commit('updateChooseState', this.chooseState);
             this.$store.dispatch('fetchLineFlightData', this.myChart)
+            */
+            /*
+            let obj = {};
+            let arr = this.myChart.getOption().legend[0].data
+            for(let key in arr) {
+                obj[arr[key]['name']] = true;
+            }
+            console.log(obj);
+            this.myChart.setOption({
+                legend: {
+                    selected: obj
+                }
+            })
+            */
         },
         selectSmall() {
             this.smallDisabled = true;
@@ -154,6 +191,7 @@ export default {
             this.sumDisabled = false;
             let smallStartTime = parseInt((new Date().getTime())/1000 - 3 * 60 * 60);
             this.$store.commit('updateSmallStartTime', smallStartTime);
+            /*
             let showLoadingDefault = {
                 text: 'Loading...',
                 color: '#23531',
@@ -164,14 +202,16 @@ export default {
             this.myChart.showLoading(showLoadingDefault);
             this.$store.commit('openLoading');
             this.$store.dispatch('fetchLineFlightData', this.myChart);
+            */
         },
         selectMiddle() {
             this.smallDisabled = false;
             this.middleDisabled = true;
             this.bigDisabled = false;
             this.sumDisabled = false;
-            let smallStartTime = parseInt((new Date().getTime())/1000 - 6 * 60 * 60);
-            this.$store.commit('updateSmallStartTime', smallStartTime);
+            let middleStartTime = parseInt((new Date().getTime())/1000 - 6 * 60 * 60);
+            this.$store.commit('updateSmallStartTime', middelStartTime);
+            /*
             let showLoadingDefault = {
                 text: 'Loading...',
                 color: '#23531',
@@ -182,14 +222,16 @@ export default {
             this.myChart.showLoading(showLoadingDefault);
             this.$store.commit('openLoading');
             this.$store.dispatch('fetchLineFlightData', this.myChart);
+            */
         },
         selectBig() {
             this.smallDisabled = false;
             this.middleDisabled = false;
             this.bigDisabled = true;
             this.sumDisabled = false;
-            let smallStartTime = parseInt((new Date().getTime())/1000 - 12 * 60 * 60);
-            this.$store.commit('updateSmallStartTime', smallStartTime);
+            let bigStartTime = parseInt((new Date().getTime())/1000 - 12 * 60 * 60);
+            this.$store.commit('updateSmallStartTime', bigStartTime);
+            /*
             let showLoadingDefault = {
                 text: 'Loading...',
                 color: '#23531',
@@ -200,14 +242,16 @@ export default {
             this.myChart.showLoading(showLoadingDefault);
             this.$store.commit('openLoading');
             this.$store.dispatch('fetchLineFlightData', this.myChart);
+            */
         },
         selectSum() {
             this.smallDisabled = false;
             this.middleDisabled = false;
             this.bigDisabled = false;
             this.sumDisabled = true;
-            let smallStartTime = 0;
-            this.$store.commit('updateSmallStartTime', smallStartTime);
+            let sumStartTime = 0;
+            this.$store.commit('updateSmallStartTime', sumStartTime);
+            /*
             let showLoadingDefault = {
                 text: 'Loading...',
                 color: '#23531',
@@ -218,26 +262,27 @@ export default {
             this.myChart.showLoading(showLoadingDefault);
             this.$store.commit('openLoading');
             this.$store.dispatch('fetchLineFlightData', this.myChart);
+            */
         },
         selectFlesh() {
             // let fleshTime = parseInt((new Date().getTime())/1000 + 15*60);
             this.$store.commit('updateFleshTime');
-            this.$store.dispatch('fetchLineFlightData', this.myChart);
+            // this.$store.dispatch('fetchLineFlightData', this.myChart);
         },
         selectOneWeek() {
             let endOneWeekTime = (((new Date().getTime())/1000) - 432000);
             this.$store.commit('updateEndDateTime', endOneWeekTime);
-            this.$store.dispatch('fetchColumnData', this.myChart);
+            // this.$store.dispatch('fetchColumnData', this.myChart);
         },
         selectTwoWeek() {
             let endTwoWeekTime = (((new Date().getTime())/1000) - 864000);
             this.$store.commit('updateEndDateTime', endTwoWeekTime);
-            this.$store.dispatch('fetchColumnData', this.myChart);
+            // this.$store.dispatch('fetchColumnData', this.myChart);
         },
         selectOneMonth() {
             let endOneMonthTime = (((new Date().getTime())/1000) - 2592000);
             this.$store.commit('updateEndDateTime', endOneMonthTime);
-            this.$store.dispatch('fetchColumnData', this.myChart);
+            // this.$store.dispatch('fetchColumnData', this.myChart);
         },
 
         downplay(index) {

@@ -11,6 +11,7 @@ const state = {
     typeIndex: 0,
     typePriceIndex: 0,
     smallStartTime: 0,
+    // endTime: (new Date().getTime())/1000,
     isFlesh: false
 }
 
@@ -191,6 +192,7 @@ const actions = {
 
     },
     fetchLineFlightData({state, commit}, chartsObj) {
+        /*
         let endTime = parseInt((new Date().getTime())/1000);
         if (state.isFlesh) {
             endTime = endTime + 15*60;
@@ -263,7 +265,7 @@ const actions = {
                         }
                         seriesSumData.push({
                             // name: key,
-                            name: '',
+                            // name: '',
                             type: 'line',
                             data: arr
                         })
@@ -335,6 +337,7 @@ const actions = {
             .catch((error) => {
                 console.log(error);
             })
+    */
     }
 }
 
@@ -363,7 +366,6 @@ const mutations = {
 
     updateChooseState(state, chooseObj) {
         state.isChoose = chooseObj
-        console.log(chooseObj);
     },
 
     updateSmallStartTime(state, smallStartTimeObj) {

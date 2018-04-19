@@ -1,11 +1,22 @@
 <template lang="html">
-    <div class="line-container">
-        <div v-bind:id="this.lineId"></div>
+    <div class="line-container"> 
+    <!--
+        <v-echart-header 
+            :name="name" 
+            :showSelectAll="showSelectAll" 
+            :showSelectTimeAll="showSelectTimeAll" 
+            :legendArr="legendArr" 
+            :showFilter="showFilter"
+            :myChart="this.myChart"
+        ></v-echart-header>
+    -->
+        <div id="priceLine"></div>
     </div>
 </template>
 
 <script>
     import echarts from 'echarts';
+    import echartHeader from '../components/echartHeader';
 
     export default {
         props: {
@@ -16,6 +27,10 @@
             option: {
                 type: Object,
                 default: {}
+            },
+            name: {
+                type: String,
+                default: '15分钟数据'
             }
         },
         data() {
@@ -144,60 +159,53 @@
                             data:[150, 232, 201, 154, 190, 330, 410]
                         }
                     ]
-                /*
-                    legend: {
-                        // color: 'rgba(255,255,255,1)',
-                        textStyle: {
-                            color: 'rgba(255,255,255,1)'
-                        },
-                        inactiveColor: '#333'
-                    },
-                    tooltip: {},
-                    dataset: {
-                        source: [
-                            ['Matcha Latte', 43.3, 85.8, 93.7],
-                            ['Milk Tea', 83.1, 73.4, 55.1],
-                            ['Cheese Cocoa', 86.4, 65.2, 82.5],
-                            ['Walnut Brownie', 72.4, 53.9, 39.1]      
-                        ]
-                    },
-                    xAxis: {
-                        type: 'category',
-                        axisLabel: {
-                            textStyle: {
-                                color: 'white'
-                            }
-                        }
-                    },
-                    yAxis: {
-                        axisLabel: {
-                            textStyle: {
-                                color: 'white',
-                                fontSize: 14
-                            }
-                        },
-                    },
-                    // Declare several bar series, each will be mapped
-                    // to a column of dataset.source by default.
-                    series: [
-                        {type: 'line'},
-                        {type: 'line'},
-                        {type: 'line'}
-                    ]
-                */
                 }
                 return option;
+            },
+            init() {
+                if(this.myChart) {
+                    return
+                }
+                this.myChart = echarts.init(document.getElementById("priceLine"));
+                this.myChart.setOption(this.getOption(), true);
             }
         },
-
+        created () {
+            this.$watch('option', options => {
+                if(!this.myChart && option) {
+                    this.init()
+                } else {
+                    let optionData = JSON.parse(JSON.stringify(this.option));
+                    this.myChart = echarts.init(document.getElementById("priceLine"));
+                    this.myChart.setOption(this.getOption(), true);
+                    this.myChart.setOption(optionData);
+                }
+            }, { deep: !this.watchShallow })
+        },
         mounted() {
-            this.myChart = echarts.init(document.getElementById(this.lineId));
+            if (this.option) {
+                this.init()
+            }
+            /*
+            let showLoadingDefault = {
+                text: 'Loading...',
+                color: '#23531',
+                textColor: '#fff',
+                maskColor: '#272D3A',
+                zlevel: 0,
+            }
+            this.myChart.showLoading(showLoadingDefault);
+            this.myChart.setOption(JSON.parse(JSON.stringify(this.option)));
+            this.myChart.hideLoading();
             let myChartLine = this.myChart;
             this.$emit('chartLine', myChartLine);
             this.$emit('chartFlightLine', myChartLine);
             this.myChart.setOption(this.getOption());
-
+            */
             window.addEventListener('resize', this.myChart.resize);
+        },
+        components: {
+            'v-echart-header': echartHeader
         }
     }
 </script>
