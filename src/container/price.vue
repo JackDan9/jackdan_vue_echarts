@@ -108,6 +108,7 @@
                 this.chooseNotAll = msg;
             },
             */
+            /*获取数据函数*/
             getData() {
                 console.log(this.formTime);
                 axios.get('/15mins_carrier', {params: {from: this.formTime, to: this.toTime}})
@@ -115,32 +116,86 @@
                         (res) => {
                             let ret = res.data.data;
                             this.data = ret;
+                            this.legendData = [];
+                            this.xAxisData = [];
+                            this.seriesData = [];
                             for(let i = 0; i < this.data['ts'].length; i++) {
                                 let timeNew = new Date(parseInt(this.data['ts'][i]) * 1000).toLocaleString("ch",{hour12:false}).replace(/:\d{1,2}$/,' ');
                                 this.xAxisData.push(timeNew);
                             }
-                    
-                            for(let key in this.data['num15']) {            
-                                this.legendData.push({
-                                    name: key,
-                                    icon: 'bar',
-                                    textStyle: {fontWeight:'bold', color: 'rgba(255,255,255,1)'},
-                                });
-                                this.seriesData.push({
-                                    name: key,
-                                    type: 'line',
-                                    data: this.data['num15'][key]
-                                })
-                            }
+                            if (this.typePriceIndex == 0) {
+                                for(let key in this.data['num15']) {            
+                                    this.legendData.push({
+                                        name: key,
+                                        icon: 'bar',
+                                        textStyle: {fontWeight:'bold', color: 'rgba(255,255,255,1)'},
+                                    });
+                                    this.seriesData.push({
+                                        name: key,
+                                        type: 'line',
+                                        data: this.data['num15'][key]
+                                    })
+                                }
 
-                            this.option  = {
-                                legend: { 
-                                    data: this.legendData,
-                                },
-                                xAxis: {
-                                    data: this.xAxisData
-                                },
-                                series: this.seriesData
+                                this.option  = {
+                                    legend: { 
+                                        data: this.legendData,
+                                    },
+                                    xAxis: {
+                                        data: this.xAxisData
+                                    },
+                                    series: this.seriesData
+                                }
+                            } else if (this.typePriceIndex == 1) {
+                                let arr = [];
+                                let sum = 0;
+                                for(let num = 0; num < this.data['num15']['BE'].length; num ++) {
+                                    sum = 0;
+                                    for(let key in this.data['num15']) {
+                                        if(this.data['num15'][key][num] == undefined) {
+                                            this.data['num15'][key][num] = 0;
+                                        }
+                                        sum += this.data['num15'][key][num] 
+                                    }
+                                    arr.push(sum);
+                                }
+                                this.seriesData.push({
+                                    name: '总数',
+                                    type: 'line',
+                                    data: arr
+                                })
+                                this.option = {
+                                    legend: { 
+                                        show: false
+                                    },
+                                    xAxis: {
+                                        data: this.xAxisData
+                                    },
+                                    series: this.seriesData
+                                }
+                            } else {
+                                for(let key in this.data['per']) {            
+                                    this.legendData.push({
+                                        name: key,
+                                        icon: 'bar',
+                                        textStyle: {fontWeight:'bold', color: 'rgba(255,255,255,1)'},
+                                    });
+                                    this.seriesData.push({
+                                        name: key,
+                                        type: 'line',
+                                        data: this.data['per'][key]
+                                    })
+                                }
+
+                                this.option  = {
+                                    legend: { 
+                                        data: this.legendData,
+                                    },
+                                    xAxis: {
+                                        data: this.xAxisData
+                                    },
+                                    series: this.seriesData
+                                }
                             }
                         }
                     )
@@ -149,6 +204,7 @@
                     }
                 )
             },
+            /*全部选*/
             selectNotAll() {
                 this.allDisabled = false;
                 this.allNotDisabled = true;
@@ -197,6 +253,7 @@
                 })
                 */
             },
+            /*全选*/
             selectAll() {
                 this.allDisabled = true;
                 this.allNotDisabled = false;
@@ -248,7 +305,13 @@
                 this.middleDisabled = false;
                 this.bigDisabled = false;
                 this.sumDisabled = false;
+                this.allDisabled = false;
+                this.allNotDisabled = false;
                 let smallStartTime = parseInt((new Date().getTime())/1000 - 3 * 60 * 60);
+                this.formTime = smallStartTime;
+                this.getData();
+                // Second Try
+                /*
                 this.xAxisData = [];
                 for(let i = 0; i < this.data['ts'].length; i++) {
                     if (smallStartTime < this.data['ts'][i]) {
@@ -256,19 +319,27 @@
                         this.xAxisData.push(timeSmallNew)
                     }
                 }
-                this.option  = {
+                this.xAxisData = this.xAxisData.reverse()
+
+                for(let key in this.seriesData) {
+                    this.seriesData.push({
+                        name: this.seriesData[key]['name'],
+                        type: 'line',
+                        data: this.seriesData[key]['data'].reverse()
+                    })
+                }
+                console.log(this.seriesData);
+                this.option = {
                     legend: { 
-                        data: this.legendData,
+                        data: this.legendData
                     },
                     xAxis: {
                         data: this.xAxisData
                     },
                     series: this.seriesData
                 }
-                // console.log(newSeriesData);
-                // console.log(this.legendData.length);
-                // console.log(typeof(this.legendData));
-
+                */
+                /* First Try */
                 // this.$store.commit('updateSmallStartTime', smallStartTime);
                 /*
                 let showLoadingDefault = {
@@ -305,6 +376,36 @@
                     },
                     series: this.seriesData
                 }
+                     /*
+                    this.legendData = [];
+                    this.seriesData = [];
+                    this.xAxisData = [];
+                    for(let i = 0; i < this.data['ts'].length; i++) {
+                        let timeNew = new Date(parseInt(this.data['ts'][i]) * 1000).toLocaleString("ch",{hour12:false}).replace(/:\d{1,2}$/,' ');
+                        this.xAxisData.push(timeNew);
+                    }
+                    for(let key in this.data['per']) {
+                        this.legendData.push({
+                            name: key,
+                            icon: 'bar',
+                            textStyle: {fontWeight:'bold', color: 'rgba(255,255,255,1)'},
+                        });
+                        this.seriesData.push({
+                            name: key,
+                            type: 'line',
+                            data: this.data['per'][key]
+                        })
+                    }
+                    this.option = {
+                        legend: { 
+                            data: this.legendData
+                        },
+                        xAxis: {
+                            data: this.xAxisData
+                        },
+                        series: this.seriesData
+                    }
+                    */
                 // this.$store.commit('updateSmallStartTime', middelStartTime);
                 /*
                 let showLoadingDefault = {
@@ -416,13 +517,12 @@
                     this.showSelectAll = true;
                     this.allDisabled = false;
                     this.allNotDisabled = false;
-                    let obj = {};
+                    this.xAxisData = [];
+                    for(let i = 0; i < this.data['ts'].length; i++) {
+                        let timeNew = new Date(parseInt(this.data['ts'][i]) * 1000).toLocaleString("ch",{hour12:false}).replace(/:\d{1,2}$/,' ');
+                        this.xAxisData.push(timeNew);
+                    }
                     for(let key in this.data['num15']) {
-                        if (this.chooseNotAll) {
-                            obj[key] = true;
-                        } else {
-                            obj[key] = false;
-                        }
                         this.legendData.push({
                             name: key,
                             icon: 'bar',
@@ -435,7 +535,7 @@
                         })
                     }
 
-                    this.option  = {
+                    this.option = {
                         legend: { 
                             data: this.legendData,
                         },
@@ -450,6 +550,11 @@
                     this.showSelectAll = false;
                     let arr = [];
                     let sum = 0;
+                    this.xAxisData = [];
+                    for(let i = 0; i < this.data['ts'].length; i++) {
+                        let timeNew = new Date(parseInt(this.data['ts'][i]) * 1000).toLocaleString("ch",{hour12:false}).replace(/:\d{1,2}$/,' ');
+                        this.xAxisData.push(timeNew);
+                    }
                     for(let num = 0; num < this.data['num15']['BE'].length; num ++) {
                         sum = 0;
                         for(let key in this.data['num15']) {
@@ -465,7 +570,7 @@
                         type: 'line',
                         data: arr
                     })
-                    this.option  = {
+                    this.option = {
                         legend: { 
                             show: false
                         },
@@ -480,6 +585,11 @@
                     this.seriesData = [];
                     this.allDisabled = false;
                     this.allNotDisabled = false;
+                    this.xAxisData = [];
+                    for(let i = 0; i < this.data['ts'].length; i++) {
+                        let timeNew = new Date(parseInt(this.data['ts'][i]) * 1000).toLocaleString("ch",{hour12:false}).replace(/:\d{1,2}$/,' ');
+                        this.xAxisData.push(timeNew);
+                    }
                     for(let key in this.data['per']) {
                         this.legendData.push({
                             name: key,
@@ -493,10 +603,9 @@
                         })
                     }
 
-                    this.option  = {
+                    this.option = {
                         legend: { 
-                            data: this.legendData,
-                            // selected: obj
+                            data: this.legendData
                         },
                         xAxis: {
                             data: this.xAxisData
