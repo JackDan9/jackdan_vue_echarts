@@ -348,7 +348,7 @@ const mutations = {
         state.isLoading = false
     },
 
-    updateStateDateTime(state, timeObj) {
+    updateStartDateTime(state, timeObj) {
         state.startDateTime = timeObj;
     },
 

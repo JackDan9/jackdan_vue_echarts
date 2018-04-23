@@ -28,6 +28,16 @@
         components: {
         },
 
+        created() {
+            this.$watch('legendData.xAxisData.seriesData', options => {
+                if (!this.myChart && option) {
+                    this.init()
+                } else {
+                   
+                }
+            })
+        },
+
         mounted() {
             this.myChart = echarts.init(document.getElementById(this.columnId));
             let myChartColumn = this.myChart;

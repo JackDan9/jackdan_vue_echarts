@@ -15,36 +15,62 @@
             </div>
             <div class="chart-price">
             <!--
-                <v-echart-header 
-                    :name="name" 
-                    :showSelectAll="showSelectAll" 
-                    :showSelectTimeAll="showSelectTimeAll" 
-                    :legendArr="legendArr" 
+                <v-echart-header
+                    :name="name"
+                    :showSelectAll="showSelectAll"
+                    :showSelectTimeAll="showSelectTimeAll"
+                    :legendArr="legendArr"
                     :showFilter="showFilter"
                     v-on:selectNotAll="selectNotAll"
                 ></v-echart-header>
             -->
                 <div class="title">
                     <h1>{{name}}</h1>
+                    <!--
                     <div class="chart-select-all" v-show="showSelectAll">
                         <button v-on:click="selectNotAll" v-bind:disabled="this.allNotDisabled">全不选</button>
                         <button v-on:click="selectAll" v-bind:disabled="this.allDisabled">全选</button>
                     </div>
+                    -->
+                    <div class="chart-select-all" v-show="showSelectAll">
+                        <button
+                            v-for="(itemSelect, indexSelect) in selectType"
+                            v-on:click="selectClick(indexSelect)" v-bind:disabled="itemSelect.isSelectDisabled">
+                            {{itemSelect.name}}
+                        </button>
+                    </div>
+                    <!--
                     <div class="chart-select-time" v-show="showSelectTimeAll">
                         <button v-on:click="selectSmall" v-bind:disabled="this.smallDisabled">3小时</button>
                         <button v-on:click="selectMiddle" v-bind:disabled="this.middleDisabled">6小时</button>
                         <button v-on:click="selectBig" v-bind:disabled="this.bigDisabled">12小时</button>
                         <button v-on:click="selectSum" v-bind:disabled="this.sumDisabled">总数</button>
                     </div>
+                    -->
+                    <div class="chart-select-time" v-show="showSelectTimeAll">
+                        <button
+                            v-for="(itemTime, indexTime) in chooseTimeType"
+                            v-on:click="timeClick(indexTime)"
+                            v-bind:disabled="itemTime.isTimeDisabled">
+                            {{itemTime.name}}
+                        </button>
+                    </div>
                 </div>
+                <!--
                 <v-line-new :option="option"></v-line-new>
+                -->
+                <v-line-new
+                    :xAxisData="xAxisData"
+                    :legendData="legendData"
+                    :seriesData="seriesData"
+                    :selectStatus="selectStatus">
+                </v-line-new>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import echarts from 'echarts';
     import echartHeader from '../components/echartHeader';
     import LineNew from '../components/lineNew';
     import filter from '../components/filter'
@@ -68,25 +94,39 @@
                     {"name": "15分钟总数", "isPriceActive": false},
                     {"name": "15分钟占比", "isPriceActive": false}
                 ],
-                option: {},
+                selectType: [
+                    {"name": "全选", "isSelectDisabled": false},
+                    {"name": "全不选", "isSelectDisabled": false}
+                ],
+                chooseTimeType: [
+                    {"name": "3小时", "isTimeDisabled": false},
+                    {"name": "6小时", "isTimeDisabled": false},
+                    {"name": "12小时", "isTimeDisabled": false},
+                    {"name": "总数", "isTimeDisabled": false}
+                ],
                 myLineChart: {},
+                selectedObj: {},
                 typePriceIndex: 0,
+                selectStatus: true,
                 formTime: 0,
-                toTime: (new Date().getTime())/1000,
+                // toTime: (new Date().getTime())/1000,
                 showSelectAll: true,
                 showSelectTimeAll: true,
                 showFilter: false,
                 chooseNotAll: true,
-                allDisabled: false,
-                allNotDisabled: false,
-                smallDisabled: false,
-                middleDisabled: false,
-                bigDisabled: false,
-                sumDisabled: false
+                // allDisabled: false,
+                // allNotDisabled: false,
+                // smallDisabled: false,
+                // middleDisabled: false,
+                // bigDisabled: false,
+                // sumDisabled: false
             }
         },
-        beforeMount() {
+        created () {
             this.getData();
+        },
+        beforeMount() {
+            // this.getData();
 
             /*
             let showLoadingDefault = {
@@ -110,8 +150,7 @@
             */
             /*获取数据函数*/
             getData() {
-                console.log(this.formTime);
-                axios.get('/15mins_carrier', {params: {from: this.formTime, to: this.toTime}})
+                axios.get('/15mins_carrier', {params: {from: this.formTime}})
                     .then (
                         (res) => {
                             let ret = res.data.data;
@@ -124,7 +163,7 @@
                                 this.xAxisData.push(timeNew);
                             }
                             if (this.typePriceIndex == 0) {
-                                for(let key in this.data['num15']) {            
+                                for(let key in this.data['num15']) {
                                     this.legendData.push({
                                         name: key,
                                         icon: 'bar',
@@ -137,8 +176,9 @@
                                     })
                                 }
 
+                                /*
                                 this.option  = {
-                                    legend: { 
+                                    legend: {
                                         data: this.legendData,
                                     },
                                     xAxis: {
@@ -146,6 +186,7 @@
                                     },
                                     series: this.seriesData
                                 }
+                                */
                             } else if (this.typePriceIndex == 1) {
                                 let arr = [];
                                 let sum = 0;
@@ -155,7 +196,7 @@
                                         if(this.data['num15'][key][num] == undefined) {
                                             this.data['num15'][key][num] = 0;
                                         }
-                                        sum += this.data['num15'][key][num] 
+                                        sum += this.data['num15'][key][num]
                                     }
                                     arr.push(sum);
                                 }
@@ -164,8 +205,10 @@
                                     type: 'line',
                                     data: arr
                                 })
+
+                                /*
                                 this.option = {
-                                    legend: { 
+                                    legend: {
                                         show: false
                                     },
                                     xAxis: {
@@ -173,8 +216,9 @@
                                     },
                                     series: this.seriesData
                                 }
+                                */
                             } else {
-                                for(let key in this.data['per']) {            
+                                for(let key in this.data['per']) {
                                     this.legendData.push({
                                         name: key,
                                         icon: 'bar',
@@ -187,8 +231,9 @@
                                     })
                                 }
 
+                                /*
                                 this.option  = {
-                                    legend: { 
+                                    legend: {
                                         data: this.legendData,
                                     },
                                     xAxis: {
@@ -196,6 +241,7 @@
                                     },
                                     series: this.seriesData
                                 }
+                                */
                             }
                         }
                     )
@@ -204,7 +250,51 @@
                     }
                 )
             },
-            /*全部选*/
+            /*全不选与全选进行切换*/
+            selectClick(indexSelect) {
+                for(let i = 0; i < this.selectType.length; i++) {
+                    if (indexSelect == i) {
+                        this.selectType[i]['isSelectDisabled'] = true
+                    } else {
+                        this.selectType[i]['isSelectDisabled'] = false
+                    }
+                }
+                if (indexSelect == 0) {
+                    this.selectStatus = true
+                    this.getData()
+                } else if (indexSelect == 1) {
+                    this.selectStatus = false
+                    this.getData()
+                }
+            },
+            /*时间区间选择*/
+            timeClick(indexTime) {
+                for(let i = 0; i < this.chooseTimeType.length; i++) {
+                    if (indexTime == i) {
+                        this.chooseTimeType[i]['isTimeDisabled'] = true
+                    } else {
+                        this.chooseTimeType[i]['isTimeDisabled'] = false
+                    }
+                }
+                if (indexTime == 0) {
+                    let smallStartTime = parseInt((new Date().getTime())/1000 - 3 * 60 * 60);
+                    this.formTime = smallStartTime;
+                    this.getData();
+                } else if (indexTime == 1) {
+                    let middleStartTime = parseInt((new Date().getTime())/1000 - 6 * 60 * 60);
+                    this.formTime = middleStartTime;
+                    this.getData();
+                } else if (indexTime == 2) {
+                    let bigStartTime = parseInt((new Date().getTime())/1000 - 12 * 60 * 60);
+                    this.formTime = bigStartTime;
+                    this.getData();
+                } else {
+                    let sumStartTime = 1;
+                    this.formTime = sumStartTime;
+                    this.getData();
+                }
+            },
+            /*全部不选*/
             selectNotAll() {
                 this.allDisabled = false;
                 this.allNotDisabled = true;
@@ -214,7 +304,7 @@
                     obj[this.legendData[i]['name']] = false
                 }
                 this.option = {
-                    legend: { 
+                    legend: {
                         data: this.legendData,
                         selected: obj
                     },
@@ -223,6 +313,7 @@
                     },
                     series: this.seriesData
                 }
+
                 // this.$emit("selectNotAll", false)
                 // this.chooseState = false
                 // this.$store.commit('updateChooseState', this.chooseState);
@@ -262,7 +353,7 @@
                     obj[this.legendData[i]['name']] = true
                 }
                 this.option = {
-                    legend: { 
+                    legend: {
                         data: this.legendData,
                         selected: obj
                     },
@@ -271,6 +362,7 @@
                     },
                     series: this.seriesData
                 }
+
                 // this.chooseState = true;
                 // this.$store.commit('updateChooseState', this.chooseState);
                 /*
@@ -310,6 +402,7 @@
                 let smallStartTime = parseInt((new Date().getTime())/1000 - 3 * 60 * 60);
                 this.formTime = smallStartTime;
                 this.getData();
+
                 // Second Try
                 /*
                 this.xAxisData = [];
@@ -330,7 +423,7 @@
                 }
                 console.log(this.seriesData);
                 this.option = {
-                    legend: { 
+                    legend: {
                         data: this.legendData
                     },
                     xAxis: {
@@ -368,7 +461,7 @@
                     }
                 }
                 this.option  = {
-                    legend: { 
+                    legend: {
                         data: this.legendData,
                     },
                     xAxis: {
@@ -376,7 +469,8 @@
                     },
                     series: this.seriesData
                 }
-                     /*
+
+                /*
                     this.legendData = [];
                     this.seriesData = [];
                     this.xAxisData = [];
@@ -397,7 +491,7 @@
                         })
                     }
                     this.option = {
-                        legend: { 
+                        legend: {
                             data: this.legendData
                         },
                         xAxis: {
@@ -405,7 +499,7 @@
                         },
                         series: this.seriesData
                     }
-                    */
+                */
                 // this.$store.commit('updateSmallStartTime', middelStartTime);
                 /*
                 let showLoadingDefault = {
@@ -434,7 +528,7 @@
                     }
                 }
                 this.option  = {
-                    legend: { 
+                    legend: {
                         data: this.legendData,
                     },
                     xAxis: {
@@ -442,6 +536,7 @@
                     },
                     series: this.seriesData
                 }
+
                 // this.$store.commit('updateSmallStartTime', bigStartTime);
                 /*
                 let showLoadingDefault = {
@@ -470,7 +565,7 @@
                     }
                 }
                 this.option  = {
-                    legend: { 
+                    legend: {
                         data: this.legendData,
                     },
                     xAxis: {
@@ -478,6 +573,7 @@
                     },
                     series: this.seriesData
                 }
+
                 // this.$store.commit('updateSmallStartTime', sumStartTime);
                 /*
                 let showLoadingDefault = {
@@ -536,7 +632,7 @@
                     }
 
                     this.option = {
-                        legend: { 
+                        legend: {
                             data: this.legendData,
                         },
                         xAxis: {
@@ -561,7 +657,7 @@
                             if(this.data['num15'][key][num] == undefined) {
                                 this.data['num15'][key][num] = 0;
                             }
-                            sum += this.data['num15'][key][num] 
+                            sum += this.data['num15'][key][num]
                         }
                         arr.push(sum);
                     }
@@ -571,7 +667,7 @@
                         data: arr
                     })
                     this.option = {
-                        legend: { 
+                        legend: {
                             show: false
                         },
                         xAxis: {
@@ -604,7 +700,7 @@
                     }
 
                     this.option = {
-                        legend: { 
+                        legend: {
                             data: this.legendData
                         },
                         xAxis: {
@@ -613,6 +709,7 @@
                         series: this.seriesData
                     }
                 }
+
                 /*
                 this.$store.commit('updateTypePriceIndex', this.typePriceIndex);
                 let showLoadingDefault = {
@@ -629,9 +726,10 @@
                 this.$store.dispatch('fetchLineFlightData', this.myLineChart);
                 */
             },
+
             /*
             selectAll(msg) {
-                
+
             },
             */
             init() {
@@ -687,7 +785,7 @@
         font-size: 14px;
         text-align: center;
         cursor: pointer;
-    }    
+    }
     .chart-content .box-card-active {
         color: #e9903a;
         border: 1px solid #e9903a;
@@ -749,7 +847,7 @@
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
     }
-    
+
     .title ul li+li {
         margin-left: -1px;
     }

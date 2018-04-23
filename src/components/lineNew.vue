@@ -1,11 +1,11 @@
 <template lang="html">
-    <div class="line-container"> 
+    <div class="line-container">
     <!--
-        <v-echart-header 
-            :name="name" 
-            :showSelectAll="showSelectAll" 
-            :showSelectTimeAll="showSelectTimeAll" 
-            :legendArr="legendArr" 
+        <v-echart-header
+            :name="name"
+            :showSelectAll="showSelectAll"
+            :showSelectTimeAll="showSelectTimeAll"
+            :legendArr="legendArr"
             :showFilter="showFilter"
             :myChart="this.myChart"
         ></v-echart-header>
@@ -24,19 +24,34 @@
                 type: String,
                 default: ''
             },
-            option: {
-                type: Object,
-                default: {}
-            },
             name: {
                 type: String,
                 default: '15分钟数据'
+            },
+            xAxisData: {
+                type: Array,
+                default: []
+            },
+            legendData: {
+                type: Array,
+                default: []
+            },
+            seriesData: {
+                type: Array,
+                default: []
+            },
+            selectStatus: {
+                type: Boolean,
+                default: true
             }
         },
         data() {
             return {
                 legendArr: [],
-                myChart: {}
+                myChart: {},
+                // option: {}
+                obj: {},
+                optionNew: {}
             }
         },
         methods: {
@@ -136,7 +151,7 @@
                         },
                         type: 'value'
                     },
-                    
+
                     dataZoom: [
                         {
                             type: 'inside',
@@ -151,7 +166,7 @@
                             end: 100
                         }
                     ],
-                
+
                     series: [
                         {
                             name:'教育局',
@@ -171,11 +186,56 @@
             }
         },
         created () {
-            this.$watch('option', options => {
-                if(!this.myChart && option) {
+            this.$watch('legendData.xAxisData.seriesData.selectStatus', options => {
+                if (!this.myChart && option) {
                     this.init()
                 } else {
-                    let optionData = JSON.parse(JSON.stringify(this.option));
+                    if (this.selectStatus) {
+                        this.obj = {}
+                        for (let i = 0; i < this.legendData.length; i++) {
+                            this.obj[this.legendData[i]['name']] = this.selectStatus
+                        }
+                        this.optionNew = {
+                            legend: {
+                                data: this.legendData,
+                                selected: this.obj
+                            },
+                            xAxis: {
+                                data: this.xAxisData
+                            },
+                            series: this.seriesData
+                        }
+                    } else if(!this.selectStatus) {
+                        this.obj = {}
+                        for(let i = 0; i < this.legendData.length; i++) {
+                            this.obj[this.legendData[i]['name']] = this.selectStatus
+                        }
+                        this.optionNew = {
+                            legend: {
+                                data: this.legendData,
+                                selected: this.obj
+                            },
+                            xAxis: {
+                                data: this.xAxisData
+                            },
+                            series: this.seriesData
+                        }
+                    }
+
+                    /*
+                    let optionNew = {
+                        legend: {
+                            data: this.legendData,
+                            selected: this.selectedObj
+                        },
+                        xAxis: {
+                            data: this.xAxisData
+                        },
+                        series: this.seriesData
+                    }
+                    */
+
+                    // let optionData = JSON.parse(JSON.stringify(optionNew));
                     this.myChart = echarts.init(document.getElementById("priceLine"));
                     this.myChart.setOption(this.getOption(), true);
                     let showLoadingDefault = {
@@ -186,8 +246,14 @@
                         zlevel: 0,
                     }
                     this.myChart.showLoading(showLoadingDefault);
-                    this.myChart.setOption(optionData);
+                    setTimeout(() => {
+                        this.myChart.hideLoading();
+                        this.myChart.setOption(this.optionNew);
+                    }, 1000);
+                    /*
+                    this.myChart.setOption(optionNew);
                     this.myChart.hideLoading();
+                    */
                 }
             }, { deep: !this.watchShallow })
         },
@@ -195,6 +261,7 @@
             if (this.option) {
                 this.init()
             }
+            // console.log(this.option);
             /*
             let showLoadingDefault = {
                 text: 'Loading...',

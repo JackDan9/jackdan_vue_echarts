@@ -12,7 +12,7 @@
             <button v-on:click="selectSum" v-bind:disabled="this.sumDisabled">总数</button>
         </div>
         <div class="chart-select-flesh" v-show="showSelectAll">
-            <button v-on:click="selectFlesh" >刷新</button>
+            <button v-on:click="selectFlesh">刷新</button>
         </div>
         <div class="filter" v-show="showFilter">
             <div class="startTime">
@@ -22,8 +22,8 @@
                     type="datetime"
                     placeholder="选择日期"
                     value-format="timestamp"
-                    @change="startDateTime"
-                    ></el-date-picker>
+                    @change="startDateTime">
+                </el-date-picker>
             </div>
             <div class="endTime">
                 <span class="timeText">截止时间</span>
@@ -37,11 +37,11 @@
             </div>
         </div>
         <div class="chart-select-week" v-show="showWeek">
-            <button v-on:click="selectOneWeek">一周</button>
-            <button v-on:click="selectTwoWeek">两周</button>
+            <button v-on:click="selectOneWeek" v-bind:disabled="oneWeekDisabled">前一周</button>
+            <button v-on:click="selectTwoWeek" v-bind:disabled="twoWeekDisabled">前两周</button>
         </div>
         <div class="chart-select-month" v-show="showMonth">
-            <button v-on:click="selectOneMonth">一月</button>
+            <button v-on:click="selectOneMonth" v-bind:disabled="oneMonthDisabled">前一月</button>
         </div>
         <div class="legend-wrapper">
             <ul>
@@ -96,6 +96,9 @@ export default {
             middleDisabled: false,
             bigDisabled: false,
             sumDisabled: false,
+            oneWeekDisabled: false,
+            twoWeekDisabled: false,
+            oneMonthDisabled: false,
             startDate: '',
             endDate: ''
         }
@@ -111,11 +114,12 @@ export default {
             })
         },
         startDateTime(val) {
-            let startTime = +(val/1000);
-            this.$store.commit('updateStateDateTime', startTime);
+            let startTime = parseInt(val/1000);
+            this.$store.commit('updateStartDateTime', startTime);
+            this.$store.dispatch('fetchColumnData', this.myChart)
         },
         endDateTime(val) {
-            let endTime = +(val/1000);
+            let endTime = parseInt(val/1000);
             this.$store.commit('updateEndDateTime', endTime);
             this.$store.dispatch('fetchColumnData', this.myChart)
         },
@@ -270,19 +274,28 @@ export default {
             // this.$store.dispatch('fetchLineFlightData', this.myChart);
         },
         selectOneWeek() {
-            let endOneWeekTime = (((new Date().getTime())/1000) - 432000);
-            this.$store.commit('updateEndDateTime', endOneWeekTime);
-            // this.$store.dispatch('fetchColumnData', this.myChart);
-        },
+            this.oneWeekDisabled = true;
+            this.twoWeekDisabled = false;
+            this.oneMonthDisabled = false;
+            let startOneWeekTime = (((new Date().getTime())/1000) - 432000);
+            this.$store.commit('updateStartDateTime', startOneWeekTime);
+            this.$store.dispatch('fetchColumnData', this.myChart);
+        },  
         selectTwoWeek() {
-            let endTwoWeekTime = (((new Date().getTime())/1000) - 864000);
-            this.$store.commit('updateEndDateTime', endTwoWeekTime);
-            // this.$store.dispatch('fetchColumnData', this.myChart);
+            this.oneWeekDisabled = false;
+            this.twoWeekDisabled = true;
+            this.oneMonthDisabled = false;
+            let startTwoWeekTime = (((new Date().getTime())/1000) - 864000);
+            this.$store.commit('updateStartDateTime', startTwoWeekTime);
+            this.$store.dispatch('fetchColumnData', this.myChart);
         },
         selectOneMonth() {
-            let endOneMonthTime = (((new Date().getTime())/1000) - 2592000);
-            this.$store.commit('updateEndDateTime', endOneMonthTime);
-            // this.$store.dispatch('fetchColumnData', this.myChart);
+            this.oneWeekDisabled = false;
+            this.twoWeekDisabled = false;
+            this.oneMonthDisabled = true;
+            let startOneMonthTime = (((new Date().getTime())/1000) - 2592000);
+            this.$store.commit('updateStartDateTime', startOneMonthTime);
+            this.$store.dispatch('fetchColumnData', this.myChart);
         },
 
         downplay(index) {
