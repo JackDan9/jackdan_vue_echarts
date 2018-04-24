@@ -339,7 +339,8 @@ export default {
 <style scoped>
     .title {
         position: relative;
-        display: flex;
+        // display: flex;
+        display: block;
         width: 100%;
         height: 50px;
         line-height: 50px;
@@ -353,6 +354,7 @@ export default {
         font-weight: bold;
         padding-left: 20px;
         font-size: 20px;
+        float: left;
     }
 
     .title ul {
@@ -386,8 +388,9 @@ export default {
     }
 
     .chart-select-all, .chart-select-time, .chart-select-flesh, .chart-select-week, .chart-select-month {
-        margin-right: 30px;
+        margin-right: 20px;
         height: 100%;
+        display: inline-block;
     }
 
     .chart-select-all button {

@@ -60,6 +60,7 @@
                 <v-line-new :option="option"></v-line-new>
                 -->
                 <v-line-new
+                    :lineId="lineId"
                     :xAxisData="xAxisData"
                     :legendData="legendData"
                     :seriesData="seriesData"
@@ -86,6 +87,7 @@
                 legendArr: [],
                 data: {},
                 optionData: {},
+                lineId:'priceLine',
                 legendData: [],
                 xAxisData: [],
                 seriesData: [],
@@ -749,7 +751,7 @@
 </script>
 
 <style scoped>
-.chart-content {
+    .chart-content {
         width: 19%;
         margin-left: 0.5%;
         margin-right: 0.5%;

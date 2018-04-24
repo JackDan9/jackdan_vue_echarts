@@ -30,8 +30,26 @@
                     <v-pie :pieId="pieId"></v-pie>
                 </div>
                 <div class="detail-line">
-                    <v-echart-header class="detail-line-header" :name="nameLine" :legendArr="legendArr" :myChart="myLineChart"></v-echart-header>
-                    <v-line-new :lineId="lineId" v-on:chartLine="chartLine"></v-line-new>
+                    <v-echart-header 
+                        class="detail-line-header" 
+                        :name="nameLine" 
+                        :legendArr="legendArr" 
+                        :myChart="myLineChart">
+                    </v-echart-header>
+                    <!--
+                    <v-line-new 
+                        :lineId="lineId" 
+                        v-on:chartLine="chartLine"
+                    ></v-line-new>
+                    -->
+
+                    <v-line-new
+                        :lineId="lineId"
+                        :legendData="legendData"
+                        :xAxisData="xAxisData"
+                        :seriesData="seriesData"
+                        :selectStatus="selectStatus">
+                    </v-line-new>
                 </div>
             </div>
         </div>
@@ -45,6 +63,7 @@ import Map from '../components/map';
 import Pie from '../components/pie';
 import LineNew from '../components/lineNew';
 import echartHeader from '../components/echartHeader'
+import axios from 'axios'
 
 export default {
     data() {
@@ -52,12 +71,15 @@ export default {
             currentDate: new Date(),
             id: 'map',
             pieId: 'pie',
-            lineId: 'lineId',
-            seriesData: [],
+            lineId: 'homeLine',
             name: '',
             nameLine: '各部门数据走势',
             myLineChart: {},
             legendArr: [],
+            legendData: [],
+            xAxisData: [],
+            seriesData: [],
+            selectStatus: true,
             overviewItem: [],
             overviewItems: [
                 {
@@ -81,104 +103,70 @@ export default {
                 }
             ],
             lineEchartsData: [],
-            lineEchartsDatas: [
-                {
-                    "name": "北关区",
-                    "echartsData": [
-                        {
-                            name:'公安部门',
-                            type:'line',
-                            stack:'总量',
-                            data:[120, 132, 101, 134, 90, 230, 210]
-                        },
-                        {
-                            name:'交通部门',
-                            type:'line',
-                            stack:'总量',
-                            data:[220, 182, 191, 234, 290, 330, 310]
-                        },
-                        {
-                            name:'教育局',
-                            type:'line',
-                            stack:'总量',
-                            data:[150, 232, 201, 154, 190, 330, 410]
-                        },
-                        {
-                            name:'法院',
-                            type:'line',
-                            stack:'总量',
-                            data:[320, 332, 301, 334, 390, 330, 320]
-                        },
-                        {
-                            name:'扶贫办',
-                            type:'line',
-                            stack:'总量',
-                            data:[820, 932, 901, 934, 1290, 1330, 1320]
-                        },
-                    ]
-                },
-                {
-                    "name": "安阳县",
-                    "echartsData": [
-                        {
-                            name:'安部门',
-                            type:'line',
-                            stack:'总量',
-                            data:[100, 120, 100, 104, 100, 100, 210]
-                        },
-                        {
-                            name:'通部门',
-                            type:'line',
-                            stack:'总量',
-                            data:[220, 182, 191, 234, 290, 330, 310]
-                        },
-                        {
-                            name:'教育局',
-                            type:'line',
-                            stack:'总量',
-                            data:[150, 232, 201, 154, 190, 330, 410]
-                        },
-                        {
-                            name:'法院',
-                            type:'line',
-                            stack:'总量',
-                            data:[320, 332, 301, 334, 390, 330, 320]
-                        },
-                        {
-                            name:'扶贫办',
-                            type:'line',
-                            stack:'总量',
-                            data:[820, 932, 901, 934, 1290, 1330, 1320]
-                        },
-                    ]
-                }
-            ],
+            lineEchartsDatas: [],
         };
     },
     methods: {
+        /*
         init() {
             this.legendArr = this.myLineChart.getOption().series;
             this.legendArr.forEach((data) => {
                 data.selected = true;
             })
         },
+        */
+        getLineData() {
+            axios.get('http://192.168.112.14:8080/static/data/line/line.json')
+                .then(
+                    (res) => {
+                        let ret = res.data.data;
+                        // console.log(res.data)
+                        this.lineEchartsDatas = ret;
+                    }
+                )
+                .catch( (error) => {
+                    console.log(error);
+                }
+            )
+        },
         changeData(msg) {
             let mapName = this.name = msg;
             let oLen = this.overviewItems.length;
             let dLen = this.lineEchartsDatas.length;
+            
             for (let i = 0; i < oLen; i++) {
-                if(mapName === this.overviewItems[i].name) {
+                if (mapName === this.overviewItems[i].name) {
                     this.overviewItem = this.overviewItems[i].data;
                 }
             }
-
             for (let j = 0; j < dLen; j++) {
-                if(mapName === this.lineEchartsDatas[j].name) {
+                if (mapName === this.lineEchartsDatas[j].name) {
+                    this.xAxisData = [];
+                    this.legendData = [];
+                    this.seriesData = [];
                     this.lineEchartsData = this.lineEchartsDatas[j].echartsData;
+                    this.xAxisData = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+                    for(let key in this.lineEchartsData) {
+                        let nameStr = this.lineEchartsData[key]['name'];
+                        let typeStr = this.lineEchartsData[key]['type'];
+                        let dataArr = this.lineEchartsData[key]['data'];
+                        this.legendData.push({
+                            name: nameStr,
+                            icon: 'bar',
+                            textStyle: {fontWeight:'bold', color: 'rgba(255,255,255,1)'},
+                        });
+                        this.seriesData.push({
+                            name: nameStr,
+                            type: typeStr,
+                            data: dataArr
+                        })
+                    }
                 }
             }
+            // console.log(JSON.parse(JSON.stringify(this.lineEchartsData)));
 
-            let data = this.lineEchartsData;
+            // let data = this.lineEchartsData;
+            /*
             let showLoadingDefault = {
                 text: 'Loading...',
                 color: '#23531',
@@ -194,11 +182,14 @@ export default {
                 series: data
             });
             this.myLineChart.hideLoading();
-            this.init();
+            */
+            // this.init();
         },
-        chartLine(msg) {
-            this.myLineChart = msg;
-        }
+        /*
+            chartLine(msg) {
+                this.myLineChart = msg;
+            }
+        */
     },
 
     components: {
@@ -209,7 +200,8 @@ export default {
     },
 
     mounted() {
-        this.init();
+        // this.init();
+        this.getLineData();
     }
 }
 </script>
@@ -220,7 +212,7 @@ export default {
         height: 89%;
     }
 
-    @media screen and (max-width: 1400px) {
+    @media screen and (max-width: 1366px) {
         .box {
             height: 100%;
         }
@@ -239,7 +231,7 @@ export default {
         border-radius: 4px;
         margin-left: 0.5%;
     }
-    @media screen and (max-width: 1400px) {
+    @media screen and (max-width: 1366px) {
         .box .container .overview {
             height: 100%;
         }
@@ -261,7 +253,7 @@ export default {
         margin-left: 0.5%;
     }
 
-    @media screen and (max-width: 1400px) {
+    @media screen and (max-width: 1366px) {
         .box .container .map {
             height: 100%;
         }
@@ -275,7 +267,7 @@ export default {
         margin-right: 0.5%;
     }
 
-    @media screen and (max-width: 1400px) {
+    @media screen and (max-width: 1366px) {
         .box .container .detail {
             height: 100%;
         }

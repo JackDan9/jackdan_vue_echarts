@@ -1,12 +1,14 @@
 <template lang="html">
     <div class="product-wrapper" v-show="showProduct">
         <div class="products">
+            <!--
             <div class="all" @click="selectAll()" v-show="pro_filter_flag">
                 <checkbox :isChecked="selectAll_flag"></checkbox>
                 <span>全选</span>
             </div>
+            -->
             <div class="pro" @click="showProPane()">
-                产品<i class="arrow"></i>
+                航线<i class="arrow"></i>
             </div>
         </div>
 
@@ -58,14 +60,18 @@
 
             initProList() {
                 let arr = []
+                console.log(this.option.legend[0].selected);
                 if (this.prevClass !== 'point') {
                     this.showProduct = true
-                    this.option.xAxis[0].data.forEach((pro, index) => {
+                    // this.option.xAxis[0].data.forEach((pro, index) => {
+                    // this.option.legend[0].selected.forEach((pro, index) => {
+                    for(let pro in this.option.legend[0].selected) {
+                        console.log(pro);
                         arr.push({
                             name: pro,
                             selected: true
                         })
-                    })
+                    }
                     this.pro_list = arr
                 }
             },
@@ -98,7 +104,7 @@
                 this.pro_list.forEach((pro, index) => {
                     index = index - count;
                     if (!pro.selected) {
-                        option.xAxis[0].data.splice(index, 1)
+                        option.legend[0].data.splice(index, 1)
                         option.series.forEach((obj) => {
                             obj.data.splice(index, 1);
                         })  
@@ -172,13 +178,15 @@
     .pro_list {
         position: absolute;
         right: 22px;
-        width: 102px;
+        width: 58px;
         text-align: left;
         background: #1e3642;
         font-size: 14px;
         margin-top: 22px;
-        overflow: hidden;
+        // overflow: hidden;
+        overflow-y: auto;
         z-index: 9;
+        height: 686px;
     }
     
     .pro_list li {
@@ -198,8 +206,9 @@
    .pro_list li .name {
         position: absolute;
         display: inline-block;
-        right: 8px;
-        width: 70px;
+        // right: 8px;
+        right: 2px;
+        width: 25px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;

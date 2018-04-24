@@ -10,13 +10,35 @@
             :myChart="this.myChart"
         ></v-echart-header>
     -->
-        <div id="priceLine"></div>
+        <div class="line-filter">
+            <!--
+            <div class="product-wrapper">
+                <div class="products">
+                    <div class="pro">
+                        航线<i class="arrow"></i>
+                    </div>
+                </div>
+
+                <div class="pro-list">
+                    <ul>
+                        <li>
+                            <span class="checkbox"></span>
+                            <span class="name">BX</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            -->
+            <v-filter :myChart="myChart" v-if="myChart._dom"></v-filter>
+        </div>
+        <div :id="lineId"></div>
     </div>
 </template>
 
 <script>
     import echarts from 'echarts';
     import echartHeader from '../components/echartHeader';
+    import filter from '../components/filter';
 
     export default {
         props: {
@@ -43,6 +65,10 @@
             selectStatus: {
                 type: Boolean,
                 default: true
+            },
+            lineId: {
+                type: String,
+                default: ''
             }
         },
         data() {
@@ -181,7 +207,7 @@
                 if(this.myChart) {
                     return
                 }
-                this.myChart = echarts.init(document.getElementById("priceLine"));
+                this.myChart = echarts.init(document.getElementById(this.lineId));
                 this.myChart.setOption(this.getOption(), true);
             }
         },
@@ -236,7 +262,7 @@
                     */
 
                     // let optionData = JSON.parse(JSON.stringify(optionNew));
-                    this.myChart = echarts.init(document.getElementById("priceLine"));
+                    this.myChart = echarts.init(document.getElementById(this.lineId));
                     this.myChart.setOption(this.getOption(), true);
                     let showLoadingDefault = {
                         text: 'Loading...',
@@ -281,7 +307,8 @@
             window.addEventListener('resize', this.myChart.resize);
         },
         components: {
-            'v-echart-header': echartHeader
+            'v-echart-header': echartHeader,
+            'v-filter': filter
         }
     }
 </script>
@@ -302,4 +329,33 @@
         height: 88%;
         opacity: 0.9;
     }
+    #homeLine {
+        width: 100%;
+        height: 88%;
+        opacity: 0.9;
+    }
+    .line-filter {
+        position: relative;
+        display: flex;
+        padding: 5px 0 0 28px;
+        font-size: 12px;
+        line-height: 11px;
+        color: #fff;
+        z-index: 9999;
+    }
+    .products {
+        position: absolute;
+        display: inline-block;
+        right: 15px;
+    }
+    .products .all {
+        display: inline-block;
+        margin-right: 18px;
+    }
+    .products .all .checkbox {
+        position: relative;
+        top: 2px;
+        left: -3px;
+    }
+    
 </style>
