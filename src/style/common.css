@@ -106,6 +106,12 @@ body {
     box-sizing: content-box;
 }
 
+@media screen and (max-width: 1366px) {
+    .flex-container.column {
+        height: 100%;
+    }
+}
+
 .active {
     height: 100%;
     width: 69%;

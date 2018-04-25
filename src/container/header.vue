@@ -125,7 +125,6 @@
                     if(i == indexFirst) {
                         this.secMenuActive = true;
                         this.secondMenuItems = this.firstMenuItems[indexFirst].submenu;
-                        console.log(this.firstMenuItems[indexFirst].submenu);
                     }
                 } 
             },

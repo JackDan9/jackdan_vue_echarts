@@ -27,6 +27,11 @@
                         </div>
                     </div>
                 </div>
+                <v-new-pie
+                    :legendData="legendData"
+                    :seriesData="seriesData"
+                    >
+                </v-new-pie>
             </div>
             <div class="chart-num">
                 <v-echart-header :name="name" :legendArr="legendArr" :showSelectAll="showSelectAll" :myChart="myChartColumn" :showFilter="showFilter" :showWeek="showWeek" :showMonth="showMonth"></v-echart-header>
@@ -39,6 +44,8 @@
 <script>
     import column from '../components/column';
     import echartHeader from '../components/echartHeader';
+    import newPie from '../components/newPie';
+    import axios from 'axios';
     import multipleColumn from '../components/multipleColumn';
 
     export default {
@@ -58,6 +65,8 @@
                     {"name": "订单金额", "isNumActive": false},
                     {"name": "验价数", "isNumActive": false}
                 ],
+                legendData: [],
+                seriesData: [],
                 showSelectAll: false,
                 showFilter: true,
                 showWeek: true,
@@ -67,6 +76,7 @@
 
         mounted() {
             // this.init();
+            this.getData();
             let showLoadingDefault = {
                 text: 'Loading...',
                 color: '#23531',
@@ -89,6 +99,7 @@
                     myChart.resize()
                 })
             },
+
             chartColumn(msg) {
                 this.myChartColumn = msg;
             },
@@ -113,7 +124,42 @@
                 this.myChartColumn.showLoading(showLoadingDefault);
                 this.$store.commit('openLoading');
                 this.$store.dispatch('fetchColumnData', this.myChartColumn); 
-            }
+            },
+            getData() {
+                let random = parseInt(Math.random() * 10 + 1);
+
+                if (this.typeIndex < 3) {
+                    axios.get('/orders_carrier?ver=' + random, {params: {from:0}})
+                        .then(
+                            (res) => {
+                                let ret = res.data.data;
+                                let numberData = ret.number;
+                                let showData = numberData;
+                                for(let i = 1; i < showData[0].length; i++) {
+                                    this.legendData.push({
+                                        name: showData[0][i],
+                                        icon: 'roundRect',
+                                        textStyle: {
+                                            color: '#fff'
+                                        }
+                                    });
+                                }
+                                for(let j = 1; j < showData.length; j++) {
+                                    this.seriesData.push({
+                                        name: showData[j][0],
+                                        value: showData[j][1]
+                                    })
+                                }
+
+                            }
+                        )
+                        .catch((error) => {
+                            console.log(error);
+                        }
+                    )
+                }
+
+            },
             /*
             init() {
                 this.items = document.querySelectorAll('.flex-container .item')
@@ -147,6 +193,7 @@
         components: {
             multipleColumn,
             'v-echart-header': echartHeader,
+            'v-new-pie': newPie,
             'v-column': column
         }
     }

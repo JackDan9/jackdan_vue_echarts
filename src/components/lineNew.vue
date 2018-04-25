@@ -29,7 +29,12 @@
                 </div>
             </div>
             -->
-            <v-filter :myChart="myChart" v-if="myChart._dom"></v-filter>
+
+            <v-filter 
+                :myChart="myChart"
+                :lineId="lineId"
+                :optionNew="optionNew"
+                v-if="myChart._dom"></v-filter>
         </div>
         <div :id="lineId"></div>
     </div>
@@ -92,21 +97,28 @@
                         // trigger: 'item'
                     },
                     legend: {
-                        show: true,
+                        show: false,
                         type: 'scroll',
-                        // orient: 'vertical',
-                        left: 40,
-                        right: 0,
+                        orient: 'vertical',
+                        // left: 40,
+                        right: -3,
                         top: 0,
-                        bottom: 0,
+                        bottom: 10,
+                        // backgroundColor: 'rgba(128, 128, 128, 0.5)', 
                         inactiveColor: '#ACA899',
+                        borderRadius: 5,
                         pageIconColor: '#aaa',
+                        pageFormatter: '{current}',
+                        pageButtonItemGap: 0,
                         pageIconInactiveColor: '#333',
+                        pageIconSize: [30, 11],
                         pageTextStyle: {
                             color: '#aaa',
                             fontStyle: 'normal',
                             fontWeight: 400
                         },
+                        animation: true,
+                        animationDurationUpdate: 0,
                         data: []
                     },
                     grid: {
@@ -248,6 +260,7 @@
                         }
                     }
 
+
                     /*
                     let optionNew = {
                         legend: {
@@ -326,12 +339,12 @@
     }
     #priceLine {
         width: 100%;
-        height: 88%;
+        height: 93%;
         opacity: 0.9;
     }
     #homeLine {
         width: 100%;
-        height: 88%;
+        height: 93%;
         opacity: 0.9;
     }
     .line-filter {

@@ -31,6 +31,10 @@
             myChart: {
                 type: Object,
                 default: {}
+            },
+            optionNew: {
+                type: Object,
+                default: {}
             }
         },
 
@@ -47,35 +51,56 @@
         },
 
         mounted() {
-          this.init();
-        },    
+            this.init();
+            //console.log(this.optionNew);
+        },
+
+        
+        created() {
+            this.$watch('optionNew', options => {
+                if(!this.optionNew) {
+                    this.init()
+                } else {
+                    this.pro_filter_flag = false
+                    this.init()
+                }
+            })
+        },
+            
 
         methods: {
             init() {
                 this.prevClass = this.$parent.$el._prevClass
-                this.option = this.myChart.getOption()
-                this.resetOption = this.deepCopy(this.myChart.getOption())
+                // this.option = this.myChart.getOption()
+                // this.resetOption = this.deepCopy(this.myChart.getOption())
+                this.option = this.optionNew;
+                this.resetOption = this.deepCopy(this.optionNew);
                 this.initProList()
             },
 
             initProList() {
                 let arr = []
-                console.log(this.option.legend[0].selected);
                 if (this.prevClass !== 'point') {
-                    this.showProduct = true
+                    let legendLen = this.optionNew.legend.data.length
+                    if (legendLen != 0) {
+                        this.showProduct = true
+                    } else {
+                        this.showProduct = false
+                    }
                     // this.option.xAxis[0].data.forEach((pro, index) => {
                     // this.option.legend[0].selected.forEach((pro, index) => {
-                    for(let pro in this.option.legend[0].selected) {
-                        console.log(pro);
+                    let selectedObj = this.option.legend.selected;
+                    for(let pro in selectedObj) {
                         arr.push({
                             name: pro,
-                            selected: true
+                            selected: selectedObj[pro]
                         })
                     }
                     this.pro_list = arr
                 }
             },
 
+            /*
             deepCopy(obj) {
                 let str, newobj;
                 str = newobj = obj.constructor === Array ? [] : {};
@@ -91,7 +116,40 @@
                 }
                 return newobj;
             },
+            */
 
+            pro_toggle(pro, index) {
+                pro.selected = !pro.selected
+                for(let key in this.optionNew.legend.selected) {
+                    if(key == pro.name) {
+                        this.optionNew.legend.selected[key] = pro.selected
+                    }
+                }
+                this.myChart.setOption(this.optionNew)
+            },
+
+            deepCopy(obj) {
+                let str, newObj;
+                str = newObj = obj.constructor === Array ? [] : {};
+                if (typeof obj !== 'object') {
+                    return;
+                } else if (window.JSON) {
+                    str = JSON.stringify(obj); //系列化对象
+                    newObj = JSON.parse(str); // 还原
+                } else {
+                    for (let i in obj) {
+                        newobj[i] = typeof obj[i] === 'object' ? cloneObj(obj[i]) : obj[i];
+                    }
+                }
+                return newObj;
+            },
+
+            redraw() {
+                //let option = this.deepCopy(this.resetOption)
+
+            },
+
+            /*
             pro_toggle(pro, index) {
                 pro.selected = !pro.selected
                 this.selectAll_flag = this.isSelectAll()
@@ -131,7 +189,7 @@
                 })
                 this.redraw();
             },
-
+            */
             showProPane() {
                 this.pro_filter_flag = !this.pro_filter_flag
             }
@@ -146,7 +204,8 @@
     .products {
         position: absolute;
         display: inline-block;
-        right: 15px;
+        // right: 15px;
+        right: 0;
     }
 
     .products .all {
@@ -177,7 +236,8 @@
 
     .pro_list {
         position: absolute;
-        right: 22px;
+        // right: 22px;
+        right: 0;
         width: 58px;
         text-align: left;
         background: #1e3642;
@@ -186,7 +246,15 @@
         // overflow: hidden;
         overflow-y: auto;
         z-index: 9;
-        height: 686px;
+        // height: 686px;
+        max-height: 686px;
+        height: auto;
+    }
+
+    @media screen and (max-width: 1366px) {
+        .pro_list {
+            max-height: 469px;
+        }
     }
     
     .pro_list li {
