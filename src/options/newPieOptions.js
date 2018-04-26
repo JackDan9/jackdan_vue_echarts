@@ -1,5 +1,6 @@
 export const newPieOptions = {
     title: {
+        show: false,
         text: '订单数',
         subtext: '',
         x:'center',
@@ -15,26 +16,46 @@ export const newPieOptions = {
         show: true,
         type: 'scroll',
         // orient: 'vertical',
-        right: 10,
-        top: 20,
-        bottom: 20,
+        right: 0,
+        top: 0,
+        bottom: 0,
         // zlevel: 9000,
-        data: [{
-            name: '系列1',
-            // 强制设置图形为圆。
-            icon: 'circle',
-            // 设置文本为红色
-            textStyle: {
-                color: 'red'
-            }
-        }]
+        inactiveColor: '#333',
+        pageFormatter: '{current}',
+        pageIconColor: '#fff',
+        pageIconInactiveColor: '#333',
+        pageTextStyle: {
+            color: '#fff'
+        },
+        data: []
     },
     series: [
         {
             name: '',
             type: 'pie',
-            radius: '55%',
-            center: ['50%', '50%'],
+            radius: ['65%', '85%'],
+            center: ['50%', '55%'],
+            // roseType: 'radius',
+            // roseType: 'area',
+            avoidLabelOverlap: false,
+            label: {
+                normal: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    show: true,
+                    textStyle: {
+                        fontSize: '30',
+                        fontWeight: 'bold'
+                    }
+                }
+            },
+            labelLine: {
+                normal: {
+                    show: false
+                }
+            },
             data: [
                 {
                     name: 'VJ',

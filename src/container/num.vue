@@ -38,6 +38,40 @@
                 <v-column :columnId="columnId" v-on:chartColumn="chartColumn"></v-column>
             </div>
         </div>
+        <div class="table-num">
+            <table class="table-title">
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>姓名</td>
+                        <td>身份证号</td>
+                        <td>地区</td>
+                        <td>工作单位</td>
+                        <td>职位</td>
+                        <td>廉政风险点</td>
+                        <td></td>
+                    </tr>
+                </thead>
+            </table>
+            <div class="table-body">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img width="75" src="../assets/images/user.png" alt="">
+                            </td>
+                            <td class="table-body-td">张三</td>
+                            <td class="table-body-td">520500197701150000</td>
+                            <td class="table-body-td">毕节市</td>
+                            <td class="table-body-td">民政局</td>
+                            <td class="table-body-td">低保股股长</td>
+                            <td class="table-body-td">房产数量</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -112,6 +146,7 @@
                     }
                 }
                 this.typeIndex = index;
+                this.getData();
                 this.name = this.chartType[index]['name'];
                 this.$store.commit('updateTypeIndex', this.typeIndex);
                 let showLoadingDefault = {
@@ -134,29 +169,88 @@
                             (res) => {
                                 let ret = res.data.data;
                                 let numberData = ret.number;
-                                let showData = numberData;
-                                for(let i = 1; i < showData[0].length; i++) {
-                                    this.legendData.push({
-                                        name: showData[0][i],
-                                        icon: 'roundRect',
-                                        textStyle: {
-                                            color: '#fff'
-                                        }
-                                    });
+                                let countData = ret.count;
+                                let priceData = ret.price;
+                                if(this.typeIndex == 0) {
+                                    let showData = countData;
+                                    this.legendData = [];
+                                    this.seriesData = [];
+                                    for(let j = 1;  j < showData.length; j++) {
+                                        this.legendData.push({
+                                            name: showData[j][0],
+                                            textStyle: {
+                                                color: '#fff'
+                                            }
+                                        });
+                                        this.seriesData.push({
+                                            name: showData[j][0],
+                                            value: showData[j][3]
+                                        })
+                                    }
+                                } else if(this.typeIndex == 1) {
+                                    let showData = numberData;
+                                    this.legendData = [];
+                                    this.seriesData = [];
+                                    for(let j = 1;  j < showData.length; j++) {
+                                        this.legendData.push({
+                                            name: showData[j][0],
+                                            textStyle: {
+                                                color: '#fff'
+                                            }
+                                        });
+                                        this.seriesData.push({
+                                            name: showData[j][0],
+                                            value: showData[j][3]
+                                        })
+                                    }
+                                } else {
+                                    let showData = priceData;
+                                    this.legendData = [];
+                                    this.seriesData = [];
+                                    for(let j = 1;  j < showData.length; j++) {
+                                        this.legendData.push({
+                                            name: showData[j][0],
+                                            textStyle: {
+                                                color: '#fff'
+                                            }
+                                        });
+                                        this.seriesData.push({
+                                            name: showData[j][0],
+                                            value: showData[j][3]
+                                        })
+                                    }
                                 }
-                                for(let j = 1; j < showData.length; j++) {
-                                    this.seriesData.push({
-                                        name: showData[j][0],
-                                        value: showData[j][1]
-                                    })
-                                }
-
                             }
                         )
                         .catch((error) => {
                             console.log(error);
                         }
                     )
+                } else {
+                    axios.get('/verify_carrier?ver=' + random, {params: {from:0}})
+                        .then(
+                            (res) => {
+                                let ret = res.data.data;
+                                let showData = ret.number;
+                                this.legendData = [];
+                                this.seriesData = [];
+                                for(let j = 1;  j < showData.length; j++) {
+                                    this.legendData.push({
+                                        name: showData[j][0],
+                                        textStyle: {
+                                            color: '#fff'
+                                        }
+                                    });
+                                    this.seriesData.push({
+                                        name: showData[j][0],
+                                        value: showData[j][3]
+                                    })
+                                }
+                            }
+                        )
+                        .catch( (error) => {
+                            console.log(error);
+                        })
                 }
 
             },
@@ -254,5 +348,49 @@
         border-radius: 4px;
         float: right;
     }
-
+    .table-num {
+        padding: 0 15px 65px;
+        position: relative;
+        width: 90%;
+        margin: 0 auto;
+    }
+    .table-num .table-title {
+        width: 100%;
+        color: #fff;
+        text-align: center;
+    }
+    .table-num .table-title thead tr {
+        line-height: 56px;
+        border: 1px solid #0183d7;
+        box-shadow: 0 0 8px #0183d7 inset;
+    }
+    .table-num .table-body {
+        width: 99.95%;
+        max-height: 667px;
+        overflow: auto;
+        border-left: 1px solid #0183d7;
+        border-bottom: 1px solid #0183d7;
+        border-right: 1px solid #0183d7;
+        box-sizing: border-box;
+    }
+    .table-num .table-body table {
+        width: 100%;
+        text-align: center;
+        color: #fff;
+    }
+    .table-num .table-body table tbody td {
+        line-height: 110px;
+    }
+    .table-num .table-body table tbody td img {
+        vertical-align: middle;
+    }
+    .table-num .table-body table .table-body-td {
+        border-bottom: 1px solid #054c76;
+    }
+    .table-num table td:first-child {
+        width: 14% !important;
+    }
+    .table-num table td {
+        width: 13.33%;
+    }
 </style>

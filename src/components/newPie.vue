@@ -40,6 +40,7 @@
                 if(!this.myChart && legendData.seriesData) {
                     this.init()
                 } else {
+                    console.log(this.seriesData);
                     this.myChart = echarts.init(document.getElementById("newPieId"))
                     this.myChart.setOption(newPieOptions, true)
                     this.myChart.setOption({
@@ -70,6 +71,7 @@
 
 
 <style scoped>
+
     .new-pie-container {
         position: relative;
         width: 100%;
@@ -79,6 +81,11 @@
         // border-bottom: 1px solid #ebeef5;
         // border: 1px solid #ebeef5;
         // border-radius: 4px;
+    }
+    @media screen and (max-width: 1366px) {
+        .new-pie-container {
+            height: 41%;
+        }
     }
     #newPieId {
         width: 100%;
