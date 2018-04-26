@@ -60,7 +60,7 @@
 
     .columnChart .main {
         width: 100%;
-        height: calc(100% - 100px);
+        height: 93%;
         margin-top: -3px;
     }
 </style>
