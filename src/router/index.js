@@ -6,6 +6,7 @@ import Price from '../container/price.vue'
 import Num from '../container/num.vue'
 import Login from '../container/login.vue'
 import Register from '../container/register.vue'
+import List from '../container/list.vue'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
           path: '/register',
           name: 'register',
           component: Register
+        },
+        {
+          path: '/list',
+          name: 'list',
+          component: List
         }
     ]
 })

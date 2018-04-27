@@ -1,6 +1,6 @@
 <template lang="html">
     <div class="dashboard">
-        <div class="flex-container column">
+        <div class="container">
             <!--
             <div class="item one" @click="clickChart('1')" style="transform: translate(-22.4%, -33.5%) scale(0.33)">
                 <multipleColumn></multipleColumn>
@@ -35,7 +35,10 @@
             </div>
             <div class="chart-num">
                 <v-echart-header :name="name" :legendArr="legendArr" :showSelectAll="showSelectAll" :myChart="myChartColumn" :showFilter="showFilter" :showWeek="showWeek" :showMonth="showMonth"></v-echart-header>
-                <v-column :columnId="columnId" v-on:chartColumn="chartColumn"></v-column>
+                <v-column 
+                    :columnId="columnId" 
+                    v-on:chartColumn="chartColumn">
+                </v-column>
             </div>
         </div>
         <div class="table-num">

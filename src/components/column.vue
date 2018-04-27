@@ -1,20 +1,28 @@
 <template lang="html">
-    <div class="columnChart">
-        <div class="main" v-bind:id="columnId"></div>
+    <div class="column-chart">
+        <div 
+            class="main" 
+            v-bind:id="columnId">    
+        </div>
     </div>
 </template>
 
 <script>
     import echarts from 'echarts';
-    import {columnOption} from '../options/columnOptions';
+    import { columnOption } from '../options/columnOptions';
 
     export default {
         props: {
             columnId: {
                 type: String,
                 default: ''
+            },
+            xAxisData: {
+                type: Array,
+                default: []
             }
         },
+
         data() {
             return {
                 color: this.$store.state.color,
@@ -22,20 +30,17 @@
             }
         },
 
-        methods: {
-        },
-
         components: {
         },
 
         created() {
-            this.$watch('legendData.xAxisData.seriesData', options => {
-                if (!this.myChart && option) {
+            this.$watch('xAxisData', options => {
+                if (!this.myChart && xAxisData) {
                     this.init()
                 } else {
-                   
+                   console.log(2);
                 }
-            })
+            }, { deep:!this.watchShallow })
         },
 
         mounted() {
@@ -45,22 +50,33 @@
             this.myChart.setOption(columnOption);
 
             window.addEventListener('resize', this.myChart.resize);
-        }
+        },
+         methods: {
+            init() {
+                if(this.myChart) {
+                    return
+                }  
+                this.myChart = echarts.init(document.getElementById(this.columnId))
+                this.myChart.setOption(columnOption);
+            }
+        },
     }
 </script>
 
 <style scoped>
-    .columnChart {
-        height: 800px;
-        background: url('../assets/images/bg.png') no-repeat;
-        // background: none;
-        background-size: 100% 100%;
-        color: #fff;
+    .column-chart {
+        position: relative;
+        width: 100%;
+        height: 100%;
     }
 
-    .columnChart .main {
+    #columnList {
         width: 100%;
         height: 93%;
-        margin-top: -3px;
+    }
+
+    #columnChart {
+        width: 100%;
+        height: 93%;
     }
 </style>

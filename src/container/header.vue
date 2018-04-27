@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="header-container">
         <div class="nav-header-left">
             <div v-bind:class="[active ? activeClass : '', errorClass]" @click="showMenu()">
                 <i class="el-icon-menu icon-pointer nav-icon-reorder" title="菜单"></i>
@@ -96,7 +96,8 @@
                 items: [
                     {name: '验价订单', ad: 'num'},
                     {name: '航线数据', ad: 'price'},
-                    {name: '机票', ad: 'flight'},         
+                    {name: '机票', ad: 'flight'},  
+                    {name: '信息发布量', ad: 'list'},       
                 ],
                 titleName: '',
                 firstMenuItems: [],
@@ -143,12 +144,12 @@
     }
 </script>
 <style scoped>
-    .container .nav-header-left {
+    .header-container .nav-header-left {
         float: left;
         height: 100%;
     }
 
-    .container .nav-header-right {
+    .header-container .nav-header-right {
         position: absolute;
         top: 1px;
         right: 0;
@@ -294,7 +295,7 @@
         border-bottom: solid 2px #409eff;
     }
 
-    .container {
+    .header-container {
         position: relative;
         min-width: 1140px;
         height: 100%;
@@ -403,13 +404,13 @@
         height: 100%;
         border-right: 1px solid #f7f7f7;
     }
-    .container .nav-flyout.level-0 {
+    .header-container .nav-flyout.level-0 {
         width: 281px;
         z-index: 5900;
         height: 5927.45px;
         left: 0;
     }
-    .container .nav-flyout.level-1 {
+    .header-container .nav-flyout.level-1 {
         width: 320px;
         z-index: 5800;
         height: 5928.45px;

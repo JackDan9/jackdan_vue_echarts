@@ -76,7 +76,7 @@ body {
     height: 100%;
     margin: 0px;
     padding: 0px;
-    padding-top: 5%;
+    padding-top: 4%;
 }
 
 .point,.multipleColumn,.columnChart,.line {
@@ -97,7 +97,7 @@ body {
     background: rgba(32, 32, 35, 0.5);
 }
 
-.flex-container.column {
+.container {
     position: relative;
     height: 90%;
     width: 90%;
@@ -107,7 +107,7 @@ body {
 }
 
 @media screen and (max-width: 1366px) {
-    .flex-container.column {
+    .container {
         height: 100%;
     }
 }

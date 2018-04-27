@@ -9,7 +9,7 @@
 	import echarts from 'echarts';
 	require('echarts-gl');
 	import echartHeader from '../components/echartHeader';
-	import {line3DOption} from '../options/line3DOptions';
+	import { line3DOption } from '../options/line3DOptions';
 
 	export default {
 		data() {
@@ -68,7 +68,8 @@
 
 	.lineThree .main {
 		width: 100%;
-		height: calc(100% - 100px);
+		// height: calc(100% - 100px);
+		height: 93%;
 		margin-top: -15px;
 	}
 </style>

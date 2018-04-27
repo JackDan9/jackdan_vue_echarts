@@ -37,10 +37,9 @@
         },
         created() {
             this.$watch('legendData.seriesData', options => {
-                if(!this.myChart && legendData.seriesData) {
+                if (!this.myChart && legendData.seriesData) {
                     this.init()
                 } else {
-                    console.log(this.seriesData);
                     this.myChart = echarts.init(document.getElementById("newPieId"))
                     this.myChart.setOption(newPieOptions, true)
                     this.myChart.setOption({
@@ -58,12 +57,13 @@
         },
         methods: {
             init() {
-                if(this.myChart) {
+                if (this.myChart) {
                     return
                 }
-                console.log(this.seriesData);
                 this.myChart = echarts.init(document.getElementById("newPieId"))
                 this.myChart.setOption(newPieOptions, true)
+
+                window.addEventListener('resize', this.myChart.resize)
             }
         }
     }
@@ -75,12 +75,8 @@
     .new-pie-container {
         position: relative;
         width: 100%;
-        // margin-left: 2%;
         height: 56%;
         border-top: 1px solid #ebeef5;
-        // border-bottom: 1px solid #ebeef5;
-        // border: 1px solid #ebeef5;
-        // border-radius: 4px;
     }
     @media screen and (max-width: 1366px) {
         .new-pie-container {

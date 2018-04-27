@@ -101,14 +101,15 @@ export const columnOption = {
         type: 'category',
         axisLabel: {
             textStyle: {
-                color: 'white'
+                color: '#fff',
+                fontSize: 14
             }
         }
     },
     yAxis: {
         axisLabel: {
             textStyle: {
-                color: 'white',
+                color: '#fff',
                 fontSize: 14
             }
         },

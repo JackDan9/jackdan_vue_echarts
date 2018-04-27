@@ -12,7 +12,7 @@
     import echarts from 'echarts';
     import echartHeader from '../components/echartHeader'
     import filter from '../components/filter'
-    import {lineOption} from '../options/lineOptions'
+    import { lineOption } from '../options/lineOptions'
 
     export default {
         data() {
@@ -58,8 +58,7 @@
                         let yAxisDataLast = ret.data.y
                         this.myChart.setOption({
                             color: this.color,
-                            xAxis: [
-                            {
+                            xAxis: [{
                                 data: xAxisDataLast
                             }],
                             series: [{
@@ -97,7 +96,8 @@
 
     .line .main {
         width: 100%;
-        height: calc(100% - 100px);
+        // height: calc(100% - 100px);
+        height: 93%;
         margin-top: -15px;
     }
 </style>

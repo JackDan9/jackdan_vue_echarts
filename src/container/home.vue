@@ -3,21 +3,26 @@
         <div class="container">
             <div class="fl overview">
                 <div class="overview-title">
-                    <h1>{{this.name}}数据对比</h1>
+                    <h1>{{this.name}}</h1>
                 </div>
-                <el-card class="box-card" v-for="(item, index) in overviewItem" :key="index">
-                  <div slot="header" class="clearfix">
-                    <span>{{item.title}}</span>
-                    <el-button style="float: right; padding: 3px 0; font-size: 16px;" type="text">查看详情</el-button>
-                  </div>
 
-                </el-card>
+                <div class="box-card" v-for="(item, index) in overviewItem" :key="index">
+                    <div class="box-card-header">
+                        <div class="clearfix">
+                            <span>{{item.title}}</span>
+                            <el-button style="float: right; padding: 3px 0; font-size: 16px;" type="text">查看详情</el-button>
+                        </div>
+                    </div>
+                </div>
+
+                <!--
                 <el-card class="box-card">
                   <div slot="header" class="clearfix">
                     <span>公安局数据对比</span>
                     <el-button style="float: right; padding: 3px 0; font-size: 16px;" type="text">查看详情</el-button>
                   </div>
                 </el-card>
+                -->
             </div>
             <div class="map">
                 <v-map :id="id" v-on:clickMap="changeData"></v-map>
@@ -322,11 +327,24 @@ export default {
         clear: both
     }
 
-    .box-card {
+    .overview .box-card {
         width: 89%;
-        margin-top: 20px;
-        margin-left: 30px;
-        margin-bottom: 20px;
+        margin: 20px auto;
+        -webkit-box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+        box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+        border: 1px solid #ebeef5;
+        transition: .3s;
+        border-radius: 4px;
+        overflow: hidden;
+        background: none;
+        color: #fff;
+        font-size: 16px;
+    }
+    .overview .box-card .box-card-header {
+        padding: 18px 20px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        border-bottom: 1px solid #ebeef5;
     }
     .el-card__body {
         padding: 0;

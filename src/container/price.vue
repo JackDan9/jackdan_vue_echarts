@@ -1,6 +1,6 @@
 <template lang="html">
     <div class="dashboard">
-        <div class="flex-container column">
+        <div class="container">
             <div class="chart-content">
                 <div class="chart-title">
                     <h1>航线数据</h1>
