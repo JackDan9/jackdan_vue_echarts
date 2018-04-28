@@ -4,7 +4,12 @@
         "title": "信息发布量排行榜",
         "subtitle": "前十名",
         "firstData": {
-            
+            "xAxisData": ["水务公司", "华润燃气", "国税局", "住房保障处", "规划局"],
+            "seriesData": {
+                "textInfo": [44, 45, 46, 47, 48],
+                "picInfo": [4, 5, 6, 7, 8],
+                "totalInfo": [48, 50, 52, 54, 56]
+            }
         }
     },
     "msg": ""

@@ -16,7 +16,23 @@
                 type: String,
                 default: ''
             },
+            title: {
+                type: String,
+                default: ''
+            },
+            subtitle: {
+                type: String,
+                default: ''
+            },
             xAxisData: {
+                type: Array,
+                default: []
+            },
+            seriesData: {
+                type: Array,
+                default: []
+            },
+            legendData: {
                 type: Array,
                 default: []
             }
@@ -29,9 +45,6 @@
         },
 
         mounted() {
-            // this.myChart = echarts.init(document.getElementById(this.columnNewId));
-            // this.myChart.setOption(columnNewOption, true);
-            // window.addEventListener('resize', this.myChart.resize);
             this.init();
         },
 
@@ -40,16 +53,28 @@
                 if (!this.myChart && xAxisData) {
                     this.init()
                 } else {
-                    console.log(2);
+                    this.myChart = echarts.init(document.getElementById(this.columnNewId));
+                    this.myChart.setOption({
+                        title: {
+                            text: this.title,
+                            subtext: this.subtitle,
+                        },
+                        legend: {
+                            data: this.legendData
+                        },
+                        xAxis: [
+                            {
+                                data: this.xAxisData
+                            }
+                        ],
+                        series: this.seriesData
+                    })
                 }
             }, { deep:!this.watchShallow })
         },
 
         methods: {
             init() {
-                // if (this.myChart) {
-                //     return
-                // }
                 this.myChart = echarts.init(document.getElementById(this.columnNewId));
                 this.myChart.setOption(columnNewOption, true);
 
@@ -68,6 +93,13 @@
 
     .column-chart .main {
         width: 100%;
-        height: 85%;
+        height: 75%;
+        margin-top: 20px;
+    }
+
+    @media screen and (max-width: 1366px) {
+        .column-chart .main {
+            height: 66%;
+        }
     }
 </style>

@@ -20,7 +20,11 @@
                 <div class="chart-title">
                     <h1>验价订单</h1>
                 </div>
-                <div v-bind:class="[item.isNumActive ? activeClass : '', errorClass]" v-for="(item, index) in chartType" :key="index" v-on:click="typeClick(index)">
+                <div 
+                    v-bind:class="[item.isNumActive ? activeClass : '', errorClass]" 
+                    v-for="(item, index) in chartType" 
+                    :key="index" 
+                    v-on:click="typeClick(index)">
                     <div class="box-card-header">
                         <div class="clearfix">
                             <span>{{item.name}}</span>
@@ -29,12 +33,19 @@
                 </div>
                 <v-new-pie
                     :legendData="legendData"
-                    :seriesData="seriesData"
-                    >
+                    :seriesData="seriesData">
                 </v-new-pie>
             </div>
             <div class="chart-num">
-                <v-echart-header :name="name" :legendArr="legendArr" :showSelectAll="showSelectAll" :myChart="myChartColumn" :showFilter="showFilter" :showWeek="showWeek" :showMonth="showMonth"></v-echart-header>
+                <v-echart-header 
+                    :name="name" 
+                    :legendArr="legendArr" 
+                    :showSelectAll="showSelectAll" 
+                    :myChart="myChartColumn" 
+                    :showFilter="showFilter" 
+                    :showWeek="showWeek" 
+                    :showMonth="showMonth">        
+                </v-echart-header>
                 <v-column 
                     :columnId="columnId" 
                     v-on:chartColumn="chartColumn">
@@ -141,7 +152,7 @@
                 this.myChartColumn = msg;
             },
             typeClick(index) {
-                for(let i = 0; i < this.chartType.length; i++) {
+                for (let i = 0; i < this.chartType.length; i++) {
                     if (i == index) {
                         this.chartType[i].isNumActive = true;
                     } else {
@@ -165,7 +176,6 @@
             },
             getData() {
                 let random = parseInt(Math.random() * 10 + 1);
-
                 if (this.typeIndex < 3) {
                     axios.get('/orders_carrier?ver=' + random, {params: {from:0}})
                         .then(
@@ -190,7 +200,7 @@
                                             value: showData[j][3]
                                         })
                                     }
-                                } else if(this.typeIndex == 1) {
+                                } else if (this.typeIndex == 1) {
                                     let showData = numberData;
                                     this.legendData = [];
                                     this.seriesData = [];
@@ -210,7 +220,7 @@
                                     let showData = priceData;
                                     this.legendData = [];
                                     this.seriesData = [];
-                                    for(let j = 1;  j < showData.length; j++) {
+                                    for (let j = 1;  j < showData.length; j++) {
                                         this.legendData.push({
                                             name: showData[j][0],
                                             textStyle: {
