@@ -1,6 +1,11 @@
 <template lang="html">
 	<div class="lineThree">
-		<v-echart-header :name="name" :legendArr="legendArr" :myChart="myChart"></v-echart-header>
+		<v-echart-header 
+			:name="name" 
+			:legendArr="legendArr" 
+			:myChart="myChart">		
+		</v-echart-header>
+		
 		<div class="main" id="line3DChart"></div>
 	</div>
 </template>

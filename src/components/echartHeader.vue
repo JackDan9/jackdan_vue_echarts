@@ -105,6 +105,7 @@ export default {
     },
 
     methods: {
+        // 初始化legend的color
         init() {
             this.color.forEach((color) => {
                 this.styleArr.push({
@@ -113,16 +114,19 @@ export default {
                 })
             })
         },
+        // 开始日期选择
         startDateTime(val) {
             let startTime = parseInt(val/1000);
             this.$store.commit('updateStartDateTime', startTime);
             this.$store.dispatch('fetchColumnData', this.myChart)
         },
+        // 结束日期选择
         endDateTime(val) {
             let endTime = parseInt(val/1000);
             this.$store.commit('updateEndDateTime', endTime);
             this.$store.dispatch('fetchColumnData', this.myChart)
         },
+        // 全部不选
         selectNotAll() {
             this.allDisabled = false;
             this.allNotDisabled = true;
@@ -156,6 +160,7 @@ export default {
             })
             */
         },
+        // 全选
         selectAll() {
             this.allDisabled = true;
             this.allNotDisabled = false;

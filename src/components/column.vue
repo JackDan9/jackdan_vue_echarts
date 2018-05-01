@@ -51,7 +51,8 @@
 
             window.addEventListener('resize', this.myChart.resize);
         },
-         methods: {
+        
+        methods: {
             init() {
                 if(this.myChart) {
                     return

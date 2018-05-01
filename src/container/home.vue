@@ -42,6 +42,9 @@
                         :myChart="myLineChart">
                     </v-echart-header>
                     <!--
+                    <v-line-new :option="option"></v-line-new>
+                    -->
+                    <!--
                     <v-line-new 
                         :lineId="lineId" 
                         v-on:chartLine="chartLine"

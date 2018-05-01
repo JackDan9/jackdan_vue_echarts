@@ -1,15 +1,21 @@
 <template lang="html">
     <div class="line">
-        <v-echart-header :name="name" :legendArr="legendArr" :myChart="myChart"></v-echart-header>
+        <v-echart-header 
+            :name="name" 
+            :legendArr="legendArr" 
+            :myChart="myChart">    
+        </v-echart-header>
+
         <div class="filter">
             <v-filter :myChart="myChart" v-if="myChart._dom"></v-filter>
         </div>
+
         <div class="main" id="lineChart"></div>
     </div>
 </template> 
 
 <script>
-    import echarts from 'echarts';
+    import echarts from 'echarts'
     import echartHeader from '../components/echartHeader'
     import filter from '../components/filter'
     import { lineOption } from '../options/lineOptions'
@@ -30,14 +36,14 @@
 
         methods: {
             init() {
-              this.legendArr = this.myChart.getOption().series
-              this.legendArr.forEach((data) => {
-                data.selected = true;
-              })
-              this.$root.charts.push(this.myChart)
-              window.addEventListener('resize', function() {
-                this.myChart.resize()
-              }.bind(this))
+                this.legendArr = this.myChart.getOption().series
+                this.legendArr.forEach((data) => {
+                    data.selected = true;
+                })
+                this.$root.charts.push(this.myChart)
+                window.addEventListener('resize', function() {
+                    this.myChart.resize()
+                }.bind(this))
             },
 
             getMyChartData() {
@@ -45,7 +51,7 @@
                     const ret = res.data;
                     this.firstData = ret;
                     this.$nextTick(() => {
-                      this.getMyChartDataLast();
+                        this.getMyChartDataLast();
                     })
                 })
             },

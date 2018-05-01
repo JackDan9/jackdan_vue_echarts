@@ -34,16 +34,18 @@
                 :myChart="myChart"
                 :lineId="lineId"
                 :optionNew="optionNew"
-                v-if="myChart._dom"></v-filter>
+                v-if="myChart._dom">    
+            </v-filter>
         </div>
+
         <div :id="lineId"></div>
     </div>
 </template>
 
 <script>
-    import echarts from 'echarts';
-    import echartHeader from '../components/echartHeader';
-    import filter from '../components/filter';
+    import echarts from 'echarts'
+    import echartHeader from '../components/echartHeader'
+    import filter from '../components/filter'
 
     export default {
         props: {
@@ -70,10 +72,6 @@
             selectStatus: {
                 type: Boolean,
                 default: true
-            },
-            lineId: {
-                type: String,
-                default: ''
             }
         },
         data() {
@@ -219,6 +217,7 @@
                 if(this.myChart) {
                     return
                 }
+                // this.myChart = echarts.init(document.getElementById("priceLine"));
                 this.myChart = echarts.init(document.getElementById(this.lineId));
                 this.myChart.setOption(this.getOption(), true);
             }
@@ -275,6 +274,7 @@
                     */
 
                     // let optionData = JSON.parse(JSON.stringify(optionNew));
+                    // this.myChart = echarts.init(document.getElementById("priceLine"));
                     this.myChart = echarts.init(document.getElementById(this.lineId));
                     this.myChart.setOption(this.getOption(), true);
                     let showLoadingDefault = {
@@ -356,19 +356,4 @@
         color: #fff;
         z-index: 9999;
     }
-    .products {
-        position: absolute;
-        display: inline-block;
-        right: 15px;
-    }
-    .products .all {
-        display: inline-block;
-        margin-right: 18px;
-    }
-    .products .all .checkbox {
-        position: relative;
-        top: 2px;
-        left: -3px;
-    }
-    
 </style>
