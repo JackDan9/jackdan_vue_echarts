@@ -1,7 +1,6 @@
 <template lang="html">
     <div class="dashboard">
         <div class="container">
-            <v-timer></v-timer>
             <div class="list-header">
                 <el-button 
                     class="list-title"

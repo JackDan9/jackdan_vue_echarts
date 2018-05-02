@@ -52,40 +52,8 @@
                 </v-column>
             </div>
         </div>
-        <div class="table-num">
-            <table class="table-title">
-                <thead>
-                    <tr>
-                        <td></td>
-                        <td>姓名</td>
-                        <td>身份证号</td>
-                        <td>地区</td>
-                        <td>工作单位</td>
-                        <td>职位</td>
-                        <td>廉政风险点</td>
-                        <td></td>
-                    </tr>
-                </thead>
-            </table>
-            <div class="table-body">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <img width="75" src="../assets/images/user.png" alt="">
-                            </td>
-                            <td class="table-body-td">张三</td>
-                            <td class="table-body-td">520500197701150000</td>
-                            <td class="table-body-td">毕节市</td>
-                            <td class="table-body-td">民政局</td>
-                            <td class="table-body-td">低保股股长</td>
-                            <td class="table-body-td">房产数量</td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <v-table
+            :tableData="tableData"></v-table>
     </div>
 </template>
 
@@ -93,9 +61,10 @@
     import column from '../components/column';
     import echartHeader from '../components/echartHeader';
     import newPie from '../components/newPie';
-    import axios from 'axios';
     import multipleColumn from '../components/multipleColumn';
-
+    import table from '../components/table';
+    import axios from 'axios';
+    
     export default {
         data() {
             return {
@@ -113,12 +82,14 @@
                     {"name": "订单金额", "isNumActive": false},
                     {"name": "验价数", "isNumActive": false}
                 ],
+                xAxisData: [],
                 legendData: [],
                 seriesData: [],
                 showSelectAll: false,
                 showFilter: true,
                 showWeek: true,
-                showMonth: true
+                showMonth: true,
+                tableData: []
             }
         },
 
@@ -301,7 +272,8 @@
             multipleColumn,
             'v-echart-header': echartHeader,
             'v-new-pie': newPie,
-            'v-column': column
+            'v-column': column,
+            'v-table': table
         }
     }
 </script>
@@ -360,50 +332,5 @@
         border: 1px solid #ebeef5;
         border-radius: 4px;
         float: right;
-    }
-    .table-num {
-        padding: 0 15px 65px;
-        position: relative;
-        width: 90%;
-        margin: 0 auto;
-    }
-    .table-num .table-title {
-        width: 100%;
-        color: #fff;
-        text-align: center;
-    }
-    .table-num .table-title thead tr {
-        line-height: 56px;
-        border: 1px solid #0183d7;
-        box-shadow: 0 0 8px #0183d7 inset;
-    }
-    .table-num .table-body {
-        width: 99.95%;
-        max-height: 667px;
-        overflow: auto;
-        border-left: 1px solid #0183d7;
-        border-bottom: 1px solid #0183d7;
-        border-right: 1px solid #0183d7;
-        box-sizing: border-box;
-    }
-    .table-num .table-body table {
-        width: 100%;
-        text-align: center;
-        color: #fff;
-    }
-    .table-num .table-body table tbody td {
-        line-height: 110px;
-    }
-    .table-num .table-body table tbody td img {
-        vertical-align: middle;
-    }
-    .table-num .table-body table .table-body-td {
-        border-bottom: 1px solid #054c76;
-    }
-    .table-num table td:first-child {
-        width: 14% !important;
-    }
-    .table-num table td {
-        width: 13.33%;
     }
 </style>

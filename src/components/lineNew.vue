@@ -151,7 +151,7 @@
                             },
                             formatter: function(params) {
                                 let upName = params.substring(0,9);
-                                let downName = params.substring(10, params.length);
+                                let downName = params.substring(9, params.length);
                                 let newParamsName = "";
                                 newParamsName = downName + "\n" + upName;
                                 return newParamsName

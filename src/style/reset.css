@@ -71,9 +71,9 @@ li {
     -webkit-border-radius: 6px;
 }
 
-html, body {
+/*html, body {
     width: 100%;
-}
+}*/
 
 body {
     -webkit-text-size-adjust: none;

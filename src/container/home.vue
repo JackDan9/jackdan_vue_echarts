@@ -1,6 +1,7 @@
 <template lang="html">
     <div class="box">
         <div class="container">
+            <v-timer></v-timer>
             <div class="fl overview">
                 <div class="overview-title">
                     <h1>{{this.name}}</h1>
@@ -71,6 +72,7 @@ import Map from '../components/map';
 import Pie from '../components/pie';
 import LineNew from '../components/lineNew';
 import echartHeader from '../components/echartHeader'
+import timer from '../components/timer'
 import axios from 'axios'
 
 export default {
@@ -204,7 +206,8 @@ export default {
         'v-map': Map,
         'v-pie': Pie,
         'v-line-new': LineNew,
-        'v-echart-header': echartHeader
+        'v-echart-header': echartHeader,
+        'v-timer': timer
     },
 
     mounted() {
@@ -225,13 +228,17 @@ export default {
             height: 100%;
         }
     }
+    
     .box .container {
-        margin: 100px auto 0;
+        /*margin: 100px auto 0;*/
+        margin: 60px auto 0;
         height: 100%;
     }
+
     .fl {
         float: left;
     }
+
     .box .container .overview {
         width: 29%;
         height: 90%;

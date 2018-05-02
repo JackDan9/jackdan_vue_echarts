@@ -17,10 +17,10 @@
                 type: String,
                 default: ''
             },
-            xAxisData: {
-                type: Array,
-                default: []
-            }
+            // xAxisData: {
+            //     type: Array,
+            //     default: []
+            // }
         },
 
         data() {

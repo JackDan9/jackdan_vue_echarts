@@ -1,12 +1,15 @@
 <template>
     <div class="header-container">
         <div class="nav-header-left">
-            <div v-bind:class="[active ? activeClass : '', errorClass]" @click="showMenu()">
+            <div v-bind:class="[active ? activeClass : '', errorClass]" 
+                @mouseover="showMenu()"
+                @mouseout="hideMenu()"
+                >
                 <i class="el-icon-menu icon-pointer nav-icon-reorder" title="菜单"></i>
                 菜单
             </div>
             
-            <div class="menu-icon">
+            <div class="menu-icon"  @mouseover="hideMenu()">
                 <h1>
                     <router-link :to="'/'">
                         {{titleName}}
@@ -14,8 +17,14 @@
                 </h1>
             </div>
 
-            <div class="nav-quicklinks">
-                <div class="nav-quicklink" v-for="(item, index) in items" :key="index" @click="showArrow(index)">
+            <div class="nav-quicklinks" 
+                @mouseover="hideMenu()">
+                <div 
+                    class="nav-quicklink" 
+                    v-for="(item, index) in items" 
+                    :key="index" 
+                    @click="showArrow(index)"
+                    >
                     <router-link :to="'/' + item.ad">
                         {{item.name}}
                         <!--
@@ -36,7 +45,7 @@
         </div>
         -->
 
-        <div class="nav-header-right">
+        <div class="nav-header-right" @mouseover="hideMenu()">
             <div class="nav-cta-button-outer">
                 <div class="lb-mbox js-mbox">
                     <router-link :to="'/'" class="nav-button">注册</router-link>
@@ -44,7 +53,11 @@
             </div>
         </div>
         
-        <div class="nav-flyout level-0 fixed opacity" v-show="active">
+        <div 
+            class="nav-flyout level-0 fixed opacity" 
+            @mouseover="showMenu()"
+            @mouseout="hideMenu()"
+            v-show="active">
             <div class="nav-flyout-content">
                 <div class="nav-vertical">
                     <div 
@@ -52,7 +65,7 @@
                         v-for="(item, indexFirst) in firstMenuItems" 
                         :key="indexFirst" 
                         @mouseover="showSecMenu(indexFirst)" 
-                        @mouseout="hideSecMenu()" >
+                        @mouseout="hideSecMenu()">
                         <a class="has-icon">
                             {{item.name}}
                             <i class="el-icon-arrow-right"></i>
@@ -113,13 +126,18 @@
 
         methods: {
             showMenu: function() {
-                this.active = !this.active;
+                this.active = true;
+            },
+            hideMenu: function() {
+                this.active = false;
             },
             showSec: function() {
                 this.secMenuActive = true;
+                this.active = true;
             },
             hideSec: function() {
                 this.secMenuActive = false;
+                this.active = false;
             },
             showSecMenu: function(indexFirst) {
                 for(let i = 0; i < this.firstMenuItems.length; i++) {
@@ -131,6 +149,7 @@
             },
             hideSecMenu: function() {
                 this.secMenuActive = false;
+                // this.active = false
             },
             showArrow: function(index) {
                 if(index == 2) {
@@ -389,7 +408,8 @@
     }
 
     .nav-flyout {
-        top: 61px;
+        /*top: 61px;*/
+        top: 59px;
         border-right: 1px solid #e2e2e2;
         font-size: 15px;
         background: #f7f7f7;
@@ -412,10 +432,12 @@
     }
     .header-container .nav-flyout.level-1 {
         width: 320px;
-        z-index: 5800;
+        /*z-index: 5800;*/
+        z-index: 6139;
         height: 5928.45px;
         visibility: visible;
-        left: 281px;
+        left: 279px;
+        border-left: 1px solid #e2e2e2;
     }
     .nav-flyout.fixed {
         position: fixed;

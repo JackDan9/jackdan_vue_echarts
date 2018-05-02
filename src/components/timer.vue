@@ -12,13 +12,15 @@
             return {
                 title: '实时数据监控',
                 timer: {},
-                clock: `${moment().format('HH')} : ${moment().format('mm')} : ${moment().format('ss')} : ${moment().format('SSS')}` 
+                // clock: `${moment().format('HH')} : ${moment().format('mm')} : ${moment().format('ss')}`
+                clock: moment(Date.now()).format('HH: mm: ss a') 
             }
         },
         mounted() {
-            // this.timer = setInterval(() => {
-            //     this.clock = `${moment().format('HH')} : ${moment().format('mm')} : ${moment().format('ss')} : ${moment().format('SSS')}`
-            // }, 1)
+            this.timer = setInterval(() => {
+                // this.clock = `${moment().format('HH')} : ${moment().format('mm')} : ${moment().format('ss')}`
+                this.clock = moment(Date.now()).format('HH: mm: ss a')
+            }, 1000)
         },
         destroyed() {
             if(this.timer) {
@@ -31,6 +33,8 @@
 <style scoped>
     .timer {
         width: 100%;
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
     .time-title {
         font-size: 22px;
