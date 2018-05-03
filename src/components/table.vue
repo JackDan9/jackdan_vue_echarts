@@ -1,15 +1,19 @@
 <template lang="html">
     <div>
-        <div class="switch-title">
+        <div 
+            class="switch-title"
+            :style="'width:' + switchData.length * 10 + '%'">
             <div 
                 v-for="(switchItem, switchIndex) in switchData" 
                 :key="switchIndex"
                 :class="[switchItem.isSwitchActive ? activeClass : '', errorClass]"
-                v-on:click="switchClick(switchIndex)">
+                v-on:click="switchClick(switchIndex)"
+                :style="'width:' + 100/switchData.length + '%'">
                 {{switchItem.name}}
             </div>
         </div>
-        <div class="table-container" 
+        <div 
+            class="table-container" 
             :class="[wholePage ? tableInWhole : '']">
             <table class="table-title">
                 <thead>
@@ -26,7 +30,9 @@
             <div class="table-body">
                 <table>
                     <tbody>
-                        <tr v-for="(tbodyItem, tbodyIndex) in tbodyData" :key="tbodyIndex">
+                        <tr 
+                            v-for="(tbodyItem, tbodyIndex) in tbodyData" 
+                            :key="tbodyIndex">
                             <td 
                                 v-for="(item, index) in tbodyItem" 
                                 :key="index" 
@@ -81,6 +87,12 @@
                     },
                     {
                         name: "居委办事项功能开启统计", isSwitchActive: false
+                    },
+                    {
+                        name: "政府办事项", isSwitchActive: false
+                    },
+                    {
+                        name: "高新数码港办事项", isSwitchActive: false
                     }
                 ],
                 switchType: 0,
@@ -113,16 +125,16 @@
                 }
             }
         }
-
     }
 </script>
 
 <style scoped>
     .switch-title {
         display: flex;
-        width: 380px;
+        /*width: 380px;*/
         /*width: auto;*/
         /*max-width: 800px;*/
+        /*width: 100%;*/
         height: 40px;
         margin: 20px auto;
         border: 1px solid #0682d8;
@@ -130,6 +142,9 @@
         line-height: 40px;
         text-align: center;
         color: #fff;
+        /*overflow: auto;*/
+        letter-spacing: normal;
+        text-overflow: ellipsis;
     }
     .swicth-title-active {
         background-color: rgb(1, 122, 203);
@@ -142,6 +157,12 @@
         flex: 1;
         border-radius: 3px;
         cursor: pointer;
+    }
+
+    @media screen and (max-width: 1366px) {
+        .switch-title div {
+            font-size: 12px;
+        }
     }
     .table-container {
         padding: 0 15px 65px;
@@ -168,6 +189,7 @@
         color: #fff;
         text-align: center;
     }
+
     .table-container .table-title thead tr {
         line-height: 56px;
         border: 1px solid #0183d7;

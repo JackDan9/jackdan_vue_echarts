@@ -20,7 +20,7 @@ Vue.use(ElementUI)
 Vue.use(Vuex)
 
 // 加载超时时长
-axios.defaults.timeout = 5000;
+axios.defaults.timeout = 8000;
 
 // http请求拦截器
 let loadinginstace

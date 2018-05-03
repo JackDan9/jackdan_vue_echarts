@@ -26,7 +26,10 @@
                 -->
             </div>
             <div class="map">
-                <v-map :id="id" v-on:clickMap="changeData"></v-map>
+                <v-map 
+                    :id="id" 
+                    v-on:clickMap="changeData">
+                </v-map>
             </div>
             <div class="fr detail">
                 <div class="detail-title">
@@ -248,7 +251,7 @@ export default {
     }
     @media screen and (max-width: 1366px) {
         .box .container .overview {
-            height: 100%;
+            height: calc(100% - 69px);
         }
     }
 
@@ -270,7 +273,7 @@ export default {
 
     @media screen and (max-width: 1366px) {
         .box .container .map {
-            height: 100%;
+            height: calc(100% - 69px);
         }
     }
 
@@ -284,7 +287,7 @@ export default {
 
     @media screen and (max-width: 1366px) {
         .box .container .detail {
-            height: 100%;
+            height: calc(100% - 69px);
         }
     }
 

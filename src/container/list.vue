@@ -1,6 +1,7 @@
 <template lang="html">
     <div class="dashboard">
         <div class="container">
+            <v-timer></v-timer>
             <div class="list-header">
                 <el-button 
                     class="list-title"
@@ -74,9 +75,9 @@
 </template>
 
 <script>
-    import timer from '../components/timer';
-    import columnNew from '../components/columnNew';
-    import axios from 'axios';
+    import timer from '../components/timer'
+    import columnNew from '../components/columnNew'
+    import axios from 'axios'
 
     export default {
         data() {

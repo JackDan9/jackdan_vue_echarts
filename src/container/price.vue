@@ -1,6 +1,7 @@
 <template lang="html">
     <div class="dashboard">
         <div class="container">
+            <v-timer></v-timer>
             <div class="chart-content">
                 <div class="chart-title">
                     <h1>航线数据</h1>
@@ -68,13 +69,18 @@
                 </v-line-new>
             </div>
         </div>
+        <v-table
+            :tableData="tableData">
+        </v-table>
     </div>
 </template>
 
 <script>
-    import echartHeader from '../components/echartHeader';
-    import LineNew from '../components/lineNew';
+    import echartHeader from '../components/echartHeader'
+    import LineNew from '../components/lineNew'
     import filter from '../components/filter'
+    import timer from '../components/timer'
+    import table from '../components/table'
     import axios from 'axios'
 
     export default {
@@ -116,6 +122,7 @@
                 showSelectTimeAll: true,
                 showFilter: false,
                 chooseNotAll: true,
+                tableData: []
                 // allDisabled: false,
                 // allNotDisabled: false,
                 // smallDisabled: false,
@@ -745,7 +752,9 @@
         components: {
             'v-echart-header': echartHeader,
             'v-line-new': LineNew,
-            'v-filter': filter
+            'v-filter': filter,
+            'v-timer': timer,
+            'v-table': table
         }
     }
 </script>
@@ -755,10 +764,16 @@
         width: 19%;
         margin-left: 0.5%;
         margin-right: 0.5%;
-        height: 100%;
+        /*height: 100%;*/
+        height: 91%;
         border: 1px solid #ebeef5;
         border-radius: 4px;
         float: left;
+    }
+    @media screen and (max-width: 1366px) {
+        .chart-content {
+            height: 88%;
+        }
     }
     .chart-content .chart-title {
         width: 100%;
@@ -800,10 +815,16 @@
     }
     .chart-price {
         width: 80%;
-        height: 100%;
+        /*height: 100%;*/
+        height: 91%;
         border: 1px solid #ebeef5;
         border-radius: 4px;
         float: right;
+    }
+    @media screen and (max-width: 1366px) {
+        .chart-price {
+            height: 88%;
+        }
     }
 
     .title {

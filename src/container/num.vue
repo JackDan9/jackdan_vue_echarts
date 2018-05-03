@@ -16,6 +16,7 @@
                 <column :columnId="columnId" v-on:chartColumn="chartColumn"></column>
             </div>
             -->
+            <v-timer></v-timer>
             <div class="chart-content">
                 <div class="chart-title">
                     <h1>验价订单</h1>
@@ -53,17 +54,19 @@
             </div>
         </div>
         <v-table
-            :tableData="tableData"></v-table>
+            :tableData="tableData">
+        </v-table>
     </div>
 </template>
 
 <script>
-    import column from '../components/column';
-    import echartHeader from '../components/echartHeader';
-    import newPie from '../components/newPie';
-    import multipleColumn from '../components/multipleColumn';
-    import table from '../components/table';
-    import axios from 'axios';
+    import column from '../components/column'
+    import echartHeader from '../components/echartHeader'
+    import newPie from '../components/newPie'
+    import multipleColumn from '../components/multipleColumn'
+    import table from '../components/table'
+    import timer from '../components/timer'
+    import axios from 'axios'
     
     export default {
         data() {
@@ -218,6 +221,7 @@
                                 let showData = ret.number;
                                 this.legendData = [];
                                 this.seriesData = [];
+                                // console.log(showData);
                                 for(let j = 1;  j < showData.length; j++) {
                                     this.legendData.push({
                                         name: showData[j][0],
@@ -227,7 +231,7 @@
                                     });
                                     this.seriesData.push({
                                         name: showData[j][0],
-                                        value: showData[j][3]
+                                        value: showData[j][5]
                                     })
                                 }
                             }
@@ -273,7 +277,8 @@
             'v-echart-header': echartHeader,
             'v-new-pie': newPie,
             'v-column': column,
-            'v-table': table
+            'v-table': table,
+            'v-timer': timer
         }
     }
 </script>
@@ -283,10 +288,16 @@
         width: 19%;
         margin-left: 0.5%;
         margin-right: 0.5%;
-        height: 100%;
+        /*height: 100%;*/
+        height: 91%;
         border: 1px solid #ebeef5;
         border-radius: 4px;
         float: left;
+    }
+    @media screen and (max-width: 1366px) {
+        .chart-content {
+            height: 88%;
+        }
     }
     .chart-content .chart-title {
         width: 100%;
@@ -328,9 +339,15 @@
     }
     .chart-num {
         width: 80%;
-        height: 100%;
+        /*height: 100%;*/
+        height: 91%;
         border: 1px solid #ebeef5;
         border-radius: 4px;
         float: right;
+    }
+    @media screen and (max-width: 1366px) {
+        .chart-num {
+            height: 88%;
+        }
     }
 </style>
