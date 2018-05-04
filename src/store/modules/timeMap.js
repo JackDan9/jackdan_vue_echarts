@@ -106,7 +106,12 @@ const actions = {
                                 dataset: {
                                     dimensions: nameData,
                                     source: seriesData
-                                }
+                                },
+                                series: [
+                                    {type: 'bar'},
+                                    {type: 'bar'},
+                                    {type: 'bar'}
+                                ]
                             })
                         } else if (indexObj == 1) {
                             let showData = numberData;
@@ -127,7 +132,12 @@ const actions = {
                                 dataset: {
                                     dimensions: nameData,
                                     source: seriesData
-                                }
+                                },
+                                series: [
+                                    {type: 'bar'},
+                                    {type: 'bar'},
+                                    {type: 'bar'}
+                                ]
                             })
                         } else if (indexObj == 2){
                             let showData = priceData;
@@ -148,7 +158,12 @@ const actions = {
                                 dataset: {
                                     dimensions: nameData,
                                     source: seriesData
-                                }
+                                },
+                                series: [
+                                    {type: 'bar'},
+                                    {type: 'bar'},
+                                    {type: 'bar'}
+                                ]
                             })
                         }
                         
@@ -181,7 +196,14 @@ const actions = {
                             dataset: {
                                 dimensions: nameData,
                                 source: seriesData
-                            }
+                            },
+                            series: [
+                                {type: 'bar'},
+                                {type: 'bar'},
+                                {type: 'bar'},
+                                {type: 'bar'},
+                                {type: 'bar'}
+                            ]
                         })
                     }
                 )
