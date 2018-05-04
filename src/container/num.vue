@@ -38,6 +38,7 @@
                 </v-new-pie>
             </div>
             <div class="chart-num">
+                <!-- 
                 <v-echart-header 
                     :name="name" 
                     :legendArr="legendArr" 
@@ -47,9 +48,30 @@
                     :showWeek="showWeek" 
                     :showMonth="showMonth">        
                 </v-echart-header>
+                -->
+                <v-echart-header  
+                    :name="name" 
+                    :legendArr="legendArr" 
+                    :showSelectAll="showSelectAll" 
+                    :showFilter="showFilter" 
+                    :showWeek="showWeek" 
+                    :showMonth="showMonth"
+                    v-on:startTime="startTime"
+                    v-on:endTime="endTime"
+                    v-on:oneWeek="oneWeek"
+                    v-on:twoWeek="twoWeek"
+                    v-on:oneMonth="oneMonth">        
+                </v-echart-header>
+                <!--   
+                    <v-column 
+                        :columnId="columnId" 
+                        v-on:chartColumn="chartColumn"
+                        :columnData="columnData">
+                    </v-column> 
+                -->
                 <v-column 
-                    :columnId="columnId" 
-                    v-on:chartColumn="chartColumn">
+                    :columnId="columnId"
+                    :columnData="columnData">
                 </v-column>
             </div>
         </div>
@@ -71,11 +93,12 @@
     export default {
         data() {
             return {
-                items: [],
+                // items: [],
                 columnId: 'columnChart',
+                columnData: [],
                 legendArr: [],
                 name: '订单数',
-                myChartColumn: {},
+                // myChartColumn: {},
                 typeIndex: 0,
                 activeClass: 'box-card-active',
                 errorClass: 'box-card',
@@ -92,6 +115,8 @@
                 showFilter: true,
                 showWeek: true,
                 showMonth: true,
+                fromTime: 0,
+                toTime: parseInt((new Date().getTime())/1000),
                 tableData: []
             }
         },
@@ -99,20 +124,20 @@
         mounted() {
             // this.init();
             this.getData();
-            let showLoadingDefault = {
-                text: 'Loading...',
-                color: '#23531',
-                textColor: '#fff',
-                maskColor: '#272D3A',
-                zlevel: 0,
-            }
-            this.myChartColumn.showLoading(showLoadingDefault);
-            this.$store.commit('openLoading');
-            this.$store.dispatch('fetchColumnData', this.myChartColumn);
-            // this.legendArr = this.myChartColumn.getOption().legend;
-            this.legendArr.forEach((data) => {
-                data.selected = true;
-            })
+            // let showLoadingDefault = {
+            //     text: 'Loading...',
+            //     color: '#23531',
+            //     textColor: '#fff',
+            //     maskColor: '#272D3A',
+            //     zlevel: 0,
+            // }
+            // this.myChartColumn.showLoading(showLoadingDefault);
+            // this.$store.commit('openLoading');
+            // this.$store.dispatch('fetchColumnData', this.myChartColumn);
+            // // this.legendArr = this.myChartColumn.getOption().legend;
+            // this.legendArr.forEach((data) => {
+            //     data.selected = true;
+            // })
         },
 
         methods: {
@@ -122,8 +147,28 @@
                 })
             },
 
-            chartColumn(msg) {
-                this.myChartColumn = msg;
+            // chartColumn(msg) {
+            //     this.myChartColumn = msg;
+            // },
+            startTime(msg) {
+                this.fromTime = msg;
+                // console.log(msg);
+            },
+            endTime(msg) {
+                this.toTime = msg
+                this.getData()
+            },
+            oneWeek(msg) {
+                this.fromTime = msg
+                this.getData()
+            },
+            twoWeek(msg) {
+                this.fromTime = msg
+                this.getData()
+            },
+            oneMonth(msg) {
+                this.fromTime = msg
+                this.getData()
             },
             typeClick(index) {
                 for (let i = 0; i < this.chartType.length; i++) {
@@ -136,30 +181,33 @@
                 this.typeIndex = index;
                 this.getData();
                 this.name = this.chartType[index]['name'];
-                this.$store.commit('updateTypeIndex', this.typeIndex);
-                let showLoadingDefault = {
-                    text: 'Loading...',
-                    color: '#23531',
-                    textColor: '#fff',
-                    maskColor: '#272D3A',
-                    zlevel: 0,
-                }
-                this.myChartColumn.showLoading(showLoadingDefault);
-                this.$store.commit('openLoading');
-                this.$store.dispatch('fetchColumnData', this.myChartColumn); 
+                // this.$store.commit('updateTypeIndex', this.typeIndex);
+                // let showLoadingDefault = {
+                //     text: 'Loading...',
+                //     color: '#23531',
+                //     textColor: '#fff',
+                //     maskColor: '#272D3A',
+                //     zlevel: 0,
+                // }
+                // this.myChartColumn.showLoading(showLoadingDefault);
+                // this.$store.commit('openLoading');
+                // this.$store.dispatch('fetchColumnData', this.myChartColumn); 
             },
             getData() {
                 let random = parseInt(Math.random() * 10 + 1);
                 if (this.typeIndex < 3) {
-                    axios.get('/orders_carrier?ver=' + random, {params: {from:0}})
+                    axios.get('/orders_carrier?ver=' + random, {params: {from:this.fromTime, to:this.toTime}})
                         .then(
                             (res) => {
                                 let ret = res.data.data;
                                 let numberData = ret.number;
                                 let countData = ret.count;
                                 let priceData = ret.price;
+                                this.columnData = [];
                                 if(this.typeIndex == 0) {
+                                    this.columnData = [];
                                     let showData = countData;
+                                    this.columnData = showData;
                                     this.legendData = [];
                                     this.seriesData = [];
                                     for(let j = 1;  j < showData.length; j++) {
@@ -175,7 +223,9 @@
                                         })
                                     }
                                 } else if (this.typeIndex == 1) {
+                                    this.columnData = [];
                                     let showData = numberData;
+                                    this.columnData = showData;
                                     this.legendData = [];
                                     this.seriesData = [];
                                     for(let j = 1;  j < showData.length; j++) {
@@ -191,7 +241,9 @@
                                         })
                                     }
                                 } else {
+                                    this.columnData = [];
                                     let showData = priceData;
+                                    this.columnData = showData;
                                     this.legendData = [];
                                     this.seriesData = [];
                                     for (let j = 1;  j < showData.length; j++) {
@@ -214,14 +266,15 @@
                         }
                     )
                 } else {
-                    axios.get('/verify_carrier?ver=' + random, {params: {from:0}})
+                    axios.get('/verify_carrier?ver=' + random, {params: {from:this.fromTime, to:this.toTime}})
                         .then(
                             (res) => {
+                                this.columnData = [];
                                 let ret = res.data.data;
                                 let showData = ret.number;
+                                this.columnData = showData;
                                 this.legendData = [];
                                 this.seriesData = [];
-                                // console.log(showData);
                                 for(let j = 1;  j < showData.length; j++) {
                                     this.legendData.push({
                                         name: showData[j][0],
@@ -238,7 +291,8 @@
                         )
                         .catch( (error) => {
                             console.log(error);
-                        })
+                        }
+                    )
                 }
 
             },

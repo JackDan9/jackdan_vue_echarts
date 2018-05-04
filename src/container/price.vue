@@ -131,7 +131,10 @@
                 // sumDisabled: false
             }
         },
-        created () {
+        // created () {
+        //     this.getData();
+        // },
+        mounted() {
             this.getData();
         },
         beforeMount() {
@@ -181,7 +184,8 @@
                                     this.seriesData.push({
                                         name: key,
                                         type: 'line',
-                                        data: this.data['num15'][key]
+                                        data: this.data['num15'][key],
+                                        smooth: true
                                     })
                                 }
 
@@ -199,10 +203,10 @@
                             } else if (this.typePriceIndex == 1) {
                                 let arr = [];
                                 let sum = 0;
-                                for(let num = 0; num < this.data['num15']['BE'].length; num ++) {
+                                for (let num = 0; num < this.data['num15']['BE'].length; num ++) {
                                     sum = 0;
-                                    for(let key in this.data['num15']) {
-                                        if(this.data['num15'][key][num] == undefined) {
+                                    for (let key in this.data['num15']) {
+                                        if (this.data['num15'][key][num] == undefined) {
                                             this.data['num15'][key][num] = 0;
                                         }
                                         sum += this.data['num15'][key][num]
@@ -212,7 +216,8 @@
                                 this.seriesData.push({
                                     name: '总数',
                                     type: 'line',
-                                    data: arr
+                                    data: arr,
+                                    smooth: true
                                 })
 
                                 /*
@@ -236,7 +241,8 @@
                                     this.seriesData.push({
                                         name: key,
                                         type: 'line',
-                                        data: this.data['per'][key]
+                                        data: this.data['per'][key],
+                                        smooth: true
                                     })
                                 }
 
@@ -627,7 +633,7 @@
                         let timeNew = new Date(parseInt(this.data['ts'][i]) * 1000).toLocaleString("ch",{hour12:false}).replace(/:\d{1,2}$/,' ');
                         this.xAxisData.push(timeNew);
                     }
-                    for(let key in this.data['num15']) {
+                    for (let key in this.data['num15']) {
                         this.legendData.push({
                             name: key,
                             icon: 'bar',
@@ -656,11 +662,11 @@
                     let arr = [];
                     let sum = 0;
                     this.xAxisData = [];
-                    for(let i = 0; i < this.data['ts'].length; i++) {
+                    for (let i = 0; i < this.data['ts'].length; i++) {
                         let timeNew = new Date(parseInt(this.data['ts'][i]) * 1000).toLocaleString("ch",{hour12:false}).replace(/:\d{1,2}$/,' ');
                         this.xAxisData.push(timeNew);
                     }
-                    for(let num = 0; num < this.data['num15']['BE'].length; num ++) {
+                    for (let num = 0; num < this.data['num15']['BE'].length; num ++) {
                         sum = 0;
                         for(let key in this.data['num15']) {
                             if(this.data['num15'][key][num] == undefined) {

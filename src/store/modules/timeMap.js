@@ -77,6 +77,7 @@ const actions = {
     },
 
     fetchColumnData ({state, commit}, chartsObj) {
+        /*
         let random = parseInt(Math.random() * 10 + 1);
         if(state.typeIndex < 3) {
             axios.get('/orders_carrier?ver=' + random, {params: {from:state.startDateTime, to:state.endDateTime}})
@@ -211,6 +212,7 @@ const actions = {
                     console.log(error)
                 })
             }
+            */
 
     },
     fetchLineFlightData({state, commit}, chartsObj) {

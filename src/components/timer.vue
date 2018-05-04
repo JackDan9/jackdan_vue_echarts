@@ -33,8 +33,10 @@
 <style scoped>
     .timer {
         width: 100%;
-        margin-top: 10px;
-        margin-bottom: 10px;
+        /*margin-top: 10px;*/
+        /*margin-bottom: 10px;*/
+        padding-top: 10px;
+        padding-bottom: 10px;
     }
     .time-title {
         font-size: 22px;

@@ -1,25 +1,57 @@
 <template lang="html">
     <div class="title">
         <h1>{{name}}</h1>
-        <div class="chart-select-all" v-show="showSelectAll">
-            <button v-on:click="selectNotAll" v-bind:disabled="this.allNotDisabled">全不选</button>
-            <button v-on:click="selectAll" v-bind:disabled="this.allDisabled">全选</button>
+        <div 
+            class="chart-select-all" 
+            v-show="showSelectAll">
+            <button 
+                v-on:click="selectNotAll" 
+                v-bind:disabled="this.allNotDisabled">
+                全不选
+            </button>
+            <button 
+                v-on:click="selectAll" 
+                v-bind:disabled="this.allDisabled">
+                全选
+            </button>
         </div>
-        <div class="chart-select-time" v-show="showSelectTimeAll">
-            <button v-on:click="selectSmall" v-bind:disabled="this.smallDisabled">3小时</button>
-            <button v-on:click="selectMiddle" v-bind:disabled="this.middleDisabled">6小时</button>
-            <button v-on:click="selectBig" v-bind:disabled="this.bigDisabled">12小时</button>
-            <button v-on:click="selectSum" v-bind:disabled="this.sumDisabled">总数</button>
+        <div 
+            class="chart-select-time" 
+            v-show="showSelectTimeAll">
+            <button 
+                v-on:click="selectSmall" 
+                v-bind:disabled="this.smallDisabled">
+                3小时
+            </button>
+            <button 
+                v-on:click="selectMiddle" 
+                v-bind:disabled="this.middleDisabled">
+                6小时
+            </button>
+            <button 
+                v-on:click="selectBig" 
+                v-bind:disabled="this.bigDisabled">
+                12小时
+            </button>
+            <button 
+                v-on:click="selectSum" 
+                v-bind:disabled="this.sumDisabled">
+                总数
+            </button>
         </div>
-        <div class="chart-select-flesh" v-show="showSelectAll">
+        <div 
+            class="chart-select-flesh" 
+            v-show="showSelectAll">
             <button v-on:click="selectFlesh">刷新</button>
         </div>
-        <div class="filter" v-show="showFilter">
+        <div 
+            class="filter" 
+            v-show="showFilter">
             <div class="startTime">
                 <span class="timeText">起始时间</span>
                 <el-date-picker
                     v-model="startDate"
-                    type="datetime"
+                    type="date"
                     placeholder="选择日期"
                     value-format="timestamp"
                     @change="startDateTime">
@@ -29,19 +61,34 @@
                 <span class="timeText">截止时间</span>
                 <el-date-picker
                     v-model="endDate"
-                    type="datetime"
+                    type="date"
                     placeholder="选择日期"
                     value-format="timestamp"
                     @change="endDateTime">
                 </el-date-picker>
             </div>
         </div>
-        <div class="chart-select-week" v-show="showWeek">
-            <button v-on:click="selectOneWeek" v-bind:disabled="oneWeekDisabled">前一周</button>
-            <button v-on:click="selectTwoWeek" v-bind:disabled="twoWeekDisabled">前两周</button>
+        <div 
+            class="chart-select-week" 
+            v-show="showWeek">
+            <button 
+                v-on:click="selectOneWeek" 
+                v-bind:disabled="oneWeekDisabled">
+                前一周
+            </button>
+            <button 
+                v-on:click="selectTwoWeek" 
+                v-bind:disabled="twoWeekDisabled">
+                前两周
+            </button>
         </div>
-        <div class="chart-select-month" v-show="showMonth">
-            <button v-on:click="selectOneMonth" v-bind:disabled="oneMonthDisabled">前一月</button>
+        <div 
+            class="chart-select-month" 
+            v-show="showMonth">
+            <button 
+                v-on:click="selectOneMonth" 
+                v-bind:disabled="oneMonthDisabled">
+                上一月</button>
         </div>
         <div class="legend-wrapper">
             <ul>
@@ -117,14 +164,16 @@ export default {
         // 开始日期选择
         startDateTime(val) {
             let startTime = parseInt(val/1000);
-            this.$store.commit('updateStartDateTime', startTime);
-            this.$store.dispatch('fetchColumnData', this.myChart)
+            this.$emit("startTime", startTime)
+            // this.$store.commit('updateStartDateTime', startTime);
+            // this.$store.dispatch('fetchColumnData', this.myChart)
         },
         // 结束日期选择
         endDateTime(val) {
             let endTime = parseInt(val/1000);
-            this.$store.commit('updateEndDateTime', endTime);
-            this.$store.dispatch('fetchColumnData', this.myChart)
+            this.$emit("endTime", endTime)
+            // this.$store.commit('updateEndDateTime', endTime);
+            // this.$store.dispatch('fetchColumnData', this.myChart)
         },
         // 全部不选
         selectNotAll() {
@@ -282,25 +331,28 @@ export default {
             this.oneWeekDisabled = true;
             this.twoWeekDisabled = false;
             this.oneMonthDisabled = false;
-            let startOneWeekTime = (((new Date().getTime())/1000) - 432000);
-            this.$store.commit('updateStartDateTime', startOneWeekTime);
-            this.$store.dispatch('fetchColumnData', this.myChart);
+            let startOneWeekTime = parseInt(((new Date().getTime())/1000) - 432000);
+            // this.$store.commit('updateStartDateTime', startOneWeekTime);
+            // this.$store.dispatch('fetchColumnData', this.myChart);
+            this.$emit("oneWeek", startOneWeekTime)
         },  
         selectTwoWeek() {
             this.oneWeekDisabled = false;
             this.twoWeekDisabled = true;
             this.oneMonthDisabled = false;
-            let startTwoWeekTime = (((new Date().getTime())/1000) - 864000);
-            this.$store.commit('updateStartDateTime', startTwoWeekTime);
-            this.$store.dispatch('fetchColumnData', this.myChart);
+            let startTwoWeekTime = parseInt(((new Date().getTime())/1000) - 864000);
+            // this.$store.commit('updateStartDateTime', startTwoWeekTime);
+            // this.$store.dispatch('fetchColumnData', this.myChart);
+            this.$emit("twoWeek", startTwoWeekTime)
         },
         selectOneMonth() {
             this.oneWeekDisabled = false;
             this.twoWeekDisabled = false;
             this.oneMonthDisabled = true;
-            let startOneMonthTime = (((new Date().getTime())/1000) - 2592000);
-            this.$store.commit('updateStartDateTime', startOneMonthTime);
-            this.$store.dispatch('fetchColumnData', this.myChart);
+            let startOneMonthTime = parseInt(((new Date().getTime())/1000) - 2592000);
+            // this.$store.commit('updateStartDateTime', startOneMonthTime);
+            // this.$store.dispatch('fetchColumnData', this.myChart);
+            this.$emit("oneMonth", startOneMonthTime)
         },
 
         downplay(index) {
