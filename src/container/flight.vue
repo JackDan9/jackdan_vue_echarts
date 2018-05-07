@@ -4,11 +4,13 @@
             :wholePage="wholePage"
             :tableData="tableData">        
         </v-table>
+        <v-table-test></v-table-test>
     </div>
 </template>
 
 <script>
     import table from '../components/table'
+    import tableTest from '../components/tableTest'
     import axios from 'axios'
 
     export default {
@@ -40,7 +42,8 @@
         },
 
         components: {
-            'v-table': table
+            'v-table': table,
+            'v-table-test': tableTest
         }
     }
 </script>

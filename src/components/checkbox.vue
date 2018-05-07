@@ -1,5 +1,8 @@
 <template lang="html">
-    <span class="v-checkbox" :class="{'checked':isChecked}"></span>
+    <span 
+        class="v-checkbox" 
+        :class="{'checked':isChecked}">
+    </span>
 </template>
 
 <script>

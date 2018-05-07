@@ -88,11 +88,17 @@
             <button 
                 v-on:click="selectOneMonth" 
                 v-bind:disabled="oneMonthDisabled">
-                上一月</button>
+                上一月
+            </button>
         </div>
         <div class="legend-wrapper">
             <ul>
-                <li v-for="(legend, index) in legendArr" v-on:mouseout="downplay(index)" v-on:mouseover="highlight(index)" :style="styleArr[index]" @click="legendToggle(legend)"> 
+                <li 
+                    v-for="(legend, index) in legendArr" 
+                    v-on:mouseout="downplay(index)" 
+                    v-on:mouseover="highlight(index)" 
+                    :style="styleArr[index]" 
+                    @click="legendToggle(legend)"> 
                     {{legend.name}}
                 </li>
             </ul>

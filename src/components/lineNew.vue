@@ -38,6 +38,7 @@
             </v-filter>
         </div>
 
+        <!-- <div id="priceLine"></div> -->
         <div :id="lineId"></div>
     </div>
 </template>

@@ -44,6 +44,25 @@
                 </table>
             </div>
         </div>
+        <ul class="pagination">
+            <li 
+                v-show="current != 1" 
+                @click="current -- && goto(current)">
+                <a href="javascript:;">上一页</a>
+            </li>
+            <li 
+                v-for="index in pages" 
+                @click="goto(index)" 
+                v-bind:class="{ 'active-pagination':current == index }" 
+                :key="index">
+                <a href="javascript:;">{{index}}</a>        
+            </li>
+            <li 
+                v-show="(allpage != current) && (allpage != 0)"
+                @click="current++ && goto(current++)">
+                <a href="javascript:;">下一页</a>        
+            </li>
+        </ul>
     </div>
 </template>
 
@@ -63,22 +82,22 @@
             return {
                 theadData: ["No", "日期", "市民提交", "已受理", "已办结", "办事总量"],
                 tbodyData: [
+                    [0, 2017, 1620, 1573, 22, 1620],
                     [1, 2017, 1620, 1573, 22, 1620],
                     [2, 2017, 1620, 1573, 22, 1620],
                     [3, 2017, 1620, 1573, 22, 1620],
                     [4, 2017, 1620, 1573, 22, 1620],
-                    [1, 2017, 1620, 1573, 22, 1620],
-                    [2, 2017, 1620, 1573, 22, 1620],
-                    [3, 2017, 1620, 1573, 22, 1620],
-                    [4, 2017, 1620, 1573, 22, 1620],
-                    [1, 2017, 1620, 1573, 22, 1620],
-                    [2, 2017, 1620, 1573, 22, 1620],
-                    [3, 2017, 1620, 1573, 22, 1620],
-                    [4, 2017, 1620, 1573, 22, 1620],
-                    [1, 2017, 1620, 1573, 22, 1620],
-                    [2, 2017, 1620, 1573, 22, 1620],
-                    [3, 2017, 1620, 1573, 22, 1620],
-                    [4, 2017, 1620, 1573, 22, 1620],
+                    [5, 2017, 1620, 1573, 22, 1620],
+                    [6, 2017, 1620, 1573, 22, 1620],
+                    [7, 2017, 1620, 1573, 22, 1620],
+                    [8, 2017, 1620, 1573, 22, 1620],
+                    [9, 2017, 1620, 1573, 22, 1620],
+                    [10, 2017, 1620, 1573, 22, 1620],
+                    [11, 2017, 1620, 1573, 22, 1620],
+                    [12, 2017, 1620, 1573, 22, 1620],
+                    [13, 2017, 1620, 1573, 22, 1620],
+                    [14, 2017, 1620, 1573, 22, 1620],
+                    [15, 2017, 1620, 1573, 22, 1620],
                     ['合计', '' , 1620, 1573, 22, 1620]
                 ],
                 switchData: [
@@ -99,7 +118,32 @@
                 activeClass: 'swicth-title-active',
                 errorClass: 'swicth-title-inactive',
                 tableWhole: 'table-container',
-                tableInWhole: 'table-container-whole'
+                tableInWhole: 'table-container-whole',
+                current: 1,
+                showItem: 5,
+                allpage: 13
+            }
+        },
+
+        computed: {
+            pages: function() {
+                let pag = [];
+                if ( this.current < this.showItem ) {
+                    let i = Math.min(this.showItem, this.allpage);
+                    while(i) {
+                        pag.unshift(i--);
+                    }
+                } else {
+                    let middle = this.current - Math.floor(this.showItem / 2);
+                    let i = this.showItem;
+                    if (middle > (this.allpage - this.showItem)) {
+                        middle = (this.allpage - this.showItem) + 1;
+                    }
+                    while(i--) {
+                        pag.push( middle++ );
+                    }
+                }
+                return pag;
             }
         },
 
@@ -123,6 +167,13 @@
                         this.switchData[i]['isSwitchActive'] = false
                     }
                 }
+            },
+
+            goto:function(index) {
+                if (index == this.current) {
+                    return;
+                }
+                this.current = index
             }
         }
     }
@@ -234,5 +285,26 @@
     }
     .table-container table td {
         /*width: 13.33%;*/
+    }
+    .pagination {
+        position: relative;
+    }
+    .pagination li{
+        display: inline-block;
+        margin:0 5px;
+    }
+    .pagination li a{
+        padding:.5rem 1rem;
+        display:inline-block;
+        border:1px solid #ddd;
+        background:#fff;
+        color:#0E90D2;
+    }
+    .pagination li a:hover{
+        background:#eee;
+    }
+    .pagination li.active-pagination a{
+        background:#0E90D2;
+        color:#fff;
     }
 </style>

@@ -9,7 +9,9 @@
                 菜单
             </div>
             
-            <div class="menu-icon"  @mouseover="hideMenu()">
+            <div 
+                class="menu-icon" 
+                @mouseover="hideMenu()">
                 <h1>
                     <router-link :to="'/'">
                         {{titleName}}
@@ -149,7 +151,6 @@
             },
             hideSecMenu: function() {
                 this.secMenuActive = false;
-                // this.active = false
             },
             showArrow: function(index) {
                 if(index == 2) {

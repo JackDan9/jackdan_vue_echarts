@@ -6,7 +6,10 @@
                 <div class="chart-title">
                     <h1>航线数据</h1>
                 </div>
-                <div v-bind:class="[item.isPriceActive ? activeClass : '', errorClass]" v-for="(item, index) in chartType" :key="index" v-on:click="typeClick(index)">
+                <div 
+                    v-bind:class="[item.isPriceActive ? activeClass : '', errorClass]" v-for="(item, index) in chartType" 
+                    :key="index" 
+                    v-on:click="typeClick(index)">
                     <div class="box-card-header">
                         <div class="clearfix">
                             <span>{{item.name}}</span>
