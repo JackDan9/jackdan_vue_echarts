@@ -8,8 +8,16 @@
 <script>
     import moment from 'moment';
     export default {
+        /*
+        beforeCreate () {
+            import(`moment`).then(module => {
+                this.moment = module;
+            });
+        },
+        */
         data() {
             return {
+                moment: null,
                 title: '实时数据监控',
                 timer: {},
                 // clock: `${moment().format('HH')} : ${moment().format('mm')} : ${moment().format('ss')}`

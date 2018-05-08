@@ -110,9 +110,7 @@
                 secMenuActive: false,
                 items: [
                     {name: '验价订单', ad: 'num'},
-                    {name: '航线数据', ad: 'price'},
-                    {name: '机票', ad: 'flight'},  
-                    {name: '信息发布量', ad: 'list'},       
+                    {name: '航线数据', ad: 'price'}       
                 ],
                 titleName: '',
                 firstMenuItems: [],

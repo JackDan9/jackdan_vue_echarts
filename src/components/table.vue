@@ -44,6 +44,7 @@
                 </table>
             </div>
         </div>
+        <!--
         <ul class="pagination">
             <li 
                 v-show="current != 1" 
@@ -63,6 +64,7 @@
                 <a href="javascript:;">下一页</a>        
             </li>
         </ul>
+        -->
     </div>
 </template>
 

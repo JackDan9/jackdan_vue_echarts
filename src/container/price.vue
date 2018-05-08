@@ -120,7 +120,7 @@
                 typePriceIndex: 0,
                 selectStatus: true,
                 formTime: 0,
-                // toTime: (new Date().getTime())/1000,
+                // toTime: parseInt((new Date().getTime())/1000),
                 showSelectAll: true,
                 showSelectTimeAll: true,
                 showFilter: false,
@@ -137,11 +137,11 @@
         // created () {
         //     this.getData();
         // },
-        mounted() {
-            this.getData();
-        },
+        // mounted() {
+        //     this.getData();
+        // },
         beforeMount() {
-            // this.getData();
+            this.getData();
 
             /*
             let showLoadingDefault = {
@@ -165,7 +165,7 @@
             */
             /*获取数据函数*/
             getData() {
-                axios.get('/15mins_carrier', {params: {from: this.formTime}})
+                axios.get('/15mins_carrier', {params: {from:this.formTime}})
                     .then (
                         (res) => {
                             let ret = res.data.data;

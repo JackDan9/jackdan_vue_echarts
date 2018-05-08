@@ -5,9 +5,9 @@ import router from './router'
 import axios from 'axios'
 import qs from 'qs'
 import 'babel-polyfill'
-import ElementUI from 'element-ui'
+// import ElementUI from 'element-ui'
 import Config from './config/config'
-import { DatePicker } from 'element-ui'
+import { DatePicker, Button, Select, Input } from 'element-ui'
 import { Loading, Message } from 'element-ui'
 import 'element-ui/lib/theme-chalk/display.css'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -16,11 +16,14 @@ import 'element-ui/lib/theme-chalk/index.css'
 import store from './store/index'
 
 Vue.component(DatePicker.name, DatePicker)
-Vue.use(ElementUI)
+Vue.component(Button.name, Button)
+Vue.component(Select.name, Select)
+Vue.component(Input.name, Input)
+// Vue.use(ElementUI)
 Vue.use(Vuex)
 
 // 加载超时时长
-axios.defaults.timeout = 8000;
+axios.defaults.timeout = 100000;
 
 // http请求拦截器
 let loadinginstace
