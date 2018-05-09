@@ -36,7 +36,7 @@
                             <td 
                                 v-for="(item, index) in tbodyItem" 
                                 :key="index" 
-                                :style="'width:' + 100/tbodyItem.length + '%'">
+                                :style="'width:' + 100/theadData.length + '%'">
                                 {{item}}
                             </td>
                         </tr>
@@ -78,6 +78,10 @@
             tableData: {
                 type: Array,
                 default: []
+            },
+            tableType: {
+                type: Number,
+                default: 0
             }
         },
         data() {
@@ -104,16 +108,13 @@
                 ],
                 switchData: [
                     {
-                        name: "办事项功能开启统计", isSwitchActive: true
+                        name: "总体波动", isSwitchActive: true
                     },
                     {
-                        name: "居委办事项功能开启统计", isSwitchActive: false
+                        name: "最大波动", isSwitchActive: false
                     },
                     {
-                        name: "政府办事项", isSwitchActive: false
-                    },
-                    {
-                        name: "高新数码港办事项", isSwitchActive: false
+                        name: "最小波动", isSwitchActive: false
                     }
                 ],
                 switchType: 0,
@@ -121,6 +122,10 @@
                 errorClass: 'swicth-title-inactive',
                 tableWhole: 'table-container',
                 tableInWhole: 'table-container-whole',
+                dataArr: [],
+                maxData: [],
+                minData: [],
+                switchIndex: 0,
                 current: 1,
                 showItem: 5,
                 allpage: 13
@@ -151,26 +156,200 @@
 
         created() {
             this.$watch('tableData', options => {
-                this.theadData = this.tableData[this.switchType]['theadData']
-                this.tbodyData = this.tableData[this.switchType]['tbodyData']
+                this.tbodyData = [];
+                this.theadData = [];
+                this.dataArr = [];
+                if (this.tableType == 1) {
+                     this.switchData = [
+                        {
+                            name: "总体波动", isSwitchActive: true
+                        }
+                    ]
+                } else {
+                    this.switchData = [
+                        {
+                            name: "总体波动", isSwitchActive: true
+                        },
+                        {
+                            name: "最大波动", isSwitchActive: false
+                        },
+                        {
+                            name: "最小波动", isSwitchActive: false
+                        }
+                    ]
+                }
+                this.tableData.map((item, index) => {
+                    let name = item['name'];
+                    let data = item['data'];
+                    let len = item['data'].length;
+                    let stdevData = this.stdev(data, len);
+                    let stdevType = '';
+                    if (stdevData == 0) {
+                        stdevType = '此数据没有波动'
+                    } else if ((stdevData > 0) && (stdevData <= 100)) {
+                        stdevType = '小于100'
+                    } else if ((stdevData > 100) && (stdevData <= 1000)){
+                        stdevType = '小于1000'
+                    } else {
+                        stdevType = '大于1000'
+                    }
+                    this.dataArr.push({
+                        name, stdevData, stdevType
+                    })
+                })
+                // console.log(dataArr);
+                // this.tbodyData = this.dataArr;
+                this.tbodyData = this.arrSort(this.dataArr, this.dataArr.length);
+                this.theadData = ['No', '波动大小数值', '波动范围']
+                // this.maxData = this.arrMax(this.dataArr, this.dataArr.length);
+                // this.minData = this.arrMin(this.dataArr, this.dataArr.length);
+                // console.log(this.tbodyData);
+                // this.theadData = this.tableData[this.switchType]['theadData']
+                // this.tbodyData = this.tableData[this.switchType]['tbodyData']
             })
         },
 
         methods: {
             switchClick(switchIndex) {
-                for(let i = 0; i < this.switchData.length; i++) {
-                    if (switchIndex == i) {
-                        this.switchData[switchIndex]['isSwitchActive'] = !this.switchData[switchIndex]['isSwitchActive']
+                this.switchIndex = switchIndex;
+                let switchLen = this.switchData.length;
+                for(let i = 0; i < switchLen; i++) {
+                    if (this.switchIndex == i) {
+                        this.switchData[this.switchIndex]['isSwitchActive'] = !this.switchData[this.switchIndex]['isSwitchActive']
                         this.theadData = []
                         this.tbodyData = []
-                        this.theadData = this.tableData[switchIndex]['theadData']
-                        this.tbodyData = this.tableData[switchIndex]['tbodyData']
+                        this.theadData = ['No', '波动大小数值', '波动范围']
+                        if (this.switchIndex == 0) {
+                            // this.dataArr = [];
+                            // this.tableData.map((item, index) => {
+                            //     let name = item['name'];
+                            //     let data = item['data'];
+                            //     let len = item['data'].length;
+                            //     let stdevData = this.stdev(data, len);
+                            //     let stdevType = '';
+                            //     if (stdevData == 0) {
+                            //         stdevType = '此数据没有波动'
+                            //     } else if ((stdevData > 0) && (stdevData <= 100)) {
+                            //         stdevType = '小于100'
+                            //     } else if ((stdevData > 100) && (stdevData <= 1000)){
+                            //         stdevType = '小于1000'
+                            //     } else {
+                            //         stdevType = '大于1000'
+                            //     }
+                            //     this.dataArr.push({
+                            //         name, stdevData, stdevType
+                            //     })
+                            // })
+                            this.tbodyData = this.arrSort(this.dataArr, this.dataArr.length);
+                        } else if (this.switchIndex == 1) {
+                            // this.tbodyData = this.maxData
+                            // this.dataArr = [];
+                            // this.tableData.map((item, index) => {
+                            //     let name = item['name'];
+                            //     let data = item['data'];
+                            //     let len = item['data'].length;
+                            //     let stdevData = this.stdev(data, len);
+                            //     let stdevType = '';
+                            //     if (stdevData == 0) {
+                            //         stdevType = '此数据没有波动'
+                            //     } else if ((stdevData > 0) && (stdevData <= 100)) {
+                            //         stdevType = '小于100'
+                            //     } else if ((stdevData > 100) && (stdevData <= 1000)){
+                            //         stdevType = '小于1000'
+                            //     } else {
+                            //         stdevType = '大于1000'
+                            //     }
+                            //     this.dataArr.push({
+                            //         name, stdevData, stdevType
+                            //     })
+                            // })
+                            let tbodyMaxData = [];
+                            let splLen = this.dataArr.length;
+                            tbodyMaxData = this.arrSort(this.dataArr, this.dataArr.length);
+                            this.tbodyData = tbodyMaxData.splice(splLen-5, splLen);
+                            // let splLen = this.tbodyData.length;
+                            // this.tbodyData = this.tbodyData.splice(splLen-5, splLen)
+                        } else {
+                            // this.dataArr = [];
+                            // this.tableData.map((item, index) => {
+                            //     let name = item['name'];
+                            //     let data = item['data'];
+                            //     let len = item['data'].length;
+                            //     let stdevData = this.stdev(data, len);
+                            //     let stdevType = '';
+                            //     if (stdevData == 0) {
+                            //         stdevType = '此数据没有波动'
+                            //     } else if ((stdevData > 0) && (stdevData <= 100)) {
+                            //         stdevType = '小于100'
+                            //     } else if ((stdevData > 100) && (stdevData <= 1000)){
+                            //         stdevType = '小于1000'
+                            //     } else {
+                            //         stdevType = '大于1000'
+                            //     }
+                            //     this.dataArr.push({
+                            //         name, stdevData, stdevType
+                            //     })
+                            // })
+                            let tbodyMinData = [];
+                            tbodyMinData = this.arrSort(this.dataArr, this.dataArr.length);
+                            this.tbodyData = tbodyMinData.slice(0, 5);
+                            // this.tbodyData = this.tbodyData.slice(0, 5);
+                        }  
                     } else {
                         this.switchData[i]['isSwitchActive'] = false
                     }
                 }
             },
-
+            stdev(data, num) {  
+                let i = 0;
+                let avg1 = this.avg(data, num);
+                let sum = 0;
+                for (i = 0; i < num; i++) {
+                    sum += (data[i] - avg1) * (data[i] - avg1);
+                }
+                return Math.sqrt(sum/num);
+            },
+            avg(data, num) {
+                let i = 0;
+                let sum = 0;
+                for (i = 0; i < num; i++) {
+                    sum += data[i]
+                }
+                return sum/num
+            },
+            arrSort(dataArr, num) {
+                for (let i = 0;  i < num; i++) {
+                    for (let j = i; j < num; j++) {
+                        if (dataArr[i]['stdevData'] > dataArr[j]['stdevData']) {
+                            let temp = dataArr[i]
+                            dataArr[i] = dataArr[j]
+                            dataArr[j] = temp
+                        }
+                    }
+                }
+                return dataArr;
+            },
+            arrMax(dataArr, num) {
+                let index = 0;
+                let max = dataArr[0]['stdevData'];
+                for (let i = 1; i < num; i++) {
+                    if (dataArr[i]['stdevData'] > max) {
+                        max = dataArr[i]['stdevData']
+                        index = i;
+                    }
+                }
+            },
+            arrMin(dataArr, num) {
+                let index = 0;
+                let min = dataArr[0]['stdevData']; 
+                for (let i = 1; i < num; i++) {
+                    if (dataArr[i]['stdevData'] < min) {
+                        min = dataArr[i]['stdevData']
+                        index = i
+                    }
+                }
+                // return dataArr[index];
+            },
             goto:function(index) {
                 if (index == this.current) {
                     return;

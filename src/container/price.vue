@@ -73,7 +73,8 @@
             </div>
         </div>
         <v-table
-            :tableData="tableData">
+            :tableData="tableData"
+            :tableType="tableType">
         </v-table>
     </div>
 </template>
@@ -119,13 +120,14 @@
                 selectedObj: {},
                 typePriceIndex: 0,
                 selectStatus: true,
-                formTime: 0,
+                formTime: parseInt((new Date().getTime())/1000 - 24 * 60 * 60),
                 // toTime: parseInt((new Date().getTime())/1000),
                 showSelectAll: true,
                 showSelectTimeAll: true,
                 showFilter: false,
                 chooseNotAll: true,
-                tableData: []
+                tableData: [],
+                tableType: 0
                 // allDisabled: false,
                 // allNotDisabled: false,
                 // smallDisabled: false,
@@ -140,7 +142,7 @@
         // mounted() {
         //     this.getData();
         // },
-        beforeMount() {
+        mounted() {
             this.getData();
 
             /*
@@ -173,17 +175,23 @@
                             this.legendData = [];
                             this.xAxisData = [];
                             this.seriesData = [];
+                            this.tableData = [];
                             for(let i = 0; i < this.data['ts'].length; i++) {
                                 let timeNew = new Date(parseInt(this.data['ts'][i]) * 1000).toLocaleString("ch",{hour12:false}).replace(/:\d{1,2}$/,' ');
                                 this.xAxisData.push(timeNew);
                             }
                             if (this.typePriceIndex == 0) {
+                                this.tableType = 0;
                                 for(let key in this.data['num15']) {
                                     this.legendData.push({
                                         name: key,
                                         icon: 'bar',
                                         textStyle: {fontWeight:'bold', color: 'rgba(255,255,255,1)'},
                                     });
+                                    this.tableData.push({
+                                        name: key,
+                                        data: this.data['num15'][key]
+                                    })
                                     this.seriesData.push({
                                         name: key,
                                         type: 'line',
@@ -204,6 +212,7 @@
                                 }
                                 */
                             } else if (this.typePriceIndex == 1) {
+                                this.tableType = 1;
                                 let arr = [];
                                 let sum = 0;
                                 for (let num = 0; num < this.data['num15']['BE'].length; num ++) {
@@ -216,6 +225,10 @@
                                     }
                                     arr.push(sum);
                                 }
+                                this.tableData.push({
+                                    name: '总数',
+                                    data: arr
+                                })
                                 this.seriesData.push({
                                     name: '总数',
                                     type: 'line',
@@ -235,12 +248,17 @@
                                 }
                                 */
                             } else {
+                                this.tableType = 2;
                                 for(let key in this.data['per']) {
                                     this.legendData.push({
                                         name: key,
                                         icon: 'bar',
                                         textStyle: {fontWeight:'bold', color: 'rgba(255,255,255,1)'},
                                     });
+                                    this.tableData.push({
+                                        name: key,
+                                        data: this.data['per'][key]
+                                    })
                                     this.seriesData.push({
                                         name: key,
                                         type: 'line',
@@ -626,6 +644,11 @@
                 this.typePriceIndex = index;
 
                 if (index == 0) {
+                    this.showSelectAll = true;
+                    this.allDisabled = false;
+                    this.allNotDisabled = false;
+                    this.getData();
+                    /*
                     this.legendData = [];
                     this.seriesData = [];
                     this.showSelectAll = true;
@@ -658,7 +681,11 @@
                         },
                         series: this.seriesData
                     }
+                    */
                 } else if (index == 1) {
+                    this.showSelectAll = false;
+                    this.getData();
+                    /*
                     this.legendData = [];
                     this.seriesData = [];
                     this.showSelectAll = false;
@@ -693,7 +720,13 @@
                         },
                         series: this.seriesData
                     }
+                    */
                 } else {
+                    this.showSelectAll = true;
+                    this.allDisabled = false;
+                    this.allNotDisabled = false;
+                    this.getData();
+                    /*
                     this.showSelectAll = true;
                     this.legendData = [];
                     this.seriesData = [];
@@ -726,6 +759,7 @@
                         },
                         series: this.seriesData
                     }
+                    */
                 }
 
                 /*

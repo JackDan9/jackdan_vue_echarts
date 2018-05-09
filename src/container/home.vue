@@ -70,10 +70,10 @@
 
 
 <script>
-import column from '../components/column';
-import Map from '../components/map';
-import Pie from '../components/pie';
-import LineNew from '../components/lineNew';
+import column from '../components/column'
+import map from '../components/map'
+import pie from '../components/pie'
+import lineNew from '../components/lineNew'
 import echartHeader from '../components/echartHeader'
 import timer from '../components/timer'
 import axios from 'axios'
@@ -81,19 +81,19 @@ import axios from 'axios'
 export default {
     data() {
         return {
-            currentDate: new Date(),
-            id: 'map',
-            pieId: 'pie',
-            lineId: 'homeLine',
-            name: '',
-            nameLine: '各部门数据走势',
-            myLineChart: {},
-            legendArr: [],
-            legendData: [],
-            xAxisData: [],
-            seriesData: [],
-            selectStatus: true,
-            overviewItem: [],
+            // currentDate: new Date(),// 当先日期
+            id: 'map', // 地图的id, 在map组件中使用
+            pieId: 'pie', // 饼图的id, 在pie组件中使用
+            lineId: 'homeLine', // 折线图的id, 在lineNew组件中使用
+            name: '', // 具体地名(北关区)
+            nameLine: '各部门数据走势', // 地区部门的走势名称
+            // myLineChart: {}, // 从子组件传递到父组件的Chart对象(不用传递对象，不友好)
+            // legendArr: [], // 传递到ehartsHeader的参数(但是legend很多的话就存在显示不友好了)
+            legendData: [], // legend的数据(传递到子组件的echarts-legend数据)
+            xAxisData: [], // xAxis的数据(传递到子组件的echarts-xAxis数据)
+            seriesData: [], // series的数据(传递到子组件的echarts-series数据)
+            selectStatus: true, // legend的selected数据(控制echarts-legend的选择状态)
+            overviewItem: [], // home主页左边的数据概览区域元素
             overviewItems: [
                 {
                     "name": "北关区", 
@@ -114,9 +114,9 @@ export default {
                         {"title": " 法院数据对比", "url": ""}
                     ]
                 }
-            ],
-            lineEchartsData: [],
-            lineEchartsDatas: [],
+            ], // home主页左边的数据概览区域元素集合
+            lineEchartsData: [], // line折线图的数据元素
+            lineEchartsDatas: [], // line折线图的数据元素集合
         };
     },
     methods: {
@@ -206,9 +206,9 @@ export default {
     },
 
     components: {
-        'v-map': Map,
-        'v-pie': Pie,
-        'v-line-new': LineNew,
+        'v-map': map,
+        'v-pie': pie,
+        'v-line-new': lineNew,
         'v-echart-header': echartHeader,
         'v-timer': timer
     },

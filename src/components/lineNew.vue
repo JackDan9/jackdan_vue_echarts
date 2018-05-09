@@ -244,7 +244,7 @@
                             },
                             series: this.seriesData
                         }
-                    } else if(!this.selectStatus) {
+                    } else if (!this.selectStatus) {
                         this.obj = {}
                         for(let i = 0; i < this.legendData.length; i++) {
                             this.obj[this.legendData[i]['name']] = this.selectStatus
@@ -345,6 +345,11 @@
         opacity: 0.9;
     }
     #homeLine {
+        width: 100%;
+        height: 93%;
+        opacity: 0.9;
+    }
+    #moneyLine {
         width: 100%;
         height: 93%;
         opacity: 0.9;

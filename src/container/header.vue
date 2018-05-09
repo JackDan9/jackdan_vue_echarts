@@ -3,8 +3,7 @@
         <div class="nav-header-left">
             <div v-bind:class="[active ? activeClass : '', errorClass]" 
                 @mouseover="showMenu()"
-                @mouseout="hideMenu()"
-                >
+                @mouseout="hideMenu()">
                 <i class="el-icon-menu icon-pointer nav-icon-reorder" title="菜单"></i>
                 菜单
             </div>
@@ -25,8 +24,7 @@
                     class="nav-quicklink" 
                     v-for="(item, index) in items" 
                     :key="index" 
-                    @click="showArrow(index)"
-                    >
+                    @click="showArrow(index)">
                     <router-link :to="'/' + item.ad">
                         {{item.name}}
                         <!--
@@ -81,8 +79,7 @@
             class="nav-flyout level-1 opacity fixed" 
             v-show="secMenuActive"
             @mouseover="showSec()" 
-            @mouseout="hideSec()"
-            >
+            @mouseout="hideSec()">
             <div class="nav-flyout-content">
                 <div class="nav-vertical">
                     <div class="nav-vertical-item" v-for="(item, indexSec) in secondMenuItems" :key="indexSec">
@@ -109,8 +106,9 @@
                 errorArrowClass: 'nav-popover',
                 secMenuActive: false,
                 items: [
-                    {name: '验价订单', ad: 'num'},
-                    {name: '航线数据', ad: 'price'}       
+                    {name: '验价订单', ad: 'num', isQuicklinksActive: false},
+                    {name: '航线数据', ad: 'price', isQuicklinksActive: false},
+                    {name: '毛利率', ad: 'money', isQuicklinksActive: false}       
                 ],
                 titleName: '',
                 firstMenuItems: [],
@@ -173,7 +171,7 @@
         right: 0;
         height: 60px;
         padding-right: 30px;
-        bakground-color: #232f3e;
+        background-color: #232f3e;
         z-index: 6100;
     }
 
@@ -308,9 +306,16 @@
         color: rgba(255, 255, 255, 0.8);
     }
 
+    /*
     .nav-flyout-trigger a.router-link-active {
         color: rgba(255, 255, 255, 0.9);
         border-bottom: solid 2px #409eff;
+    }
+    */
+    .nav-quicklinks a.router-link-active {
+        /*color: rgba(255, 255, 255, 0.9);*/
+        /*border-bottom: solid 2px #409eff;*/
+        color: #e9903a;
     }
 
     .header-container {
