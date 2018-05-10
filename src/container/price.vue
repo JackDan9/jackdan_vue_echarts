@@ -144,6 +144,9 @@
         // },
         mounted() {
             this.getData();
+            // setInterval( () => {
+            //     this.getData();
+            // }, 900000)
 
             /*
             let showLoadingDefault = {
@@ -798,6 +801,10 @@
             'v-filter': filter,
             'v-timer': timer,
             'v-table': table
+        },
+
+        destroyed () {
+            clearInterval()
         }
     }
 </script>

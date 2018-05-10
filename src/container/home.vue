@@ -87,8 +87,8 @@ export default {
             lineId: 'homeLine', // 折线图的id, 在lineNew组件中使用
             name: '', // 具体地名(北关区)
             nameLine: '各部门数据走势', // 地区部门的走势名称
-            // myLineChart: {}, // 从子组件传递到父组件的Chart对象(不用传递对象，不友好)
-            // legendArr: [], // 传递到ehartsHeader的参数(但是legend很多的话就存在显示不友好了)
+            myLineChart: {}, // 从子组件传递到父组件的Chart对象(不用传递对象，不友好)
+            legendArr: [], // 传递到ehartsHeader的参数(但是legend很多的话就存在显示不友好了)
             legendData: [], // legend的数据(传递到子组件的echarts-legend数据)
             xAxisData: [], // xAxis的数据(传递到子组件的echarts-xAxis数据)
             seriesData: [], // series的数据(传递到子组件的echarts-series数据)

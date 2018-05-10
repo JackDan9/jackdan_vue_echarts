@@ -117,8 +117,5 @@ export const columnOption = {
     // Declare several bar series, each will be mapped
     // to a column of dataset.source by default.
     series: [
-        {type: 'bar'},
-        {type: 'bar'},
-        {type: 'bar'}
     ]
 }

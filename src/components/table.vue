@@ -193,14 +193,27 @@
                     } else {
                         stdevType = '大于1000'
                     }
+                    // console.log(item['data'])
+                    // console.log(item['data'][len - 1] )
+                    let changeType = '';
+                    if (item['data'][len - 1] < item['data'][len - 2]) {
+                        changeType = '下降';
+                    } else if (item['data'][len - 1] > item['data'][len - 2]) {
+                        changeType = '上升';
+                    } else {
+                        changeType = '没有变化';
+                    }
+                    // if (this.tableData[tabLen] > this.tableData[tabLen - 1]['data']) {
+                    //     console.log('上升');
+                    // }
                     this.dataArr.push({
-                        name, stdevData, stdevType
+                        name, stdevData, stdevType, changeType
                     })
                 })
                 // console.log(dataArr);
                 // this.tbodyData = this.dataArr;
                 this.tbodyData = this.arrSort(this.dataArr, this.dataArr.length);
-                this.theadData = ['No', '波动大小数值', '波动范围']
+                this.theadData = ['No', '波动大小数值', '波动范围', '最新变化情况']
                 // this.maxData = this.arrMax(this.dataArr, this.dataArr.length);
                 // this.minData = this.arrMin(this.dataArr, this.dataArr.length);
                 // console.log(this.tbodyData);
@@ -218,7 +231,7 @@
                         this.switchData[this.switchIndex]['isSwitchActive'] = !this.switchData[this.switchIndex]['isSwitchActive']
                         this.theadData = []
                         this.tbodyData = []
-                        this.theadData = ['No', '波动大小数值', '波动范围']
+                        this.theadData = ['No', '波动大小数值', '波动范围', '最新变化情况']
                         if (this.switchIndex == 0) {
                             // this.dataArr = [];
                             // this.tableData.map((item, index) => {
@@ -264,9 +277,8 @@
                             //     })
                             // })
                             let tbodyMaxData = [];
-                            let splLen = this.dataArr.length;
                             tbodyMaxData = this.arrSort(this.dataArr, this.dataArr.length);
-                            this.tbodyData = tbodyMaxData.splice(splLen-5, splLen);
+                            this.tbodyData = tbodyMaxData.slice(0, 5);
                             // let splLen = this.tbodyData.length;
                             // this.tbodyData = this.tbodyData.splice(splLen-5, splLen)
                         } else {
@@ -291,8 +303,9 @@
                             //     })
                             // })
                             let tbodyMinData = [];
+                            let splLen = this.dataArr.length;
                             tbodyMinData = this.arrSort(this.dataArr, this.dataArr.length);
-                            this.tbodyData = tbodyMinData.slice(0, 5);
+                            this.tbodyData = tbodyMinData.splice(splLen-5, splLen);
                             // this.tbodyData = this.tbodyData.slice(0, 5);
                         }  
                     } else {
@@ -320,7 +333,7 @@
             arrSort(dataArr, num) {
                 for (let i = 0;  i < num; i++) {
                     for (let j = i; j < num; j++) {
-                        if (dataArr[i]['stdevData'] > dataArr[j]['stdevData']) {
+                        if (dataArr[i]['stdevData'] < dataArr[j]['stdevData']) {
                             let temp = dataArr[i]
                             dataArr[i] = dataArr[j]
                             dataArr[j] = temp
@@ -348,7 +361,6 @@
                         index = i
                     }
                 }
-                // return dataArr[index];
             },
             goto:function(index) {
                 if (index == this.current) {
@@ -454,6 +466,13 @@
     .table-container .table-body table tbody td {
         /*line-height: 110px;*/
         line-height: 40px;
+    }
+    .table-container .table-body table tbody td:nth-of-type(2) {
+        color: #e9903a;
+    }
+    .table-container .table-body table tbody td:nth-of-type(4) {
+        color: red;
+        font-weight: bold;
     }
     .table-container .table-body table tbody td img {
         vertical-align: middle;

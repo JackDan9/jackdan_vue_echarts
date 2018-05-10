@@ -94,7 +94,7 @@
         data() {
             return {
                 // items: [],
-                columnId: 'columnChart',
+                columnId: 'numColumn',
                 columnData: [],
                 legendArr: [],
                 name: '订单数',

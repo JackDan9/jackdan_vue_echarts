@@ -42,8 +42,10 @@
                 let nameData = [];
                 let seriesData = [];
                 let seriesType = [];
+                console.log(this.columnData[0]);
                 this.columnData[0].map((item, index) => {
                     nameData.push(item);
+                    console.log(index);
                     if(index > 0) {
                         seriesType.push({
                             type: 'bar'
@@ -99,7 +101,12 @@
         height: 93%;
     }
 
-    #columnChart {
+    #numColumn {
+        width: 100%;
+        height: 93%;
+    }
+
+    #moneyColumn {
         width: 100%;
         height: 93%;
     }

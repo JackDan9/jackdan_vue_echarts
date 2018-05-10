@@ -154,7 +154,6 @@
                 } else {
                     this.arrowActive = false
                 }
-                
             }
         }
     }
