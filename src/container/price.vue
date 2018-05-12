@@ -59,6 +59,21 @@
                             {{itemTime.name}}
                         </button>
                     </div>
+
+                    <div class="chart-select-range" v-show="showSelectRange">
+                        <div style="display: inline-block; position: relative; width: 50%;">
+                            <input 
+                                type="text" 
+                                name="flight" 
+                                placeholder="航线号"
+                                class="price-input"
+                                v-model="inputValue"
+                                @change="rangeChange()" />
+                        </div>
+                        <button
+                            v-on:click="rangeClick()" 
+                            v-bind:disabled="isRangeDisabled">搜索</button>
+                    </div>
                 </div>
                 <!--
                 <v-line-new :option="option"></v-line-new>
@@ -68,7 +83,8 @@
                     :xAxisData="xAxisData"
                     :legendData="legendData"
                     :seriesData="seriesData"
-                    :selectStatus="selectStatus">
+                    :selectStatus="selectStatus"
+                    :searchData="searchData">
                 </v-line-new>
             </div>
         </div>
@@ -124,10 +140,14 @@
                 // toTime: parseInt((new Date().getTime())/1000),
                 showSelectAll: true,
                 showSelectTimeAll: true,
+                showSelectRange: true,
                 showFilter: false,
                 chooseNotAll: true,
+                isRangeDisabled: false,
                 tableData: [],
-                tableType: 0
+                tableType: 0,
+                inputValue: '',
+                searchData: '',
                 // allDisabled: false,
                 // allNotDisabled: false,
                 // smallDisabled: false,
@@ -163,6 +183,14 @@
             // this.legendArr = this.myLineChart.getOption().legend;
         },
         methods: {
+            rangeClick() {
+                this.isRangeDisabled = true;
+                this.searchData = this.inputValue;
+                this.getData();
+            },
+            rangeChange() {
+                this.isRangeDisabled = false;
+            },
             /*
             selectNotAll(msg) {
                 this.chooseNotAll = msg;
@@ -339,7 +367,7 @@
                 this.allNotDisabled = true;
                 this.chooseNotAll = false;
                 let obj = {}
-                for(let i = 0; i < this.legendData.length; i++) {
+                for (let i = 0; i < this.legendData.length; i++) {
                     obj[this.legendData[i]['name']] = false
                 }
                 this.option = {
@@ -352,7 +380,6 @@
                     },
                     series: this.seriesData
                 }
-
                 // this.$emit("selectNotAll", false)
                 // this.chooseState = false
                 // this.$store.commit('updateChooseState', this.chooseState);
@@ -499,7 +526,7 @@
                         this.xAxisData.push(timeSmallNew)
                     }
                 }
-                this.option  = {
+                this.option = {
                     legend: {
                         data: this.legendData,
                     },
@@ -925,7 +952,7 @@
         margin-left: -1px;
     }
 
-    .chart-select-all, .chart-select-time, .chart-select-flesh, .chart-select-week, .chart-select-month {
+    .chart-select-all, .chart-select-time, .chart-select-flesh, .chart-select-week, .chart-select-month, .chart-select-range {
         margin-right: 30px;
         height: 100%;
     }
@@ -945,6 +972,9 @@
     .chart-select-month button {
         background: #FFD1A4;
     }
+    .chart-select-range button {
+        background: #FF8000;
+    }
 
     button {
         display: inline-block;
@@ -956,7 +986,7 @@
         padding: 3px 15px;
         margin-right: 10px;
         cursor: pointer;
-        height: 22px;
+        height: 24px;
         line-height: 18px;
     }
     button:disabled{
@@ -975,5 +1005,17 @@
         border: 1px solid #333;
         background-color: #333;
         color:#ACA899;
+    }
+    .price-input {
+        width: 100%;
+        padding: 0px 0 0 15px;
+        height: 24px;
+        line-height: 24px;
+        font-size: 12px;
+        outline: none;
+        border: none;
+        border: 1px solid green;
+        background: none;
+        color: #fff;
     }
 </style>

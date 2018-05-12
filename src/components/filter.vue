@@ -253,7 +253,7 @@
 
     @media screen and (max-width: 1366px) {
         .pro_list {
-            max-height: 469px;
+            max-height: 604px;
         }
     }
     

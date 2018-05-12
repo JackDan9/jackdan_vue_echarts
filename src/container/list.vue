@@ -50,8 +50,7 @@
                         <el-input
                             placeholder="请输入内容"
                             v-model="inputValue">
-                        
-                            </el-input>
+                        </el-input>
                     </div>
                     <span class="rangeText">名</span>
                 </div>

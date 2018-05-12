@@ -73,6 +73,10 @@
             selectStatus: {
                 type: Boolean,
                 default: true
+            },
+            searchData: {
+                type: String,
+                default: ''
             }
         },
         data() {
@@ -225,14 +229,24 @@
             }
         },
         created () {
-            this.$watch('legendData.xAxisData.seriesData.selectStatus', options => {
+            this.$watch('legendData.xAxisData.seriesData.selectStatus.searchData', options => {
                 if (!this.myChart && option) {
                     this.init()
                 } else {
                     if (this.selectStatus) {
                         this.obj = {}
-                        for (let i = 0; i < this.legendData.length; i++) {
-                            this.obj[this.legendData[i]['name']] = this.selectStatus
+                        if (this.searchData && (this.searchData.length !== 0)) {
+                            for (let i = 0; i < this.legendData.length; i++) {
+                                if (this.legendData[i]['name'] == this.searchData) {
+                                    this.obj[this.legendData[i]['name']] = this.selectStatus
+                                } else {
+                                    this.obj[this.legendData[i]['name']] = !this.selectStatus
+                                }
+                            }
+                        } else {
+                            for (let i = 0; i < this.legendData.length; i++) {
+                                this.obj[this.legendData[i]['name']] = this.selectStatus
+                            }
                         }
                         this.optionNew = {
                             legend: {
@@ -246,8 +260,18 @@
                         }
                     } else if (!this.selectStatus) {
                         this.obj = {}
-                        for(let i = 0; i < this.legendData.length; i++) {
-                            this.obj[this.legendData[i]['name']] = this.selectStatus
+                        if (this.searchData && (this.searchData.length !== 0)) {
+                            for (let i = 0; i < this.legendData.length; i++) {
+                                if (this.legendData[i]['name'] == this.searchData) {
+                                    this.obj[this.legendData[i]['name']] = this.selectStatus
+                                } else {
+                                    this.obj[this.legendData[i]['name']] = !this.selectStatus
+                                }
+                            }
+                        } else {
+                            for (let i = 0; i < this.legendData.length; i++) {
+                                this.obj[this.legendData[i]['name']] = this.selectStatus
+                            }
                         }
                         this.optionNew = {
                             legend: {
@@ -355,12 +379,23 @@
         opacity: 0.9;
     }
     .line-filter {
-        position: relative;
+        /*position: relative;
         display: flex;
         padding: 5px 0 0 28px;
         font-size: 12px;
         line-height: 11px;
         color: #fff;
+        z-index: 9999;*/
+        position: absolute;
+        top: -36px;
+        right: 0;
+        width: 100px;
+        height: 20px;
+        display: block;
         z-index: 9999;
+        color: #fff;
+        font-size: 12px;
+        line-height: 11px;
+
     }
 </style>

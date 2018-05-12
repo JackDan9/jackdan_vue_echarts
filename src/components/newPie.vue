@@ -71,7 +71,6 @@
 
 
 <style scoped>
-
     .new-pie-container {
         position: relative;
         width: 100%;
