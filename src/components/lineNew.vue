@@ -34,7 +34,7 @@
                 :myChart="myChart"
                 :lineId="lineId"
                 :optionNew="optionNew"
-                v-if="myChart._dom">    
+                v-if="(myChart._dom && filterStatus)">    
             </v-filter>
         </div>
 
@@ -77,6 +77,14 @@
             searchData: {
                 type: String,
                 default: ''
+            },
+            filterStatus: {
+                type: Boolean,
+                default: false
+            },
+            legendShow: {
+                type: Boolean,
+                default: false
             }
         },
         data() {
@@ -102,9 +110,10 @@
                     legend: {
                         show: false,
                         type: 'scroll',
-                        orient: 'vertical',
+                        // orient: 'vertical',
+                        orient: 'horizontal',
                         // left: 40,
-                        right: -3,
+                        // right: -3,
                         top: 0,
                         bottom: 10,
                         // backgroundColor: 'rgba(128, 128, 128, 0.5)', 
@@ -250,6 +259,7 @@
                         }
                         this.optionNew = {
                             legend: {
+                                show: this.legendShow,
                                 data: this.legendData,
                                 selected: this.obj
                             },
@@ -275,6 +285,7 @@
                         }
                         this.optionNew = {
                             legend: {
+                                show: this.legendShow,
                                 data: this.legendData,
                                 selected: this.obj
                             },
@@ -374,6 +385,11 @@
         opacity: 0.9;
     }
     #moneyLine {
+        width: 100%;
+        height: 93%;
+        opacity: 0.9;
+    }
+    #searchLine {
         width: 100%;
         height: 93%;
         opacity: 0.9;

@@ -84,7 +84,8 @@
                     :legendData="legendData"
                     :seriesData="seriesData"
                     :selectStatus="selectStatus"
-                    :searchData="searchData">
+                    :searchData="searchData"
+                    :filterStatus="filterStatus">
                 </v-line-new>
             </div>
         </div>
@@ -148,6 +149,7 @@
                 tableType: 0,
                 inputValue: '',
                 searchData: '',
+                filterStatus: true
                 // allDisabled: false,
                 // allNotDisabled: false,
                 // smallDisabled: false,

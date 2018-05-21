@@ -12,6 +12,7 @@ const Home = () => import('../container/home.vue')
 const Price = () => import('../container/price.vue')
 const Num = () => import('../container/num.vue')
 const Money = () => import('../container/money.vue')
+const Search = () => import('../container/search.vue')
 
 Vue.use(Router)
 
@@ -36,6 +37,11 @@ export default new Router({
           path: '/money',
           name: 'money',
           component: Money
+        },
+        {
+          path: '/search',
+          name: 'search',
+          component: Search
         }
     ]
 })
