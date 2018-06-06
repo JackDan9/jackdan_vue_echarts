@@ -329,11 +329,13 @@
                     }
                 }
                 if (indexSelect == 0) {
-                    this.selectStatus = true
-                    this.getData()
+                    this.selectStatus = true;
+                    this.searchData = '';
+                    this.getData();
                 } else if (indexSelect == 1) {
-                    this.selectStatus = false
-                    this.getData()
+                    this.selectStatus = false;
+                    this.searchData = '';
+                    this.getData();
                 }
             },
             /*时间区间选择*/

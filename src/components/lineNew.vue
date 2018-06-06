@@ -243,14 +243,21 @@
                     this.init()
                 } else {
                     if (this.selectStatus) {
-                        this.obj = {}
+                        this.obj = {};
+                        let nameArr = [];
                         if (this.searchData && (this.searchData.length !== 0)) {
                             for (let i = 0; i < this.legendData.length; i++) {
-                                if (this.legendData[i]['name'] == this.searchData) {
-                                    this.obj[this.legendData[i]['name']] = this.selectStatus
-                                } else {
-                                    this.obj[this.legendData[i]['name']] = !this.selectStatus
+                                for (let j  = 0; j < this.searchData.split(",").length; j++) {
+                                    if (this.legendData[i]['name'] == this.searchData.split(",")[j]) {
+                                        // this.obj[this.legendData[i]['name']] = this.selectStatus
+                                        nameArr.push(this.legendData[i]['name'])
+                                    } else {
+                                        this.obj[this.legendData[i]['name']] = !this.selectStatus
+                                    } 
                                 }
+                            }
+                            for (let n = 0; n < nameArr.length; n++) {
+                                this.obj[nameArr[n]] = this.selectStatus
                             }
                         } else {
                             for (let i = 0; i < this.legendData.length; i++) {
@@ -269,14 +276,21 @@
                             series: this.seriesData
                         }
                     } else if (!this.selectStatus) {
-                        this.obj = {}
+                        this.obj = {};
+                        let nameArr = [];
                         if (this.searchData && (this.searchData.length !== 0)) {
                             for (let i = 0; i < this.legendData.length; i++) {
-                                if (this.legendData[i]['name'] == this.searchData) {
-                                    this.obj[this.legendData[i]['name']] = this.selectStatus
-                                } else {
-                                    this.obj[this.legendData[i]['name']] = !this.selectStatus
+                                for (let j  = 0; j < this.searchData.split(",").length; j++) {
+                                    if (this.legendData[i]['name'] == this.searchData.split(",")[j]) {
+                                        // this.obj[this.legendData[i]['name']] = this.selectStatus
+                                        nameArr.push(this.legendData[i]['name'])
+                                    } else {
+                                        this.obj[this.legendData[i]['name']] = this.selectStatus
+                                    }
                                 }
+                            }
+                            for (let n = 0; n < nameArr.length; n++) {
+                                this.obj[nameArr[n]] = !this.selectStatus
                             }
                         } else {
                             for (let i = 0; i < this.legendData.length; i++) {
@@ -295,8 +309,6 @@
                             series: this.seriesData
                         }
                     }
-
-
                     /*
                     let optionNew = {
                         legend: {

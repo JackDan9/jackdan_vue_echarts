@@ -415,7 +415,8 @@ export default {
         flex: 0 0 200px;
         font-size: 12px;
         font-weight: bold;
-        padding-left: 20px;
+        /*padding-left: 20px;*/
+        padding-left: 10px;
         font-size: 20px;
         float: left;
     }
