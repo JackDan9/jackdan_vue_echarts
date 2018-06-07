@@ -98,7 +98,7 @@
 
 <script>
     import echartHeader from '../components/echartHeader'
-    import LineNew from '../components/lineNew'
+    import lineNew from '../components/lineNew'
     import filter from '../components/filter'
     import timer from '../components/timer'
     import table from '../components/table'
@@ -828,7 +828,7 @@
 
         components: {
             'v-echart-header': echartHeader,
-            'v-line-new': LineNew,
+            'v-line-new': lineNew,
             'v-filter': filter,
             'v-timer': timer,
             'v-table': table

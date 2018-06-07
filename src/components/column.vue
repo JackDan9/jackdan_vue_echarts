@@ -42,7 +42,7 @@
                 let nameData = [];
                 let seriesData = [];
                 let seriesType = [];
-                console.log(this.columnData[0]);
+                // console.log(this.columnData[0]);
                 this.columnData[0].map((item, index) => {
                     nameData.push(item);
                     console.log(index);

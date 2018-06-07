@@ -109,7 +109,8 @@
                     {name: '验价订单', ad: 'num', isQuicklinksActive: false},
                     {name: '航线数据', ad: 'price', isQuicklinksActive: false},
                     {name: '毛利率', ad: 'money', isQuicklinksActive: false},
-                    {name: '一小时数据搜索', ad: 'search', isQuicklinksActive: false}      
+                    {name: '一小时数据搜索', ad: 'search', isQuicklinksActive: false},
+                    {name: '剩余座位与价格', ad: 'flight', isQuicklinksActive: false}      
                 ],
                 titleName: '',
                 firstMenuItems: [],

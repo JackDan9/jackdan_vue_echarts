@@ -1,31 +1,66 @@
 export const line3DOption = {
     tooltip: {},
     backgroundColor: 'none',
-    visualMap: {
-        show: false,
-        dimension: 2,
-        min: 0,
-        max: 30,
-        inRange: {
-            color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
-        }
-    },
     xAxis3D: {
-        type: 'value'
+        name: '时间',
+        nameTextStyle: {
+            color: '#fff'
+        },
+        axisLine: {
+            lineStyle: {
+                color: '#fff'
+            }
+        },
+        axisLabel: {
+            textStyle: {
+                color: '#fff'
+            }
+        },
+        type: 'time'
     },
     yAxis3D: {
+        name: '价格',
+        nameTextStyle: {
+            color: '#fff'
+        },
+        axisLine: {
+            lineStyle: {
+                color: '#fff'
+            }
+        },
+        axisLabel: {
+            textStyle: {
+                color: '#fff'
+            }
+        },
         type: 'value'
     },
     zAxis3D: {
+        name: '座位数',
+        nameTextStyle: {
+            color: '#fff'
+        },
+        axisLine: {
+            lineStyle: {
+                color: '#fff'
+            }
+        },
+        axisLabel: {
+            textStyle: {
+                color: '#fff'
+            }
+        },
         type: 'value'
     },
     grid3D: {
         viewControl: {
-            projection: 'orthographic'
+            // projection: 'orthographic'
+            projection: 'perspective'
         }
     },
     series: [{
     	type: 'line3D',
+        name: '3D剩余座位与价格',
         data: [],
         lineStyle: {
             width: 4

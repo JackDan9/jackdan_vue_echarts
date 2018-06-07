@@ -238,7 +238,7 @@
             }
         },
         created () {
-            this.$watch('legendData.xAxisData.seriesData.selectStatus.searchData', options => {
+            this.$watch('legendData.xAxisData.seriesData.selectStatus', options => {
                 if (!this.myChart && option) {
                     this.init()
                 } else {
@@ -424,6 +424,5 @@
         color: #fff;
         font-size: 12px;
         line-height: 11px;
-
     }
 </style>
