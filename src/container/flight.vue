@@ -74,7 +74,6 @@
                 this.isRangeDisabled = true;
                 let numId = this.inputValue;
                 let RegExpObject = new RegExp(/^\d{7}$/);
-                console.log(RegExpObject.test(numId));
                 if (RegExpObject.test(numId)) {
                     this.flightId = parseInt(this.inputValue)
                     this.getFlightData();
