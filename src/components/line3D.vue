@@ -46,12 +46,12 @@
 		},
 
 		methods: {
-			// init() {
-			// 	this.$root.charts.push(this.myChart)
-			// 	window.addEventListener('resize', function() {
-			// 		this.myChart.resize()
-			// 	}.bind(this))
-			// },
+			init() {
+				// this.$root.charts.push(this.myChart)
+				window.addEventListener('resize', function() {
+					this.myChart.resize()
+				}.bind(this))
+			},
 
 			// getData() {
 
@@ -84,6 +84,18 @@
                 // console.log(data);
                 // console.log(dataArr);
                 this.optionNew = {
+                    xAxis3D: {
+                        axisLabel: {
+                            textStyle: {
+                                color: '#fff'
+                            },
+                            formatter:function(params) {
+                                let name = new Date(params).toLocaleString("ch", {hour12:false}).replace(/:\d{1,2}$/,' ');
+                                let nameNew = name.substring(5, (name.length - 6));
+                                return nameNew;
+                            }
+                        }
+                    },
                 	series: [{
                 		data: data
                 	}]
@@ -99,9 +111,13 @@
                 setTimeout(() => {
                     this.myChart.hideLoading();
                     this.myChart.setOption(this.optionNew);
+
                 }, 1000);
 			}, { deep: !this.watchShallow })           
-		}
+		},
+        mounted() {
+            this.init();
+        }
 		/*
 		mounted() {
 			this.myChart = echarts.init(document.getElementById(this.lineThreeID));

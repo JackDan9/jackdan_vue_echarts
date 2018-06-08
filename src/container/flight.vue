@@ -106,11 +106,11 @@
                                 // console.log(parseInt(timeNew));
                                 // this.xAxisData.push(timeNew);
                                 this.xAxisData.push(item[0] * 1000);
-                                priceArr.push(item[1]);
-                                seatArr.push(item[2]);
+                                this.yAxisData.push(item[1]);
+                                this.zAxisData.push(item[2]);
                             })
-                            this.yAxisData = priceArr;
-                            this.zAxisData = seatArr;
+                            // this.yAxisData = priceArr;
+                            // this.zAxisData = seatArr;
 
                             /*
                             dataArr.push({

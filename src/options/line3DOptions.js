@@ -16,6 +16,7 @@ export const line3DOption = {
                 color: '#fff'
             }
         },
+        interval: 43200000,
         type: 'time'
     },
     yAxis3D: {
@@ -53,10 +54,17 @@ export const line3DOption = {
         type: 'value'
     },
     grid3D: {
+        boxWidth: 100,
+        boxHeight: 100,
+        boxDepth: 100,
         viewControl: {
             // projection: 'orthographic'
-            projection: 'perspective'
-        }
+            projection: 'perspective',
+            autoRotate: true,
+            distance: 200
+        },
+        left: 0,
+        top: 0
     },
     series: [{
     	type: 'line3D',
