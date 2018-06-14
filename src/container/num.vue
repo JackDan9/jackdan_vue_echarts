@@ -22,7 +22,7 @@
                     <h1>验价订单</h1>
                 </div>
                 <div 
-                    v-bind:class="[item.isNumActive ? activeClass : '', errorClass]" 
+                    v-bind:class="[item.isNumActive ? activeClass : '', errorClass]"
                     v-for="(item, index) in chartType" 
                     :key="index" 
                     v-on:click="typeClick(index)">
@@ -33,6 +33,7 @@
                     </div>
                 </div>
                 <v-new-pie
+                    v-show="false"
                     :legendData="legendData"
                     :seriesData="seriesData">
                 </v-new-pie>
@@ -70,9 +71,19 @@
                     </v-column> 
                 -->
                 <v-column 
+                    v-if="showColumn"
                     :columnId="columnId"
                     :columnData="columnData">
                 </v-column>
+
+                <v-compare-column
+                    v-if="showCompareColumn"
+                    :compareColumnId="compareColumnId"
+                    :xAxisColumnData="xAxisColumnData"
+                    :legendColumnData="legendColumnData"
+                    :lossColumnData="lossColumnData"
+                    :profitColumnData="profitColumnData">
+                </v-compare-column>
             </div>
         </div>
         <v-table
@@ -83,6 +94,7 @@
 
 <script>
     import column from '../components/column'
+    import compareColumn from '../components/compareColumn'
     import echartHeader from '../components/echartHeader'
     import newPie from '../components/newPie'
     import multipleColumn from '../components/multipleColumn'
@@ -94,6 +106,7 @@
         data() {
             return {
                 // items: [],
+                showColumn: true,
                 columnId: 'numColumn',
                 columnData: [],
                 legendArr: [],
@@ -106,11 +119,20 @@
                     {"name": "订单数", "isNumActive": true},
                     {"name": "订单乘机人", "isNumActive": false},
                     {"name": "订单金额", "isNumActive": false},
+                    {"name": "亏损数目", "isNumActive": false},
+                    {"name": "盈利数目", "isNumActive": false},
+                    {"name": "对比数目", "isNumActive": false},
                     {"name": "验价数", "isNumActive": false}
                 ],
                 xAxisData: [],
                 legendData: [],
                 seriesData: [],
+                compareColumnId: 'compareColumn',
+                xAxisColumnData: [],
+                legendColumnData: [],
+                lossColumnData: [],
+                profitColumnData: [],
+                showCompareColumn: false,
                 showSelectAll: false,
                 showFilter: true,
                 showWeek: true,
@@ -179,7 +201,15 @@
                     }
                 }
                 this.typeIndex = index;
-                this.getData();
+                if (index == 5) {
+                    this.showCompareColumn = true;
+                    this.showColumn = false;
+                    this.getData();
+                } else {
+                    this.showColumn = true;
+                    this.showCompareColumn = false;
+                    this.getData();
+                }
                 this.name = this.chartType[index]['name'];
                 // this.$store.commit('updateTypeIndex', this.typeIndex);
                 // let showLoadingDefault = {
@@ -195,7 +225,7 @@
             },
             getData() {
                 let random = parseInt(Math.random() * 10 + 1);
-                if (this.typeIndex < 3) {
+                if (this.typeIndex < 6) {
                     axios.get('/orders_carrier?ver=' + random, {params: {from:this.fromTime, to:this.toTime}})
                         .then(
                             (res) => {
@@ -203,6 +233,8 @@
                                 let numberData = ret.number;
                                 let countData = ret.count;
                                 let priceData = ret.price;
+                                let lossData = ret.loss;
+                                let profitData = ret.profit;
                                 this.columnData = [];
                                 if(this.typeIndex == 0) {
                                     this.columnData = [];
@@ -240,7 +272,7 @@
                                             value: showData[j][3]
                                         })
                                     }
-                                } else {
+                                } else if (this.typeIndex == 2) {
                                     this.columnData = [];
                                     let showData = priceData;
                                     this.columnData = showData;
@@ -258,6 +290,86 @@
                                             value: showData[j][3]
                                         })
                                     }
+                                } else if (this.typeIndex == 3) {
+                                    this.columnData = [];
+                                    let showData = lossData;
+                                    this.columnData = showData;
+                                    this.legendData = [];
+                                    this.seriesData = [];
+                                    for (let j = 1;  j < showData.length; j++) {
+                                        this.legendData.push({
+                                            name: showData[j][0],
+                                            textStyle: {
+                                                color: '#fff'
+                                            }
+                                        });
+                                        this.seriesData.push({
+                                            name: showData[j][0],
+                                            value: showData[j][3]
+                                        })
+                                    }
+                                } else if (this.typeIndex == 4) {
+                                    this.columnData = [];
+                                    let showData = profitData;
+                                    this.columnData = showData;
+                                    this.legendData = [];
+                                    this.seriesData = [];
+                                    for (let j = 1;  j < showData.length; j++) {
+                                        this.legendData.push({
+                                            name: showData[j][0],
+                                            textStyle: {
+                                                color: '#fff'
+                                            }
+                                        });
+                                        this.seriesData.push(
+                                            {
+                                                name: showData[j][0],
+                                                value: showData[j][3]
+                                            }
+                                        )
+                                    }
+                                } else {
+                                    let showFirstData = profitData;
+                                    let showSecondData = lossData;
+                                    this.xAxisColumnData = [];
+                                    this.legendColumnData = [];
+                                    this.lossColumnData = [];
+                                    this.profitColumnData = [];
+                                    for (let i = 1; i < showFirstData.length; i++) {
+                                        for (let k = i; k < showFirstData.length; k++) {
+                                            if (showFirstData[i][5] < showFirstData[k][5]) {
+                                                let tempFir = showFirstData[i];
+                                                showFirstData[i] = showFirstData[k];
+                                                showFirstData[k] = tempFir;
+                                                let tempSec = showSecondData[i];
+                                                showSecondData[i] = showSecondData[k];
+                                                showSecondData[k] = tempSec;
+                                            }
+                                        }
+                                    }
+                                    for (let j = 1;  j < showFirstData.length; j++) {
+                                            this.xAxisColumnData.push(showFirstData[j][0])
+                                            this.lossColumnData.push(lossData[j][5]);
+                                            this.profitColumnData.push(profitData[j][5]);
+                                        // this.legendColumnData.push({
+                                        //     name: showFirstData[j][0],
+                                        //     textStyle: {
+                                        //         color: '#fff'
+                                        //     }
+                                        // });
+                                        // console.log(showFirstData[j][0]);
+                                        // console.log(showFirstData[j][3]);
+                                        // this.seriesColumnData.push(
+                                        //     {
+                                        //         name: showFirstData[j][0],
+                                        //         value: showFirstData[j][3]
+                                        //     },
+                                        //     {
+                                        //         name: showFirstData[j][0],
+                                        //         value: showFirstData[j][3]
+                                        //     }
+                                        // )
+                                    }
                                 }
                             }
                         )
@@ -269,6 +381,8 @@
                     axios.get('/verify_carrier?ver=' + random, {params: {from:this.fromTime, to:this.toTime}})
                         .then(
                             (res) => {
+                                this.showColumn = true;
+                                this.showCompareColumn = false;
                                 this.columnData = [];
                                 let ret = res.data.data;
                                 let showData = ret.number;
@@ -331,6 +445,7 @@
             'v-echart-header': echartHeader,
             'v-new-pie': newPie,
             'v-column': column,
+            'v-compare-column': compareColumn,
             'v-table': table,
             'v-timer': timer
         }

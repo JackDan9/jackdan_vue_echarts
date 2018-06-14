@@ -45,7 +45,6 @@
                 // console.log(this.columnData[0]);
                 this.columnData[0].map((item, index) => {
                     nameData.push(item);
-                    console.log(index);
                     if(index > 0) {
                         seriesType.push({
                             type: 'bar'
@@ -58,13 +57,24 @@
                 seriesData = this.columnData.slice(1);
                 this.myChart = echarts.init(document.getElementById(this.columnId));
                 this.myChart.setOption(columnOption, true);
-                this.myChart.setOption({
-                    dataset: {
-                        dimensions: nameData,
-                        source: seriesData
-                    },
-                    series: seriesType
-                })
+                let showLoadingDefault = {
+                    text: 'Loading...',
+                    color: '#23531',
+                    textColor: '#fff',
+                    maskColor: '#272D3A',
+                    zlevel: 0,
+                }
+                this.myChart.showLoading(showLoadingDefault);
+                setTimeout(() => {
+                    this.myChart.hideLoading();
+                    this.myChart.setOption({
+                        dataset: {
+                            dimensions: nameData,
+                            source: seriesData
+                        },
+                        series: seriesType
+                    })
+                }, 1000); 
             }, { deep:!this.watchShallow })
         },
 
