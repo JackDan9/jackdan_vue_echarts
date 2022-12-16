@@ -1,0 +1,848 @@
+[
+  {
+    "location_code": "711802701",
+    "location_name": "湖北纳威联-武汉",
+    "province_name": "湖北省",
+    "city_name": "武汉市",
+    "district_name": "江汉区",
+    "lng": 114.277506,
+    "lat": 30.607282
+  },
+  {
+    "location_code": "711871001",
+    "location_name": "湖北纳威联-襄阳",
+    "province_name": "湖北省",
+    "city_name": "襄阳市",
+    "district_name": "樊城区",
+    "lng": 112.142599,
+    "lat": 32.050572
+  },
+  {
+    "location_code": "711871201",
+    "location_name": "湖北纳威联-孝感",
+    "province_name": "湖北省",
+    "city_name": "孝感市",
+    "district_name": "孝南区",
+    "lng": 113.91749,
+    "lat": 30.922978
+  },
+  {
+    "location_code": "711973501",
+    "location_name": "湖南纳通-郴州",
+    "province_name": "湖南省",
+    "city_name": "郴州市",
+    "district_name": "苏仙区",
+    "lng": 113.048423,
+    "lat": 25.806737
+  },
+  {
+    "location_code": "711974601",
+    "location_name": "湖南纳通-永州",
+    "province_name": "湖南省",
+    "city_name": "永州市",
+    "district_name": "冷水滩区",
+    "lng": 111.598426,
+    "lat": 26.467706
+  },
+  {
+    "location_code": "711973001",
+    "location_name": "湖南纳通-岳阳",
+    "province_name": "湖南省",
+    "city_name": "岳阳市",
+    "district_name": "岳阳楼区",
+    "lng": 113.136481,
+    "lat": 29.377995
+  },
+  {
+    "location_code": "711973101",
+    "location_name": "湖南纳通-长沙",
+    "province_name": "湖南省",
+    "city_name": "长沙市",
+    "district_name": "开福区",
+    "lng": 112.992585,
+    "lat": 28.261379
+  },
+  {
+    "location_code": "710443201",
+    "location_name": "吉林纳通-吉林",
+    "province_name": "吉林省",
+    "city_name": "吉林市",
+    "district_name": "昌邑区",
+    "lng": 126.581449,
+    "lat": 43.887992
+  },
+  {
+    "location_code": "710443301",
+    "location_name": "吉林纳通-延吉",
+    "province_name": "吉林省",
+    "city_name": "延吉市",
+    "district_name": "",
+    "lng": 129.52052,
+    "lat": 42.912717
+  },
+  {
+    "location_code": "710443101",
+    "location_name": "吉林纳通-长春",
+    "province_name": "吉林省",
+    "city_name": "长春市",
+    "district_name": "南关区",
+    "lng": 125.35661,
+    "lat": 43.869873
+  },
+  {
+    "location_code": "712151901",
+    "location_name": "江苏纳通-常州",
+    "province_name": "江苏省",
+    "city_name": "常州市",
+    "district_name": "天宁区",
+    "lng": 119.980463,
+    "lat": 31.78557
+  },
+  {
+    "location_code": "712151701",
+    "location_name": "江苏纳通-淮安",
+    "province_name": "江苏省",
+    "city_name": "淮安市",
+    "district_name": "清江浦区",
+    "lng": 119.032414,
+    "lat": 33.558562
+  },
+  {
+    "location_code": "712102501",
+    "location_name": "江苏纳通-南京",
+    "province_name": "江苏省",
+    "city_name": "南京市",
+    "district_name": "栖霞区",
+    "lng": 118.915423,
+    "lat": 32.1026
+  },
+  {
+    "location_code": "712151301",
+    "location_name": "江苏纳通-南通",
+    "province_name": "江苏省",
+    "city_name": "南通市",
+    "district_name": "崇川区",
+    "lng": 120.86342,
+    "lat": 32.015923
+  },
+  {
+    "location_code": "712151201",
+    "location_name": "江苏纳通-苏州",
+    "province_name": "江苏省",
+    "city_name": "苏州市",
+    "district_name": "高新区",
+    "lng": 120.407424,
+    "lat": 31.335851
+  },
+  {
+    "location_code": "712151001",
+    "location_name": "江苏纳通-无锡",
+    "province_name": "江苏省",
+    "city_name": "无锡市",
+    "district_name": "梁溪区",
+    "lng": 120.3096,
+    "lat": 31.571645
+  },
+  {
+    "location_code": "712151601",
+    "location_name": "江苏纳通-徐州",
+    "province_name": "江苏省",
+    "city_name": "徐州市",
+    "district_name": "泉山区",
+    "lng": 117.20059,
+    "lat": 34.249943
+  },
+  {
+    "location_code": "712151501",
+    "location_name": "江苏纳通-盐城",
+    "province_name": "江苏省",
+    "city_name": "盐城市",
+    "district_name": "盐都区",
+    "lng": 120.160503,
+    "lat": 33.34402
+  },
+  {
+    "location_code": "712151401",
+    "location_name": "江苏纳通-扬州",
+    "province_name": "江苏省",
+    "city_name": "扬州市",
+    "district_name": "邗江区",
+    "lng": 119.404385,
+    "lat": 32.382751
+  },
+  {
+    "location_code": "710879101",
+    "location_name": "江西纳通-南昌",
+    "province_name": "江西省",
+    "city_name": "南昌市",
+    "district_name": "青云谱区",
+    "lng": 115.931416,
+    "lat": 28.627236
+  },
+  {
+    "location_code": "710755601",
+    "location_name": "安徽纳通-安庆",
+    "province_name": "安徽省",
+    "city_name": "安庆市",
+    "district_name": "迎江区",
+    "lng": 117.097514,
+    "lat": 30.517523
+  },
+  {
+    "location_code": "710755801",
+    "location_name": "安徽纳通-阜阳",
+    "province_name": "安徽省",
+    "city_name": "阜阳市",
+    "district_name": "颍州区",
+    "lng": 115.813411,
+    "lat": 32.889625
+  },
+  {
+    "location_code": "710755101",
+    "location_name": "安徽纳通-合肥",
+    "province_name": "安徽省",
+    "city_name": "合肥市",
+    "district_name": "包河区",
+    "lng": 117.316576,
+    "lat": 31.799293
+  },
+  {
+    "location_code": "710755901",
+    "location_name": "安徽纳通-黄山",
+    "province_name": "安徽省",
+    "city_name": "黄山市",
+    "district_name": "屯溪区",
+    "lng": 118.321418,
+    "lat": 29.702144
+  },
+  {
+    "location_code": "710755301",
+    "location_name": "安徽纳通-芜湖",
+    "province_name": "安徽省",
+    "city_name": "芜湖市",
+    "district_name": "镜湖区",
+    "lng": 118.392606,
+    "lat": 31.345867
+  },
+  {
+    "location_code": "712201002",
+    "location_name": "北京纳通-北京",
+    "province_name": "北京市",
+    "city_name": "北京市",
+    "district_name": "海淀区",
+    "lng": 116.305434,
+    "lat": 39.96549
+  },
+  {
+    "location_code": "712289901",
+    "location_name": "北京纳通-三亚",
+    "province_name": "海南省",
+    "city_name": "三亚市",
+    "district_name": "海棠区",
+    "lng": 109.737119,
+    "lat": 18.359223
+  },
+  {
+    "location_code": "711593101",
+    "location_name": "甘肃纳通-兰州",
+    "province_name": "甘肃省",
+    "city_name": "兰州市",
+    "district_name": "七里河区",
+    "lng": 103.792414,
+    "lat": 36.072129
+  },
+  {
+    "location_code": "711597101",
+    "location_name": "甘肃纳通-西宁",
+    "province_name": "青海省",
+    "city_name": "西宁市",
+    "district_name": "城西区",
+    "lng": 101.772414,
+    "lat": 36.634497
+  },
+  {
+    "location_code": "711595101",
+    "location_name": "甘肃纳通-银川",
+    "province_name": "宁夏回族自治区",
+    "city_name": "银川市",
+    "district_name": "兴庆区",
+    "lng": 106.295494,
+    "lat": 38.479579
+  },
+  {
+    "location_code": "711385101",
+    "location_name": "贵州纳通-贵阳",
+    "province_name": "贵州省",
+    "city_name": "贵阳市",
+    "district_name": "云岩区",
+    "lng": 106.730535,
+    "lat": 26.610381
+  },
+  {
+    "location_code": "712537201",
+    "location_name": "河南纳远-安阳",
+    "province_name": "河南省",
+    "city_name": "安阳市",
+    "district_name": "文峰区",
+    "lng": 114.363374,
+    "lat": 36.096833
+  },
+  {
+    "location_code": "712537901",
+    "location_name": "河南纳远-洛阳",
+    "province_name": "河南省",
+    "city_name": "洛阳市",
+    "district_name": "瀍河回族区",
+    "lng": 112.506604,
+    "lat": 34.685462
+  },
+  {
+    "location_code": "712539801",
+    "location_name": "河南纳远-三门峡",
+    "province_name": "河南省",
+    "city_name": "三门峡市",
+    "district_name": "湖滨区",
+    "lng": 111.195574,
+    "lat": 34.775997
+  },
+  {
+    "location_code": "712537002",
+    "location_name": "河南纳远-商丘",
+    "province_name": "河南省",
+    "city_name": "商丘市",
+    "district_name": "睢阳区",
+    "lng": 115.659476,
+    "lat": 34.394152
+  },
+  {
+    "location_code": "712537301",
+    "location_name": "河南纳远-新乡",
+    "province_name": "河南省",
+    "city_name": "新乡市",
+    "district_name": "红旗区",
+    "lng": 113.881416,
+    "lat": 35.310136
+  },
+  {
+    "location_code": "712537601",
+    "location_name": "河南纳远-信阳",
+    "province_name": "河南省",
+    "city_name": "信阳市",
+    "district_name": "浉河区",
+    "lng": 114.065581,
+    "lat": 32.122554
+  },
+  {
+    "location_code": "712537401",
+    "location_name": "河南纳远-许昌",
+    "province_name": "河南省",
+    "city_name": "许昌市",
+    "district_name": "东城区",
+    "lng": 116.422401,
+    "lat": 39.934827
+  },
+  {
+    "location_code": "712537101",
+    "location_name": "河南纳远-郑州",
+    "province_name": "河南省",
+    "city_name": "郑州市",
+    "district_name": "管城回族区",
+    "lng": 113.683525,
+    "lat": 34.759674
+  },
+  {
+    "location_code": "712539401",
+    "location_name": "河南纳远-周口",
+    "province_name": "河南省",
+    "city_name": "周口市",
+    "district_name": "川汇区",
+    "lng": 114.657602,
+    "lat": 33.652997
+  },
+  {
+    "location_code": "710545101",
+    "location_name": "黑龙江纳通-哈尔滨",
+    "province_name": "黑龙江省",
+    "city_name": "哈尔滨市",
+    "district_name": "香坊区",
+    "lng": 126.669624,
+    "lat": 45.71362
+  },
+  {
+    "location_code": "710545401",
+    "location_name": "黑龙江纳通-佳木斯",
+    "province_name": "黑龙江省",
+    "city_name": "佳木斯市",
+    "district_name": "向阳区",
+    "lng": 130.372612,
+    "lat": 46.813512
+  },
+  {
+    "location_code": "710879301",
+    "location_name": "江西纳通-上饶",
+    "province_name": "江西省",
+    "city_name": "上饶市",
+    "district_name": "信州区",
+    "lng": 117.973412,
+    "lat": 28.437628
+  },
+  {
+    "location_code": "710879501",
+    "location_name": "江西纳通-宜春",
+    "province_name": "江西省",
+    "city_name": "宜春市",
+    "district_name": "袁州区",
+    "lng": 114.434561,
+    "lat": 27.802583
+  },
+  {
+    "location_code": "711487101",
+    "location_name": "昆明世泽-昆明",
+    "province_name": "云南省",
+    "city_name": "昆明市",
+    "district_name": "西山区",
+    "lng": 102.671557,
+    "lat": 25.043199
+  },
+  {
+    "location_code": "712041201",
+    "location_name": "辽宁纳通-鞍山",
+    "province_name": "辽宁省",
+    "city_name": "鞍山市",
+    "district_name": "铁东区",
+    "lng": 122.9974,
+    "lat": 41.096332
+  },
+  {
+    "location_code": "712041101",
+    "location_name": "辽宁纳通-大连",
+    "province_name": "辽宁省",
+    "city_name": "大连市",
+    "district_name": "沙河口区",
+    "lng": 121.594507,
+    "lat": 38.913544
+  },
+  {
+    "location_code": "712042901",
+    "location_name": "辽宁纳通-葫芦岛",
+    "province_name": "辽宁省",
+    "city_name": "葫芦岛市",
+    "district_name": "连山区",
+    "lng": 120.876482,
+    "lat": 40.780894
+  },
+  {
+    "location_code": "712041601",
+    "location_name": "辽宁纳通-锦州",
+    "province_name": "辽宁省",
+    "city_name": "锦州市",
+    "district_name": "凌河区",
+    "lng": 121.15759,
+    "lat": 41.120691
+  },
+  {
+    "location_code": "712042701",
+    "location_name": "辽宁纳通-盘锦",
+    "province_name": "辽宁省",
+    "city_name": "盘锦市",
+    "district_name": "兴隆台区",
+    "lng": 122.076499,
+    "lat": 41.164499
+  },
+  {
+    "location_code": "712002401",
+    "location_name": "辽宁纳通-沈阳",
+    "province_name": "辽宁省",
+    "city_name": "沈阳市",
+    "district_name": "沈河区",
+    "lng": 123.465461,
+    "lat": 41.802274
+  },
+  {
+    "location_code": "711077101",
+    "location_name": "南宁",
+    "province_name": "广西壮族自治区",
+    "city_name": "南宁市",
+    "district_name": "青秀区",
+    "lng": 108.501439,
+    "lat": 22.792227
+  },
+  {
+    "location_code": "711089801",
+    "location_name": "南宁哲远-海口",
+    "province_name": "海南省",
+    "city_name": "海口市",
+    "district_name": "龙华区",
+    "lng": 110.335541,
+    "lat": 20.036321
+  },
+  {
+    "location_code": "710347801",
+    "location_name": "内蒙古德联-巴彦淖尔",
+    "province_name": "内蒙古自治区",
+    "city_name": "巴彦淖尔市",
+    "district_name": "临河区",
+    "lng": 107.369534,
+    "lat": 40.756681
+  },
+  {
+    "location_code": "710347101",
+    "location_name": "内蒙古德联-包头",
+    "province_name": "内蒙古自治区",
+    "city_name": "包头市",
+    "district_name": "昆都仑区",
+    "lng": 109.845538,
+    "lat": 40.647644
+  },
+  {
+    "location_code": "710347601",
+    "location_name": "内蒙古德联-赤峰",
+    "province_name": "内蒙古自治区",
+    "city_name": "赤峰市",
+    "district_name": "红山区",
+    "lng": 118.963564,
+    "lat": 42.270478
+  },
+  {
+    "location_code": "710347201",
+    "location_name": "内蒙古德联-呼和浩特",
+    "province_name": "内蒙古自治区",
+    "city_name": "呼和浩特市",
+    "district_name": "回民区",
+    "lng": 111.63047,
+    "lat": 40.814506
+  },
+  {
+    "location_code": "710347001",
+    "location_name": "内蒙古德联-呼伦贝尔",
+    "province_name": "内蒙古自治区",
+    "city_name": "呼伦贝尔市",
+    "district_name": "海拉尔区",
+    "lng": 119.742465,
+    "lat": 49.218216
+  },
+  {
+    "location_code": "710347401",
+    "location_name": "内蒙古德联-乌兰察布",
+    "province_name": "内蒙古自治区",
+    "city_name": "乌兰察布市",
+    "district_name": "集宁区",
+    "lng": 113.120587,
+    "lat": 41.041146
+  },
+  {
+    "location_code": "710102201",
+    "location_name": "天津纳通-天津",
+    "province_name": "天津市",
+    "city_name": "市辖区",
+    "district_name": "河西区",
+    "lng": 117.229416,
+    "lat": 39.115718
+  },
+  {
+    "location_code": "710953101",
+    "location_name": "山东纳通-济南",
+    "province_name": "山东省",
+    "city_name": "济南市",
+    "district_name": "天桥区",
+    "lng": 116.993399,
+    "lat": 36.684068
+  },
+  {
+    "location_code": "710953201",
+    "location_name": "山东纳通-青岛",
+    "province_name": "山东省",
+    "city_name": "青岛市",
+    "district_name": "市北区",
+    "lng": 120.381404,
+    "lat": 36.09345
+  },
+  {
+    "location_code": "710953501",
+    "location_name": "山东纳通-烟台",
+    "province_name": "山东省",
+    "city_name": "烟台市",
+    "district_name": "芝罘区",
+    "lng": 121.40654,
+    "lat": 37.546313
+  },
+  {
+    "location_code": "710953701",
+    "location_name": "山东纳通-济宁",
+    "province_name": "山东省",
+    "city_name": "济宁市",
+    "district_name": "任城区",
+    "lng": 116.55447,
+    "lat": 35.493731
+  },
+  {
+    "location_code": "710953901",
+    "location_name": "山东纳通-临沂",
+    "province_name": "山东省",
+    "city_name": "临沂市",
+    "district_name": "兰山区",
+    "lng": 118.3545,
+    "lat": 35.05734
+  },
+  {
+    "location_code": "710954301",
+    "location_name": "山东纳通-滨州",
+    "province_name": "山东省",
+    "city_name": "滨州市",
+    "district_name": "滨城区",
+    "lng": 118.026604,
+    "lat": 37.436843
+  },
+  {
+    "location_code": "710963501",
+    "location_name": "山东纳通-聊城",
+    "province_name": "山东省",
+    "city_name": "聊城市",
+    "district_name": "昌府区",
+    "lng": 115.991588,
+    "lat": 36.462758
+  },
+  {
+    "location_code": "711602001",
+    "location_name": "广东纳通-广州",
+    "province_name": "广东省",
+    "city_name": "广州市",
+    "district_name": "天河区",
+    "lng": 113.368509,
+    "lat": 23.130358
+  },
+  {
+    "location_code": "711666801",
+    "location_name": "广东纳通-茂名",
+    "province_name": "广东省",
+    "city_name": "茂名市",
+    "district_name": "茂南区",
+    "lng": 110.925546,
+    "lat": 21.647152
+  },
+  {
+    "location_code": "711675101",
+    "location_name": "广东纳通-韶关",
+    "province_name": "广东省",
+    "city_name": "韶关市",
+    "district_name": "武江区",
+    "lng": 113.594556,
+    "lat": 24.798486
+  },
+  {
+    "location_code": "711675301",
+    "location_name": "广东纳通-梅州",
+    "province_name": "广东省",
+    "city_name": "梅州市",
+    "district_name": "梅江区",
+    "lng": 116.123536,
+    "lat": 24.315879
+  },
+  {
+    "location_code": "711675401",
+    "location_name": "广东纳通-汕头",
+    "province_name": "广东省",
+    "city_name": "汕头市",
+    "district_name": "龙湖区",
+    "lng": 116.723525,
+    "lat": 23.377776
+  },
+  {
+    "location_code": "711675501",
+    "location_name": "广东纳通-深圳",
+    "province_name": "广东省",
+    "city_name": "深圳市",
+    "district_name": "罗湖区",
+    "lng": 114.137432,
+    "lat": 22.554485
+  },
+  {
+    "location_code": "711675901",
+    "location_name": "广东纳通-湛江",
+    "province_name": "广东省",
+    "city_name": "湛江市",
+    "district_name": "赤坎区",
+    "lng": 110.372533,
+    "lat": 21.272135
+  },
+  {
+    "location_code": "210401",
+    "location_name": "WMS-LK",
+    "province_name": "北京市",
+    "city_name": "市辖区",
+    "district_name": "延庆区",
+    "lng": 115.981632,
+    "lat": 40.462169
+  },
+  {
+    "location_code": "40012020",
+    "location_name": "正天产品库WMS",
+    "province_name": "天津市",
+    "city_name": "市辖区",
+    "district_name": "东丽区",
+    "lng": 117.320569,
+    "lat": 39.092332
+  },
+  {
+    "location_code": "710235101",
+    "location_name": "山西纳通-太原",
+    "province_name": "山西省",
+    "city_name": "太原市",
+    "district_name": "迎泽区",
+    "lng": 112.569385,
+    "lat": 37.869532
+  },
+  {
+    "location_code": "712691501",
+    "location_name": "陕西纳通-安康",
+    "province_name": "陕西省",
+    "city_name": "安康市",
+    "district_name": "汉滨区",
+    "lng": 109.033596,
+    "lat": 32.701196
+  },
+  {
+    "location_code": "712691601",
+    "location_name": "陕西纳通-汉中",
+    "province_name": "陕西省",
+    "city_name": "汉中市",
+    "district_name": "汉台区",
+    "lng": 107.038402,
+    "lat": 33.074191
+  },
+  {
+    "location_code": "712691401",
+    "location_name": "陕西纳通-商洛",
+    "province_name": "陕西省",
+    "city_name": "商洛市",
+    "district_name": "商州区",
+    "lng": 109.947472,
+    "lat": 33.868855
+  },
+  {
+    "location_code": "712691301",
+    "location_name": "陕西纳通-渭南",
+    "province_name": "陕西省",
+    "city_name": "渭南市",
+    "district_name": "临渭区",
+    "lng": 109.516787,
+    "lat": 34.505525
+  },
+  {
+    "location_code": "712602901",
+    "location_name": "陕西纳通-西安",
+    "province_name": "陕西省",
+    "city_name": "西安市",
+    "district_name": "碑林区",
+    "lng": 108.946974,
+    "lat": 34.263047
+  },
+  {
+    "location_code": "712691101",
+    "location_name": "陕西纳通-延安",
+    "province_name": "陕西省",
+    "city_name": "延安市",
+    "district_name": "宝塔区",
+    "lng": 109.495911,
+    "lat": 36.591115
+  },
+  {
+    "location_code": "712302101",
+    "location_name": "上海世泽-上海",
+    "province_name": "上海市",
+    "city_name": "上海市",
+    "district_name": "静安区",
+    "lng": 121.453432,
+    "lat": 31.233845
+  },
+  {
+    "location_code": "711202801",
+    "location_name": "四川纳通-成都",
+    "province_name": "四川省",
+    "city_name": "成都市",
+    "district_name": "青羊区",
+    "lng": 104.067445,
+    "lat": 30.680038
+  },
+  {
+    "location_code": "711281701",
+    "location_name": "四川纳通-南充",
+    "province_name": "四川省",
+    "city_name": "南充市",
+    "district_name": "嘉陵区",
+    "lng": 106.078433,
+    "lat": 30.764896
+  },
+  {
+    "location_code": "710102201",
+    "location_name": "天津纳通-天津",
+    "province_name": "天津市",
+    "city_name": "天津市",
+    "district_name": "河西区",
+    "lng": 117.229416,
+    "lat": 39.115718
+  },
+  {
+    "location_code": "712499801",
+    "location_name": "新疆纳通-喀什",
+    "province_name": "新疆维吾尔自治区",
+    "city_name": "喀什市",
+    "district_name": "",
+    "lng": 76.000313,
+    "lat": 39.47365
+  },
+  {
+    "location_code": "712499101",
+    "location_name": "新疆纳通-乌鲁木齐",
+    "province_name": "新疆维吾尔自治区",
+    "city_name": "乌鲁木齐市",
+    "district_name": "沙依巴克区",
+    "lng": 87.60467,
+    "lat": 43.807262
+  },
+  {
+    "location_code": "712499901",
+    "location_name": "新疆纳通-伊犁",
+    "province_name": "新疆维吾尔自治区",
+    "city_name": "伊宁市",
+    "district_name": "城乡结合区",
+    "lng": 81.284242,
+    "lat": 43.915299
+  },
+  {
+    "location_code": "710657101",
+    "location_name": "浙江纳通-杭州",
+    "province_name": "浙江省",
+    "city_name": "杭州市",
+    "district_name": "上城区",
+    "lng": 120.20429,
+    "lat": 30.232618
+  },
+  {
+    "location_code": "710657401",
+    "location_name": "浙江纳通-宁波",
+    "province_name": "浙江省",
+    "city_name": "宁波市",
+    "district_name": "鄞州区",
+    "lng": 121.555427,
+    "lat": 29.824206
+  },
+  {
+    "location_code": "711102301",
+    "location_name": "重庆纳通-重庆",
+    "province_name": "重庆市",
+    "city_name": "重庆市",
+    "district_name": "渝中区",
+    "lng": 106.57544,
+    "lat": 29.55909
+  },
+  {
+    "location_code": "711871301",
+    "location_name": "湖北纳威联-黄冈",
+    "province_name": "湖北省",
+    "city_name": "黄冈市",
+    "district_name": "黄州区",
+    "lng": 114.886532,
+    "lat": 30.440224
+  }
+]

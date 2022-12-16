@@ -1,10 +1,8 @@
 'use strict'
-const webpack = require('webpack'); // Made by JackDan
 const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
-
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -35,10 +33,6 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
-    modules: [
-      resolve('src'),
-      resolve('node_modules')
-    ],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
@@ -46,8 +40,7 @@ module.exports = {
   },
   module: {
     rules: [
-      // Made by JackDan
-      // ...(config.dev.useEslint ? [createLintingRule()] : []),
+      ...(config.dev.useEslint ? [createLintingRule()] : []),
       {
         test: /\.vue$/,
         loader: 'vue-loader',
@@ -56,7 +49,7 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')]
+        include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -84,24 +77,6 @@ module.exports = {
       }
     ]
   },
-  // Made By JackDan
-  plugins: [
-    new webpack.DllReferencePlugin({
-      context: path.resolve(__dirname, '..'),
-      manifest: require('./vendor-manifest.json')
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: false,
-      show_copyright: false,
-      comments: false,
-      compress: {
-        warnings: false,
-        drop_console: true,
-        pure_funcs: ['console.log']
-      }
-    }),
-    new webpack.optimize.ModuleConcatenationPlugin()
-  ],
   node: {
     // prevent webpack from injecting useless setImmediate polyfill because Vue
     // source contains it (although only uses it if it's native).
