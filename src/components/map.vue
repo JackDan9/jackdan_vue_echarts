@@ -110,6 +110,7 @@ export default {
             },
             lineStyle: {
               normal: {
+                type: 'dashed',
                 width: 2, //尾迹线条宽度
                 opacity: 1, //尾迹线条透明度
                 curveness: 0.3, //尾迹线条曲直度
