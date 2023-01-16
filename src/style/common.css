@@ -29,7 +29,7 @@ body {
     height: 100%;
     margin: 0;
     overflow: auto;
-    background: url("../assets/images/bg.png") no-repeat;
+    background: #f3f4fa;
 }
 
 

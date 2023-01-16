@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="box">
-      <div class="left-container">
+      <!-- <div class="left-container">
           <div class="table-content">
               <el-table
                   :data="tableData"
@@ -25,12 +25,12 @@
           <div class="next-btn-content">
               <el-button type="primary" :loading="nextBtnLoading" @click="handleNextStep">下一步</el-button>
           </div>
-      </div>
+      </div> -->
       <div class="container">
-          <v-timer></v-timer>
+          <!-- <v-timer></v-timer> -->
           <div class="map">
-              <v-map :id='id' :linesCityData="linesCityData" v-on:clickMap="changeData">
-              </v-map>
+              <v-china-map :id='id' :linesCityData="linesCityData" v-on:clickMap="changeData">
+              </v-china-map>
           </div>
       </div>
   </div>
@@ -38,6 +38,7 @@
 
 <script>
 /* eslint-disable*/
+import ChinaMap from "@/components/ChinaMap";
 import Map from "@/components/Map";
 import Timer from '@/components/Timer';
 
@@ -101,6 +102,7 @@ export default {
   },
 
   components: {
+    "v-china-map": ChinaMap,
     "v-map": Map,
     "v-timer": Timer
   },
@@ -123,6 +125,7 @@ export default {
 }
 
 .box .left-container {
+  display: none;
   position: absolute;
   width: 320px;
   height: 100%;

@@ -16,7 +16,7 @@
   "dependencies": {
     "axios": "^1.2.1",
     "dayjs": "^1.11.7",
-    "echarts": "^4.0.3",
+    "echarts": "^4.9.0",
     "echarts-gl": "^2.0.9",
     "element-ui": "^2.15.12",
     "vue": "^2.5.2",

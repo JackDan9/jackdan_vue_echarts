@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="map-container">
-    <div v-bind:id="this.id" ></div>
+    <div v-bind:id="this.id"></div>
   </div>
 </template>
 
@@ -110,7 +110,7 @@ export default {
             },
             lineStyle: {
               normal: {
-                type: 'dashed',
+                type: 'dashed', // 线条的类型,默认是solid实线，可以是dashed线性虚线和'dotted'点型虚线
                 width: 2, //尾迹线条宽度
                 opacity: 1, //尾迹线条透明度
                 curveness: 0.3, //尾迹线条曲直度
