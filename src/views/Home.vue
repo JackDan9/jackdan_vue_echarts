@@ -27,6 +27,7 @@
           </div>
       </div> -->
       <div class="container">
+          <v-table :columnsData="columnsData" :tableData="respData"></v-table>
           <!-- <v-timer></v-timer> -->
           <div class="map">
               <v-china-map :id='id' :linesCityData="linesCityData" v-on:clickMap="changeData">
@@ -40,8 +41,10 @@
 /* eslint-disable*/
 import ChinaMap from "@/components/ChinaMap";
 import Map from "@/components/Map";
-import Timer from '@/components/Timer';
-import axios from 'axios';
+import Timer from "@/components/Timer";
+import Table from "@/components/Table";
+import axios from "axios";
+import dayjs from 'dayjs';
 
 export default {
   data() {
@@ -76,7 +79,8 @@ export default {
       ],
       nextBtnLoading: false,
       linesCityData: [],
-      respData: []
+      respData: [],
+      columnsData: [],
     };
   },
   methods: {
@@ -106,18 +110,40 @@ export default {
   components: {
     "v-china-map": ChinaMap,
     "v-map": Map,
-    "v-timer": Timer
+    "v-timer": Timer,
+    "v-table": Table,
   },
 
   mounted() {
     // 请求数据
-    axios.post(url).then((res) => {
-      // 
-      if(res.code === 200 || res.code === 0) {
-        this.respData = res && res.data
-      }
-      
-    }); 
+    axios
+      .get(
+        "http://172.27.128.86:9002/QueryLBX?LocationCode=SLNT40012020&Status=40&BillType=101"
+      )
+      .then((res) => {
+        // response内容
+        if (res && res.data && res.data.code === 200) {
+          this.respData = JSON.parse(res.data.data).map((item) => {
+            console.log(item)
+            for(let key in item) {
+              if (key.includes('time') && item[key]) {
+                item[key] = dayjs(item[key]).format("YYYY-MM-DD")
+              } else if (!item[key] && item[key] !== 0) {
+                item[key] = '-'
+              } else {
+                item[key] = item[key]
+              }
+            }
+            return item;
+          });
+          Object.keys(this.respData[0]).map((keyItem) => {
+            this.columnsData.push({
+              prop: keyItem,
+              label: keyItem,
+            });
+          });
+        }
+      });
   },
 };
 </script>
@@ -126,6 +152,7 @@ export default {
 .box {
   width: 100%;
   height: 89%;
+  overflow-y: auto;
 }
 
 @media screen and (max-width: 1366px) {

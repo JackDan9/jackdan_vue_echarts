@@ -10,7 +10,9 @@ import * as echarts from "echarts";
 
 export default {
   name: "Scatter",
-  props: {},
+  props: {
+    
+  },
 
   data() {
     return {
