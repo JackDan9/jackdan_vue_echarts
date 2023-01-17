@@ -41,6 +41,7 @@
 import ChinaMap from "@/components/ChinaMap";
 import Map from "@/components/Map";
 import Timer from '@/components/Timer';
+import axios from 'axios';
 
 export default {
   data() {
@@ -75,6 +76,7 @@ export default {
       ],
       nextBtnLoading: false,
       linesCityData: [],
+      respData: []
     };
   },
   methods: {
@@ -108,6 +110,14 @@ export default {
   },
 
   mounted() {
+    // 请求数据
+    axios.post(url).then((res) => {
+      // 
+      if(res.code === 200 || res.code === 0) {
+        this.respData = res && res.data
+      }
+      
+    }); 
   },
 };
 </script>
